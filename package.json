@@ -1,32 +1,50 @@
 {
   "name": "vue-ele-form",
+  "description": "基于 element-ui 功能强大的表单组件",
   "version": "0.1.0",
-  "private": true,
+  "license": "MIT",
+  "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build:lib": "vue build -t lib --name vue-ele-form -d ./dist/ ./src/index.js",
+    "build": "npm run lint & npm run build:lib",
     "lint": "vue-cli-service lint"
   },
-  "dependencies": {
-    "core-js": "^2.6.5",
-    "vue": "^2.6.10"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dream2023/vue-ele-form"
   },
+  "main": "dist/vue-ele-form.umd.min.js",
+  "homepage": "https://github.com/dream2023/vue-ele-form",
+  "keywords": [
+    "vue-ele-form",
+    "vue form",
+    "element form",
+    "element",
+    "element-ui form",
+    "el-form",
+    "datatable"
+  ],
+  "dependencies": {},
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.8.0",
     "@vue/cli-plugin-eslint": "^3.8.0",
     "@vue/cli-service": "^3.8.0",
     "@vue/eslint-config-standard": "^4.0.0",
     "babel-eslint": "^10.0.1",
+    "core-js": "^2.6.5",
+    "element-ui": "^2.10.0",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
     "lint-staged": "^8.1.5",
+    "vue": "^2.6.10",
     "vue-template-compiler": "^2.6.10"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
   },
   "lint-staged": {
-    "*.{js,vue}": [
+    "src/*.{js,vue}": [
       "vue-cli-service lint",
       "git add"
     ]
