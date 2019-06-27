@@ -319,17 +319,21 @@ formDesc: {
         if (this.isLoading) return // 判断状态
         try {
           this.isLoading = true // 更改状态
-          const response = await axios.post('/api/user', data) // 发送请求
+          const response = await axios.post(
+            'https://jsonplaceholder.typicode.com/posts',
+            data
+          ) // 发送请求
 
           // 成功处理
           this.$message.success('添加成功')
-          this.$router.back()
+          // this.$router.back() // 跳转回上一页
         } catch (error) {
           // 处理错误
           // 为了表单同步显示后端返回的错误, 需要将错误信息传递给表单
-          this.formError = { name: '用户名不存在', password: '密码错误' }
+          this.$message.error('表单填写出错了')
+          this.formError = { username: '用户名不存在', password: '密码错误' }
         } finally {
-          this.isLoading = true
+          this.isLoading = false
         }
       }
     }
@@ -353,12 +357,24 @@ formDesc: {
     methods: {
       handleRequest(data) {
         // 1.必须返回一个Promise对象
-        // 2.当出现异常的时候, 返回的错误信息, 必须是这样的格式: { name: '用户名不存在', password: '密码错误' }
-        return axios.post('/api/user', data)
+        // 2.当出现异常的时候, 返回的错误信息, 必须是以字段为key, 错误原因为 message的对象或者错误:
+        // { name: '用户名不存在', password: '密码不正确' } 或者 new Error(JSON.stringify({ name: '用户名不存在', password: '密码不正确' }))
+        return new Promise(async (resolve, reject) => {
+          try {
+            await axios.post('https://jsonplaceholder.typicode.com/posts', data)
+            resolve()
+          } catch (error) {
+            reject(
+              new Error(
+                JSON.stringify({ name: '用户名不存在', password: '密码不正确' })
+              )
+            )
+          }
+        })
       },
       handleRequestSuccess() {
         this.$message.success('添加成功')
-        this.$router.back()
+        // this.$router.back()
       }
     }
   }

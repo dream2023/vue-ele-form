@@ -31,7 +31,7 @@
                 v-if="formItem.type !== 'hide'"
               >
                 <el-form-item
-                  :error="formError ? formError[field] : null"
+                  :error="formErrorObj ? formErrorObj[field] : null"
                   :label="formItem.label"
                   :prop="field"
                 >
@@ -41,6 +41,7 @@
                     :desc="formItem"
                     :name="field"
                   >
+                    <el-input v-model="formData[field]"></el-input>
                     <!-- 特殊组件 -->
                     <!-- <easy-special
                       :desc="formItem"
@@ -67,7 +68,7 @@
           <!-- 操作按钮去 -->
           <el-form-item v-if="isShowSubmitBtn || isShowBackBtn">
             <el-button
-              :loading="isLoading"
+              :loading="isLoading || innerIsLoading"
               native-type="submit"
               type="primary"
               v-if="isShowSubmitBtn"
@@ -84,8 +85,11 @@
 </template>
 
 <script>
+import responsiveMixin from './mixins/responsiveMixin'
+
 export default {
   name: 'EleForm',
+  mixins: [responsiveMixin],
   props: {
     // 表单描述
     formDesc: {
@@ -127,31 +131,47 @@ export default {
     backBtnText: {
       type: String,
       default: '返回'
-    },
-    // 标签位置
-    labelPosition: String,
-    // 不填则响应式, 填则固定
-    span: Number
+    }
   },
   data () {
     return {
       // 是否正在请求中
-      isSubmitting: false,
-      // 表单标签位置
-      formLabelPosition: 'right',
-      // 表单宽度
-      formSpan: this.span || 22
+      innerIsLoading: false,
+      // 内部请求出错
+      innerFormError: {}
+    }
+  },
+  computed: {
+    // 表单错误信息
+    formErrorObj () {
+      return Object.assign({}, this.innerFormError, this.formError)
+    }
+  },
+  watch: {
+    formErrorObj (obj) {
+      // 后端异常的弹窗警告
+      if (obj) {
+        try {
+          let messageArr = []
+          for (const key in obj) {
+            const formItem = this.formDesc[key]
+            const label = formItem && formItem.label ? formItem.label + ': ' : key + ': '
+            messageArr.push(label + obj[key])
+          }
+          this.showError(messageArr)
+        } catch {}
+      }
     }
   },
   methods: {
     // 验证表单
-    handleValidateForm () {
-      if (this.formRules) {
-        this.$refs['form'].validate((valid) => {
+    async handleValidateForm () {
+      if (this.rules) {
+        this.$refs['form'].validate((valid, invalidFields) => {
           if (valid) {
             this.handleSubmitForm()
           } else {
-            this.$message.error('表填填写错误, 请检查')
+            this.processValidError(invalidFields)
           }
         })
       } else {
@@ -159,34 +179,79 @@ export default {
       }
     },
 
+    // 显示错误
+    showError (messageArr) {
+      if (messageArr.length) {
+        const h = this.$createElement
+        messageArr = messageArr.map(msg => {
+          return h('div', { style: { marginBottom: '8px' } }, msg)
+        })
+        this.$notify.error({
+          title: '表单填写错误',
+          message: h('div', { style: { minWidth: '300px', marginTop: '12px' } }, messageArr)
+        })
+      }
+    },
+
+    // 处理表单错误
+    processValidError (invalidFields) {
+      let messageArr = []
+      for (const key in invalidFields) {
+        const formItem = this.formDesc[key]
+        const label = formItem && formItem.label ? formItem.label + ': ' : key + ': '
+        invalidFields[key].forEach((item) => {
+          messageArr.push(label + item.message)
+        })
+      }
+
+      this.showError(messageArr)
+    },
+
     // 提交表单
     async handleSubmitForm () {
       if (this.requestFn) {
         // 在内部请求
-        if (this.isSubmitting) return
-        this.isSubmitting = true
+        if (this.innerIsLoading) return
+        this.innerIsLoading = true
         try {
           const data = await this.requestFn(this.formData)
           this.$nextTick(() => {
             this.$emit('request-success', data)
           })
-        } catch (formError) {
-          this.formError = formError
+        } catch (error) {
+          // 处理异常情况
+          if (error instanceof Error) {
+            // 返回的是Error类型, 则进行解析
+            try {
+              const msg = JSON.parse(error.message)
+              if (msg instanceof Object) {
+                this.innerFormError = msg
+              }
+            } catch {}
+          } else if (error instanceof Object) {
+            // 返回的是对象类型, 则直接设置
+            this.innerFormError = error
+          }
           this.$emit('request-error')
         } finally {
-          this.isSubmitting = false
+          this.innerIsLoading = false
           this.$emit('request-end')
         }
       } else {
         // 在外部请求
         if (this.isLoading) return
-        this.$emit('request')
+        this.$emit('request', this.formData)
       }
     },
-
     // 返回按钮
     goBack () {
-      this.$router.go(-1)
+      if (this.$router) {
+        // vue-router
+        this.$router.back()
+      } else {
+        // 浏览器history API
+        history.back()
+      }
     },
     // 重置表单
     resetForm () {
