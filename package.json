@@ -14,7 +14,7 @@
     "type": "git",
     "url": "https://github.com/dream2023/vue-ele-form"
   },
-  "main": "dist/vue-ele-form.umd.min.js",
+  "main": "lib/index.js",
   "homepage": "https://github.com/dream2023/vue-ele-form",
   "keywords": [
     "vue-ele-form",
@@ -25,7 +25,12 @@
     "el-form",
     "datatable"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "bc-quill-image-resize-module": "^3.0.0",
+    "vue-ele-upload-image": "^2.0.2",
+    "vue-ele-upload-video": "^2.0.0",
+    "vue2-editor": "^2.8.1"
+  },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.8.0",
     "@vue/cli-plugin-eslint": "^3.8.0",

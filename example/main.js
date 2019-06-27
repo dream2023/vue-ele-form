@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
-import EleForm from '../src/index'
+import EleForm from '../lib/index'
 import 'element-ui/lib/theme-chalk/index.css'
 import ElementUI from 'element-ui'
 
