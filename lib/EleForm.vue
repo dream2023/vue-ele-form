@@ -41,7 +41,16 @@
                     :desc="formItem"
                     :name="field"
                   >
-                    <el-input v-model="formData[field]"></el-input>
+                    <el-select v-model="formData[field]">
+                      <template v-if="Array.isArray(formItem.options)">
+                        <el-option
+                          :key="index"
+                          :label="option.text"
+                          :value="option.value"
+                          v-for="(option, index) of formItem.options"
+                        ></el-option>
+                      </template>
+                    </el-select>
                     <!-- 特殊组件 -->
                     <!-- <easy-special
                       :desc="formItem"
@@ -148,6 +157,15 @@ export default {
     }
   },
   watch: {
+    // 处理options参数
+    formDesc: {
+      handler: function (desc) {
+        for (const field in desc) {
+          this.changeOptions(desc[field].options, field)
+        }
+      },
+      immediate: true
+    },
     formErrorObj (obj) {
       // 后端异常的弹窗警告
       if (obj) {
@@ -164,6 +182,37 @@ export default {
     }
   },
   methods: {
+    // 将四种类型: 字符串数组, 对象数组, Promise对象和函数统一为 对象数组
+    changeOptions (options, field) {
+      if (options) {
+        if (options instanceof Array) {
+          // 当options为数组时
+          this.formDesc[field].options = options.map((option) => {
+            if (typeof option === 'string') {
+            // 字符串 转为 对象
+            // 例如 ['男', '女'] => [ { text: '男', value: '男' }, { text: '女', value: '女' } ]
+              return {
+                text: option,
+                value: option
+              }
+            } else {
+            // 对象 直接返回
+              return option
+            }
+          })
+        } else if (options instanceof Function) {
+          // 函数, 递归
+          this.changeOptions(options(), field)
+        } else if (options instanceof Promise) {
+          options.then((options) => {
+            this.formDesc[field].options = options
+          })
+        } else {
+          // 其他报错
+          throw new TypeError(options, 'options的类型不正确, 支持字符串数组, 对象数组, 函数和Promise四种类型')
+        }
+      }
+    },
     // 验证表单
     async handleValidateForm () {
       if (this.rules) {
