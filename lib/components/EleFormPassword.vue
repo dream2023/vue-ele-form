@@ -4,9 +4,9 @@
     :placeholder="'请输入' + desc.label"
     :show-password="true"
     :style="desc.style"
-    v-bind="desc.attrs"
-    v-model="initValue"
-    v-on="desc.on"
+    v-bind="attrs"
+    v-model="newValue"
+    v-on="onEvents"
   >
     <!-- 组件内部插槽 -->
     <template
@@ -24,10 +24,14 @@
 <script>
 import formMixin from '../mixins/formMixin'
 export default {
-  name: 'EleFormInput',
+  name: 'EleFormPassword',
   mixins: [formMixin],
-  props: {
-    value: String
+  data () {
+    return {
+      defaultAttrs: {
+        placeholder: '请输入' + this.desc.label
+      }
+    }
   }
 }
 </script>

@@ -5,7 +5,7 @@
     @input="handleChange"
     placeholder="请输入URL"
     v-bind="desc.attrs"
-    v-model="initValue"
+    v-model="newValue"
     v-on="desc.on"
   >
     <template slot="prepend">Http://</template>

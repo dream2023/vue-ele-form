@@ -77,11 +77,28 @@
 <script>
 import responsiveMixin from './mixins/responsiveMixin'
 import EleFormInput from './components/EleFormInput'
+import EleFormSwitch from './components/EleFormSwitch'
 import EleFormPassword from './components/EleFormPassword'
+import EleFormButton from './components/EleFormButton'
+import EleFormNumber from './components/EleFormNumber'
+import EleFormGallery from './components/EleFormGallery'
+import EleFormRate from './components/EleFormRate'
+import EleFormColor from './components/EleFormColor'
+import EleFormDate from './components/EleFormDate'
 
 export default {
   name: 'EleForm',
-  components: { EleFormInput, EleFormPassword },
+  components: {
+    EleFormInput,
+    EleFormDate,
+    EleFormColor,
+    EleFormGallery,
+    EleFormPassword,
+    EleFormButton,
+    EleFormNumber,
+    EleFormRate,
+    EleFormSwitch
+  },
   mixins: [responsiveMixin],
   props: {
     // 表单描述
@@ -254,14 +271,22 @@ export default {
 
     // 提交表单
     async handleSubmitForm () {
+      // valueFormatter的处理
+      const data = Object.assign({}, this.formData)
+      for (const field in data) {
+        if (this.formDesc[field].valueFormatter) {
+          data[field] = this.formDesc[field].valueFormatter(data[field])
+        }
+      }
+
       if (this.requestFn) {
         // 在内部请求
         if (this.innerIsLoading) return
         this.innerIsLoading = true
         try {
-          const data = await this.requestFn(this.formData)
+          const response = await this.requestFn(data)
           this.$nextTick(() => {
-            this.$emit('request-success', data)
+            this.$emit('request-success', response)
           })
         } catch (error) {
           // 处理异常情况
@@ -285,7 +310,7 @@ export default {
       } else {
         // 在外部请求
         if (this.isLoading) return
-        this.$emit('request', this.formData)
+        this.$emit('request', data)
       }
     },
     // 返回按钮

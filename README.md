@@ -156,12 +156,14 @@ formDesc: {
     label: String, // `form-item` 的 `label` 属性值
     attrs: Object, // 所渲染组件的属性, `v-bind` 的 API 相同
     layout: Number, // 1-24, 默认是24, 占满一整行, 具体参考 https://element.eleme.cn/#/zh-CN/component/layout
+    displayFormatter: Function, // 对显示的值做处理
+    valueFormatter: Function, // 对请求的值做处理
     tip: String, // 表单项的提示
     options: Array | Function | Promise, // checkbox, select等组件的 options 部分, 具体细节参考下面
     slots: Object, // 插槽, 使用渲染函数 https://cn.vuejs.org/v2/guide/render-function.html
     'class': Mix, // 与 `v-bind:class` 的 API 相同，接受一个字符串、对象或字符串和对象组成的数组
     style: Object | Array // 与 `v-bind:style` 的 API 相同，接受一个字符串、对象，或对象组成的数组
-    on: Object, // 事件监听器在 `on` 属性内，
+    on: Object, // 事件监听器在 `on` 属性内
   },
   field2: {
     // ...
@@ -189,6 +191,9 @@ formDesc: {
     type: 'input',
     label: '姓名',
     layout: 12, // name 和 region 共占一行,
+    displayFormatter (value) { // 将显示的值转为 '我的名字是'  + value
+      return '我的名字是'  + value
+    },
     on: { // 时间监听
       change (value) {
         console.log(value)
@@ -217,6 +222,9 @@ formDesc: {
     label: '年龄',
     attrs: {
       min: 1 // 最小 1 岁
+    },
+    valueFormatter (value) { // 对请求的值进一步处理
+      return value + 1 // 将发送的数据转为 value + 1
     },
     style: { // 指定样式
       maxWidth: '400px'
@@ -502,7 +510,7 @@ formDesc: {
     :class="desc.class"
     :style="desc.style"
     v-bind="desc.attrs"
-    v-model="initValue"
+    v-model="newValue"
     v-on="desc.on"
   >
     <template slot="prepend"
