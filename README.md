@@ -28,6 +28,10 @@ vue-ele-form 是基于 [element-ui form](https://element.eleme.cn/#/zh-CN/compon
 - [插槽](#插槽)
   - [默认插槽](#默认插槽)
   - [作用域插槽](#作用域插槽)
+- [自定义组件(以 custom-url 组件为例)](#%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BB%84%E4%BB%B6%E4%BB%A5-custom-url-%E7%BB%84%E4%BB%B6%E4%B8%BA%E4%BE%8B)
+  - [第 1 步: 新建组件,并引入 mixin](#%E7%AC%AC-1-%E6%AD%A5-%E6%96%B0%E5%BB%BA%E7%BB%84%E4%BB%B6-%E5%B9%B6%E5%BC%95%E5%85%A5-mixin)
+  - [第 2 步: 完善 html](#%E7%AC%AC-2-%E6%AD%A5-%E5%AE%8C%E5%96%84-html)
+  - [第 3 步: 注册并使用](#%E7%AC%AC-3-%E6%AD%A5-%E6%B3%A8%E5%86%8C%E5%B9%B6%E4%BD%BF%E7%94%A8)
 
 ## 图片演示
 
@@ -153,9 +157,9 @@ formDesc: {
     attrs: Object, // 所渲染组件的属性, `v-bind` 的 API 相同
     layout: Number, // 1-24, 默认是24, 占满一整行, 具体参考 https://element.eleme.cn/#/zh-CN/component/layout
     tip: String, // 表单项的提示
-    options: Array | Function, // checkbox, select等组件的 options 部分, 具体细节参考下面
+    options: Array | Function | Promise, // checkbox, select等组件的 options 部分, 具体细节参考下面
     slots: Object, // 插槽, 使用渲染函数 https://cn.vuejs.org/v2/guide/render-function.html
-    class: Mix, // 与 `v-bind:class` 的 API 相同，接受一个字符串、对象或字符串和对象组成的数组
+    'class': Mix, // 与 `v-bind:class` 的 API 相同，接受一个字符串、对象或字符串和对象组成的数组
     style: Object | Array // 与 `v-bind:style` 的 API 相同，接受一个字符串、对象，或对象组成的数组
     on: Object, // 事件监听器在 `on` 属性内，
   },
@@ -184,7 +188,23 @@ formDesc: {
   name: {
     type: 'input',
     label: '姓名',
-    layout: 12, // name 和 region 共占一行
+    layout: 12, // name 和 region 共占一行,
+    on: { // 时间监听
+      change (value) {
+        console.log(value)
+      }
+    }
+  },
+  birthday:{
+    type: 'date',
+    label: '出生日期',
+    slots: { // 插槽
+      prefix (h) {
+        return h('i', {
+          class: 'input__icon el-icon-date'
+        })
+      }
+    }
   },
   region: {
     type: 'select',
@@ -205,7 +225,13 @@ formDesc: {
   best_friends: {
     type: 'checkbox',
     label: '最好的朋友',
-    options: axios.get('/api/friends') // 可以是个Promise对象
+    options: async function () {
+      const response = await axios.get('http://jsonplaceholder.typicode.com/users')
+      const data = response.data
+      return data.map((item) => {
+        return { text: item.username, value: item.id }
+      })
+    }
   },
   // ....
 }
@@ -271,7 +297,7 @@ formDesc: {
 formDesc: {
   city: {
     // 从服务器获取数据
-    options: axios.get('/api/city')
+    options: getCity('/api/city') // 返回的是Promise
   }
 }
 ```
@@ -283,7 +309,7 @@ formDesc: {
   city: {
     // 函数, 函数的返回值可以是以上三种类型: 字符串数组, 对象数组, Promise对象
     options: function () {
-      return axios.get('/api/city')
+      return [{ text: '北京', value: 'beijing' }, {text: '深圳', value: 'shenzhen'}]
     }
   }
 }
@@ -293,7 +319,7 @@ formDesc: {
 
 #### 外部请求
 
-当发起请求时, 会抛出 `\$emit('request', data)`, 需要传递 `isLoading` 参数
+当发起请求时, 会抛出 `$emit('request', data)`, 需要传递 `isLoading` 参数
 
 ```html
 <!-- 伪代码 -->
@@ -343,7 +369,7 @@ formDesc: {
 
 #### 内部请求
 
-当发起请求时, 需要传递 `request-fn` 参数, 请求结束后, 会根据状态抛出: `$emit('request-success', data)` / `$emit('request-error', error)` / `\$emit('request-finish')`
+当发起请求时, 需要传递 `request-fn` 参数, 请求结束后, 会根据状态抛出: `$emit('request-success', data)` / `$emit('request-error', error)` / `$emit('request-finish')`
 
 ```html
 <!-- 伪代码 -->
@@ -438,4 +464,73 @@ formDesc: {
     }
   }
 </script>
+```
+
+## 自定义组件(以 custom-url 组件为例)
+
+### 第 1 步: 新建组件, 并引入 mixin
+
+```html
+<template> </template>
+
+<script>
+  import formMixin from 'vue-ele-form/mixins/formMixin'
+  export default {
+    name: 'custom-url', // name 属性必须填写, 在使用时, 需要和这里定义的 name 一致
+    mixins: [formMixin] // 其实 mixin 做事很简单, 可以参考下面图片
+  }
+</script>
+```
+
+![image](<https://raw.githubusercontent.com/dream2023/images/master/carbon%20(1).1f9sbeq2f2p.png>)
+
+### 第 2 步: 完善 html
+
+```html
+<template>
+  <!-- 这里就需要注意了! -->
+  <!-- 1.v-model 绑定的是 newValue -->
+  <!-- 2.需要将改变值, 通过 handleChange 传递出去 -->
+  <!-- 3.class 是绑定的类 -->
+  <!-- 4.attrs 是绑定的属性 -->
+  <!-- 5.style 是绑定的样式 -->
+  <!-- 6.on 是绑定的事件 -->
+  <el-input
+    placeholder="请输入URL"
+    v-model="newValue"
+    @input="handleChange"
+    :class="desc.class"
+    :style="desc.style"
+    v-bind="desc.attrs"
+    v-model="initValue"
+    v-on="desc.on"
+  >
+    <template slot="prepend"
+      >Http://</template
+    >
+    <template slot="append"
+      >.com</template
+    >
+  </el-input>
+</template>
+```
+
+### 第 3 步: 注册并使用
+
+```js
+// 必须注册到全局
+import CustomUrl from 'path/to/CustomUrl'
+Vue.component(CustomUrl.name, CustomUrl)
+```
+
+```js
+// 使用
+export default: {
+  formDesc: {
+    blog: {
+      type: 'custom-url',
+      label: '博客地址'
+    }
+  }
+}
 ```

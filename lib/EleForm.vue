@@ -41,30 +41,11 @@
                     :desc="formItem"
                     :name="field"
                   >
-                    <el-select v-model="formData[field]">
-                      <template v-if="Array.isArray(formItem.options)">
-                        <el-option
-                          :key="index"
-                          :label="option.text"
-                          :value="option.value"
-                          v-for="(option, index) of formItem.options"
-                        ></el-option>
-                      </template>
-                    </el-select>
-                    <!-- 特殊组件 -->
-                    <!-- <easy-special
+                    <component
                       :desc="formItem"
-                      :type="formItem.type"
-                      v-if="isSpecialComponent(formItem.type)"
+                      :is="getComponentName(formItem.type)"
                       v-model="formData[field]"
-                    />-->
-                    <!-- 普通组件 -->
-                    <!-- <easy-common
-                      :desc="formItem"
-                      v-else
-                      :type="formItem.type"
-                      v-model="formData[field]"
-                    />-->
+                    />
                   </slot>
                   <div
                     class="ele-form-tip"
@@ -95,9 +76,12 @@
 
 <script>
 import responsiveMixin from './mixins/responsiveMixin'
+import EleFormInput from './components/EleFormInput'
+import EleFormPassword from './components/EleFormPassword'
 
 export default {
   name: 'EleForm',
+  components: { EleFormInput, EleFormPassword },
   mixins: [responsiveMixin],
   props: {
     // 表单描述
@@ -147,7 +131,9 @@ export default {
       // 是否正在请求中
       innerIsLoading: false,
       // 内部请求出错
-      innerFormError: {}
+      innerFormError: {},
+      // 所有内置组件
+      builtInNames: ['hide', 'text', 'input', 'number', 'checkbox', 'radio', 'date', 'time', 'datetime', 'switch', 'json', 'slider', 'password', 'color', 'select', 'cascader', 'transfer', 'image', 'video', 'file', 'rate', 'tags', 'gallery', 'button']
     }
   },
   computed: {
@@ -182,6 +168,16 @@ export default {
     }
   },
   methods: {
+    // 组件名称
+    getComponentName (type) {
+      if (this.builtInNames.includes(type)) {
+        // 内置组件
+        return 'ele-form-' + type
+      } else {
+        // 外部组件
+        return type
+      }
+    },
     // 将四种类型: 字符串数组, 对象数组, Promise对象和函数统一为 对象数组
     changeOptions (options, field) {
       if (options) {
