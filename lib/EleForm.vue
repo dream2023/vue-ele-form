@@ -92,6 +92,7 @@ import EleFormSelect from './components/EleFormSelect'
 import EleFormDatetime from './components/EleFormDatetime'
 import EleFormCheckbox from './components/EleFormCheckbox'
 import EleFormCascader from './components/EleFormCascader'
+import EleFormTransfer from './components/EleFormTransfer'
 import EleFormCheckboxButton from './components/EleFormCheckboxButton'
 
 export default {
@@ -110,6 +111,7 @@ export default {
     EleFormSlider,
     EleFormTime,
     EleFormSwitch,
+    EleFormTransfer,
     EleFormDatetime,
     EleFormCheckbox,
     EleFormCascader,

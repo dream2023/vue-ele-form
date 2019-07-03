@@ -140,6 +140,21 @@ export default {
           label: '开关',
           type: 'switch'
         },
+        transfer: {
+          label: '穿梭框',
+          type: 'transfer',
+          options () {
+            const data = []
+            for (let i = 1; i <= 15; i++) {
+              data.push({
+                key: i,
+                label: `备选项 ${i}`,
+                disabled: i % 4 === 0
+              })
+            }
+            return data
+          }
+        },
         slider: {
           label: '滑块',
           type: 'slider'
