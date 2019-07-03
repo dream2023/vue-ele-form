@@ -19,7 +19,7 @@
           ref="form"
         >
           <!-- 默认插槽作为表单项 -->
-          <slot/>
+          <slot />
 
           <el-row :gutter="20">
             <!-- 表单项 -->
@@ -87,14 +87,19 @@ import EleFormColor from './components/EleFormColor'
 import EleFormDate from './components/EleFormDate'
 import EleFormTime from './components/EleFormTime'
 import EleFormSlider from './components/EleFormSlider'
+import EleFormRadio from './components/EleFormRadio'
+import EleFormSelect from './components/EleFormSelect'
 import EleFormDatetime from './components/EleFormDatetime'
+import EleFormCheckbox from './components/EleFormCheckbox'
 
 export default {
   name: 'EleForm',
   components: {
     EleFormInput,
     EleFormDate,
+    EleFormRadio,
     EleFormColor,
+    EleFormSelect,
     EleFormGallery,
     EleFormPassword,
     EleFormButton,
@@ -103,7 +108,8 @@ export default {
     EleFormSlider,
     EleFormTime,
     EleFormSwitch,
-    EleFormDatetime
+    EleFormDatetime,
+    EleFormCheckbox
   },
   mixins: [responsiveMixin],
   props: {

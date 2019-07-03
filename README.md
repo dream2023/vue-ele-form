@@ -282,8 +282,11 @@ formDesc: {
 ```js
 formDesc: {
   sex: {
-    // 显示到屏幕上, 分别为男 和 女, 但发送数据分别为 0 和 1
-    options: [{ text: '男', value: 0 }, { text: '女', value: 1 }]
+    // 显示到屏幕上, 分别为男 和 女, 但发送数据分别为 0 和 1, attrs 可选
+    options: [
+      { text: '男', value: 0, attrs: { size: 'medium' } }
+      { text: '女', value: 1, attrs: { size : 'medium' } } }
+    ]
   }
 }
 ```
