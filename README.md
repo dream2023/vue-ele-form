@@ -156,8 +156,8 @@ formDesc: {
     label: String, // `form-item` 的 `label` 属性值
     attrs: Object, // 所渲染组件的属性, `v-bind` 的 API 相同
     layout: Number, // 1-24, 默认是24, 占满一整行, 具体参考 https://element.eleme.cn/#/zh-CN/component/layout
-    displayFormatter: Function, // 对显示的值做处理
-    valueFormatter: Function, // 对请求的值做处理
+    displayFormatter: Function, // 对首次显示的值做处理
+    valueFormatter: Function, // 对最终请求的值做处理
     tip: String, // 表单项的提示
     options: Array | Function | Promise, // checkbox, select等组件的 options 部分, 具体细节参考下面
     slots: Object, // 插槽, 使用渲染函数 https://cn.vuejs.org/v2/guide/render-function.html

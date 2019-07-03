@@ -3,7 +3,7 @@
     :class="desc.class"
     :style="desc.style"
     placeholder="选择日期"
-    type="date"
+    type="datetime"
     v-bind="attrs"
     v-model="newValue"
     v-on="onEvents"
@@ -14,7 +14,7 @@
 import formMixin from '../mixins/formMixin'
 import timeMixin from '../mixins/timeMixin'
 export default {
-  name: 'EleFormDate',
+  name: 'EleFormDatetime',
   mixins: [formMixin, timeMixin]
 }
 </script>

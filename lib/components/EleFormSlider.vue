@@ -1,9 +1,7 @@
 <template>
-  <el-date-picker
+  <el-slider
     :class="desc.class"
     :style="desc.style"
-    placeholder="选择日期"
-    type="date"
     v-bind="attrs"
     v-model="newValue"
     v-on="onEvents"
@@ -12,9 +10,8 @@
 
 <script>
 import formMixin from '../mixins/formMixin'
-import timeMixin from '../mixins/timeMixin'
 export default {
-  name: 'EleFormDate',
-  mixins: [formMixin, timeMixin]
+  name: 'EleFormSlider',
+  mixins: [formMixin]
 }
 </script>

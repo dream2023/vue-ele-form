@@ -85,6 +85,9 @@ import EleFormGallery from './components/EleFormGallery'
 import EleFormRate from './components/EleFormRate'
 import EleFormColor from './components/EleFormColor'
 import EleFormDate from './components/EleFormDate'
+import EleFormTime from './components/EleFormTime'
+import EleFormSlider from './components/EleFormSlider'
+import EleFormDatetime from './components/EleFormDatetime'
 
 export default {
   name: 'EleForm',
@@ -97,7 +100,10 @@ export default {
     EleFormButton,
     EleFormNumber,
     EleFormRate,
-    EleFormSwitch
+    EleFormSlider,
+    EleFormTime,
+    EleFormSwitch,
+    EleFormDatetime
   },
   mixins: [responsiveMixin],
   props: {
