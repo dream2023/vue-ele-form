@@ -9,9 +9,10 @@
     <!-- 组件内部插槽 -->
     <template
       v-for="(render, key) of desc.slots"
-      v-slot:[key]
+      v-slot:[key]="data"
     >
       <extend-slot
+        :data="data"
         :key="key"
         :render="render"
       />

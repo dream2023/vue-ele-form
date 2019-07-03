@@ -203,8 +203,8 @@ formDesc: {
   birthday:{
     type: 'date',
     label: '出生日期',
-    slots: { // 插槽
-      prefix (h) {
+    slots: { // 插槽, 第一个参数是渲染函数, 第二个参数是作用域插槽传递过来的值
+      prefix (h, data) {
         return h('i', {
           class: 'input__icon el-icon-date'
         })

@@ -91,6 +91,7 @@ import EleFormRadio from './components/EleFormRadio'
 import EleFormSelect from './components/EleFormSelect'
 import EleFormDatetime from './components/EleFormDatetime'
 import EleFormCheckbox from './components/EleFormCheckbox'
+import EleFormCascader from './components/EleFormCascader'
 import EleFormCheckboxButton from './components/EleFormCheckboxButton'
 
 export default {
@@ -111,6 +112,7 @@ export default {
     EleFormSwitch,
     EleFormDatetime,
     EleFormCheckbox,
+    EleFormCascader,
     EleFormCheckboxButton
   },
   mixins: [responsiveMixin],

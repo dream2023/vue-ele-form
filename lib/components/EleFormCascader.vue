@@ -1,8 +1,7 @@
 <template>
-  <el-input
+  <el-cascader
     :class="desc.class"
-    :placeholder="'请输入' + desc.label"
-    :show-password="true"
+    :options="desc.options"
     :style="desc.style"
     v-bind="attrs"
     v-model="newValue"
@@ -19,19 +18,18 @@
         :render="render"
       />
     </template>
-  </el-input>
+  </el-cascader>
 </template>
 
 <script>
 import formMixin from '../mixins/formMixin'
+
 export default {
-  name: 'EleFormPassword',
+  name: 'EleFormCascader',
   mixins: [formMixin],
   data () {
     return {
-      defaultAttrs: {
-        placeholder: '请输入' + this.desc.label
-      }
+      newValue: []
     }
   }
 }
