@@ -6,14 +6,12 @@
     v-model="newValue"
     v-on="onEvents"
   >
-    <template v-if="isShowOptions">
-      <el-checkbox-button
-        :key="option.value"
-        :label="option.value"
-        v-bind="option.attrs"
-        v-for="option of desc.options"
-      >{{option.text}}</el-checkbox-button>
-    </template>
+    <el-checkbox-button
+      :key="option.value"
+      :label="option.value"
+      v-bind="option.attrs"
+      v-for="option of options"
+    >{{option.text}}</el-checkbox-button>
   </el-checkbox-group>
 </template>
 

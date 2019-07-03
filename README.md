@@ -327,6 +327,11 @@ formDesc: {
 }
 ```
 
+⚠️ 这里有两个组件需要注意:
+
+- `transfer` 组件的 `data` 属性, 这里用`options` 代替
+- `cascader` 和 `transfer` 的 `options` 格式必须按照其原有的格式
+
 ### 请求方式
 
 #### 外部请求

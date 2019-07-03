@@ -1,7 +1,7 @@
 <template>
   <el-cascader
     :class="desc.class"
-    :options="desc.options"
+    :options="options"
     :style="desc.style"
     v-bind="attrs"
     v-model="newValue"

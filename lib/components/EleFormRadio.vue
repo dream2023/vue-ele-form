@@ -6,14 +6,12 @@
     v-model="newValue"
     v-on="onEvents"
   >
-    <template v-if="isShowOptions">
-      <el-radio
-        :key="option.value"
-        :label="option.value"
-        v-bind="option.attrs"
-        v-for="option of desc.options"
-      >{{option.text}}</el-radio>
-    </template>
+    <el-radio
+      :key="option.value"
+      :label="option.value"
+      v-bind="option.attrs"
+      v-for="option of options"
+    >{{option.text}}</el-radio>
   </el-radio-group>
 </template>
 

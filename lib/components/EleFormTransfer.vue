@@ -1,26 +1,20 @@
 <template>
-  <el-select
+  <el-transfer
     :class="desc.class"
+    :data="options"
+    :options="desc.options"
     :style="desc.style"
     v-bind="attrs"
     v-model="newValue"
     v-on="onEvents"
-  >
-    <el-option
-      :key="option.value"
-      :label="option.text"
-      :value="option.value"
-      v-bind="option.attrs"
-      v-for="option in options"
-    ></el-option>
-  </el-select>
+  ></el-transfer>
 </template>
 
 <script>
 import formMixin from '../mixins/formMixin'
 
 export default {
-  name: 'EleFormSelect',
+  name: 'EleFormTransfer',
   mixins: [formMixin]
 }
 </script>
