@@ -57,6 +57,14 @@ export default {
             { text: '上海', value: 'shanghai' }
           ]
         },
+        'checkbox-button': {
+          label: '多选框',
+          type: 'checkbox-button',
+          options: [
+            { text: '北京', value: 'beijing' },
+            { text: '上海', value: 'shanghai' }
+          ]
+        },
         time: {
           label: '时间',
           type: 'time'

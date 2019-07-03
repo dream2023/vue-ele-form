@@ -91,6 +91,7 @@ import EleFormRadio from './components/EleFormRadio'
 import EleFormSelect from './components/EleFormSelect'
 import EleFormDatetime from './components/EleFormDatetime'
 import EleFormCheckbox from './components/EleFormCheckbox'
+import EleFormCheckboxButton from './components/EleFormCheckboxButton'
 
 export default {
   name: 'EleForm',
@@ -109,7 +110,8 @@ export default {
     EleFormTime,
     EleFormSwitch,
     EleFormDatetime,
-    EleFormCheckbox
+    EleFormCheckbox,
+    EleFormCheckboxButton
   },
   mixins: [responsiveMixin],
   props: {
@@ -162,7 +164,7 @@ export default {
       // 内部请求出错
       innerFormError: {},
       // 所有内置组件
-      builtInNames: ['hide', 'text', 'input', 'number', 'checkbox', 'radio', 'date', 'time', 'datetime', 'switch', 'json', 'slider', 'password', 'color', 'select', 'cascader', 'transfer', 'image', 'video', 'file', 'rate', 'tags', 'gallery', 'button']
+      builtInNames: ['hide', 'text', 'input', 'number', 'checkbox', 'checkbox-button', 'radio', 'date', 'time', 'datetime', 'switch', 'json', 'slider', 'password', 'color', 'select', 'cascader', 'transfer', 'image', 'video', 'file', 'rate', 'tags', 'gallery', 'button']
     }
   },
   computed: {
