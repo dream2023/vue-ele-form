@@ -83,6 +83,7 @@ import EleFormButton from './components/EleFormButton'
 import EleFormNumber from './components/EleFormNumber'
 import EleFormGallery from './components/EleFormGallery'
 import EleFormRate from './components/EleFormRate'
+import EleFormTag from './components/EleFormTag'
 import EleFormColor from './components/EleFormColor'
 import EleFormDate from './components/EleFormDate'
 import EleFormTime from './components/EleFormTime'
@@ -98,6 +99,7 @@ import EleFormCheckboxButton from './components/EleFormCheckboxButton'
 export default {
   name: 'EleForm',
   components: {
+    EleFormTag,
     EleFormInput,
     EleFormDate,
     EleFormRadio,
@@ -168,7 +170,7 @@ export default {
       // 内部请求出错
       innerFormError: {},
       // 所有内置组件
-      builtInNames: ['hide', 'text', 'input', 'number', 'checkbox', 'checkbox-button', 'radio', 'date', 'time', 'datetime', 'switch', 'json', 'slider', 'password', 'color', 'select', 'cascader', 'transfer', 'image', 'video', 'file', 'rate', 'tags', 'gallery', 'button']
+      builtInNames: ['hide', 'text', 'input', 'number', 'checkbox', 'checkbox-button', 'radio', 'date', 'time', 'datetime', 'switch', 'json', 'slider', 'password', 'color', 'select', 'cascader', 'transfer', 'image', 'video', 'file', 'rate', 'tag', 'gallery', 'button']
     }
   },
   computed: {
@@ -245,7 +247,8 @@ export default {
       }
     },
     // 验证表单
-    async handleValidateForm () {
+    async handleValidateForm (e) {
+      console.log(e)
       if (this.rules) {
         this.$refs['form'].validate((valid, invalidFields) => {
           if (valid) {

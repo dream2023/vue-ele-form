@@ -1,14 +1,19 @@
 # vue-ele-form | 一行代码搞定整个表单
 
+⚠️ 目前还未完成
+
 ## 说明
 
 vue-ele-form 是基于 [element-ui form](https://element.eleme.cn/#/zh-CN/component/form) 的二次封装, 实现了表单生成、表单校检、表单布局、响应式表单, 并内置了上传图片, 上传视频, 富文本等 20 多款实用组件, 这一切的一切只需要一行 html 和 数据即可实现, 即保证了质量, 又使得开发速度仿佛坐上 🚀!
 
 > 为了帮助你更好的理解, 如果 star 超过 100, 详细的视频源码讲解
 
+## 图片演示
+
+<!-- [![演示图](./public/example.gif)](https://codepen.io/dream2023/pen/xoXKBq) -->
+
 ## 目录
 
-- [图片演示](#图片演示)
 - [DEMO](#demo)
 - [安装](#安装)
 - [使用](#使用)
@@ -28,15 +33,11 @@ vue-ele-form 是基于 [element-ui form](https://element.eleme.cn/#/zh-CN/compon
     - [外部请求](#外部请求)
 - [插槽](#插槽)
   - [默认插槽](#默认插槽)
-  - [作用域插槽](#作用域插槽)
+  - [具名插槽](#具名插槽)
 - [自定义组件(以 custom-url 组件为例)](#%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BB%84%E4%BB%B6%E4%BB%A5-custom-url-%E7%BB%84%E4%BB%B6%E4%B8%BA%E4%BE%8B)
   - [第 1 步: 新建组件,并引入 mixin](#%E7%AC%AC-1-%E6%AD%A5-%E6%96%B0%E5%BB%BA%E7%BB%84%E4%BB%B6-%E5%B9%B6%E5%BC%95%E5%85%A5-mixin)
   - [第 2 步: 完善 html](#%E7%AC%AC-2-%E6%AD%A5-%E5%AE%8C%E5%96%84-html)
   - [第 3 步: 注册并使用](#%E7%AC%AC-3-%E6%AD%A5-%E6%B3%A8%E5%86%8C%E5%B9%B6%E4%BD%BF%E7%94%A8)
-
-## 图片演示
-
-<!-- [![演示图](./public/example.gif)](https://codepen.io/dream2023/pen/xoXKBq) -->
 
 ## DEMO
 
@@ -64,19 +65,11 @@ Vue.use(EleForm, {
     responseFn (response) { // 处理响应结果
       return 'https://www.xxx.com/upload/' + response.id
     }
-  },
-  // 每个组件单独的全局配置
-  // 所有的input都会有 clearable: true 的属性
-  input: {
-    clearable: true
-  },
-  // 所有的上传图片都会有 limit: 3 的属性
-  image: {
-    limit: 3
-  },
-  // ...
+  }
 })
 ```
+
+[⬆ 回到目录](#目录)
 
 ## Props
 
@@ -134,6 +127,8 @@ props: {
 }
 ```
 
+[⬆ 回到目录](#目录)
+
 ### 响应式相关参数
 
 > width 指表单的包裹元素宽度
@@ -147,6 +142,8 @@ props: {
   - <code>992px ≤ width < 1200px</code> 时, labelPosition = 'right', span = 16
   - <code>1200px ≤ width < 1920px</code> 时, labelPosition = 'right', span = 14
   - <code>1920px ≤ width </code> 时, labelPosition = 'right', span = 12
+
+[⬆ 回到目录](#目录)
 
 ### formDesc
 
@@ -246,6 +243,8 @@ formDesc: {
 }
 ```
 
+[⬆ 回到目录](#目录)
+
 #### type 类型列表
 
 | 类型            | 含义           | 属性参考                                                                                   |
@@ -272,10 +271,12 @@ formDesc: {
 | video           | 上传视频       | [vue-ele-upload-video](https://github.com/dream2023/vue-ele-upload-video)                  |
 | file            | 上传文件       | [element-ui upload](https://element.eleme.cn/#/zh-CN/component/upload)                     |
 | rate            | 评分组件       | [element-ui rate](https://element.eleme.cn/#/zh-CN/component/rate)                         |
-| tags            | 标签           | [element-ui tags]()                                                                        |
+| tag             | 标签           | [element-ui tag](https://element.eleme.cn/#/zh-CN/component/tag)                           |
 | rich-text       | 富文本         | [vue2-editor](https://github.com/davidroyer/vue2-editor)                                   |
 | gallery         | 图片/视频展示  | [vue-ele-gallery](https://github.com/dream2023/vue-ele-gallery)                            |
 | button          | 按钮           | [element-ui button](https://element.eleme.cn/#/zh-CN/component/button)                     |
+
+[⬆ 回到目录](#目录)
 
 #### options
 
@@ -334,6 +335,8 @@ formDesc: {
 
 - `transfer` 组件的 `data` 属性, 这里用 `options` 代替
 - `cascader` 和 `transfer` 的 `options` 格式必须按照其原有的格式
+
+[⬆ 回到目录](#目录)
 
 ### 请求方式
 
@@ -427,6 +430,8 @@ formDesc: {
 </script>
 ```
 
+[⬆ 回到目录](#目录)
+
 ## 插槽
 
 ### 默认插槽
@@ -456,7 +461,7 @@ formDesc: {
 </script>
 ```
 
-### 作用域插槽
+### 具名插槽
 
 ```html
 <el-form :formDesc="formDesc" :formData="formData">
@@ -485,6 +490,8 @@ formDesc: {
   }
 </script>
 ```
+
+[⬆ 回到目录](#目录)
 
 ## 自定义组件(以 custom-url 组件为例)
 
@@ -554,3 +561,5 @@ export default: {
   }
 }
 ```
+
+[⬆ 回到目录](#目录)

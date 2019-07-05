@@ -16,6 +16,8 @@ export default {
       formError: {},
       formData: {
         number: 10,
+        tag: [1, 3, 3],
+        // cascader: [17, 18, 20],
         date: '2019-10-20'
       },
       formDesc: {
@@ -154,6 +156,10 @@ export default {
             }
             return data
           }
+        },
+        tag: {
+          label: '标签',
+          type: 'tag'
         },
         slider: {
           label: '滑块',

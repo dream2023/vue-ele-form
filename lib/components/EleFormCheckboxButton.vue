@@ -23,7 +23,7 @@ export default {
   mixins: [formMixin],
   data () {
     return {
-      newValue: []
+      newValue: this.value || []
     }
   }
 }

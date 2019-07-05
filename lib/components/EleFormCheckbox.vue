@@ -21,9 +21,12 @@ import formMixin from '../mixins/formMixin'
 export default {
   name: 'EleFormCheckbox',
   mixins: [formMixin],
+  props: {
+    value: Array
+  },
   data () {
     return {
-      newValue: []
+      newValue: this.value || []
     }
   }
 }
