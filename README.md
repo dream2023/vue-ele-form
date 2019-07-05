@@ -34,10 +34,10 @@ vue-ele-form 是基于 [element-ui form](https://element.eleme.cn/#/zh-CN/compon
 - [插槽](#插槽)
   - [默认插槽](#默认插槽)
   - [具名插槽](#具名插槽)
-- [自定义组件(以 custom-url 组件为例)](#%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BB%84%E4%BB%B6%E4%BB%A5-custom-url-%E7%BB%84%E4%BB%B6%E4%B8%BA%E4%BE%8B)
-  - [第 1 步: 新建组件,并引入 mixin](#%E7%AC%AC-1-%E6%AD%A5-%E6%96%B0%E5%BB%BA%E7%BB%84%E4%BB%B6-%E5%B9%B6%E5%BC%95%E5%85%A5-mixin)
-  - [第 2 步: 完善 html](#%E7%AC%AC-2-%E6%AD%A5-%E5%AE%8C%E5%96%84-html)
-  - [第 3 步: 注册并使用](#%E7%AC%AC-3-%E6%AD%A5-%E6%B3%A8%E5%86%8C%E5%B9%B6%E4%BD%BF%E7%94%A8)
+- [自定义组件](#自定义组件)
+  - [第 1 步: 新建组件](#第-1-步:-新建组件)
+  - [第 2 步: 完善 html](#第-2-步:-完善-html)
+  - [第 3 步: 注册并使用](#第-3-步:-注册并使用)
 
 ## DEMO
 
@@ -65,8 +65,25 @@ Vue.use(EleForm, {
     responseFn (response) { // 处理响应结果
       return 'https://www.xxx.com/upload/' + response.id
     }
+  },
+  // image类型
+  image: {
+    limit: 10 // 所有 image 类型, 上传图片大小为 10 MB
+  },
+  // number类型
+  number: {
+    min: 0 // 所有 number 类型, 最小值为 0
   }
 })
+
+// 或者直接赋值
+Vue.prototype.$EleFormParams = {
+  upload: {
+    action: 'xxx'.
+    // ...
+  },
+  // ...
+}
 ```
 
 [⬆ 回到目录](#目录)
@@ -493,9 +510,9 @@ formDesc: {
 
 [⬆ 回到目录](#目录)
 
-## 自定义组件(以 custom-url 组件为例)
+## 自定义组件
 
-### 第 1 步: 新建组件, 并引入 mixin
+### 第 1 步: 新建组件
 
 ```html
 <template> </template>

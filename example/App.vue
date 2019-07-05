@@ -30,6 +30,17 @@ export default {
             { text: '异常', value: 0 }
           ]
         },
+        image: {
+          label: '上传图片',
+          type: 'image',
+          attrs: {
+            action: 'https://jsonplaceholder.typicode.com/posts/',
+            responseFn (response, file, fileList) {
+              // 根据响应结果, 设置 URL
+              return file.url
+            }
+          }
+        },
         input: {
           label: '普通输入框',
           type: 'input',

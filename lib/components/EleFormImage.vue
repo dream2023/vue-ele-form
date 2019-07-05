@@ -1,39 +1,20 @@
 <template>
-  <ele-upload-image/>
+  <ele-upload-image
+    :class="desc.class"
+    :style="desc.style"
+    v-bind="attrs"
+    v-model="newValue"
+    v-on="onEvents"
+  />
 </template>
 
 <script>
 import EleUploadImage from 'vue-ele-upload-image/src/index'
+import formMixin from '../mixins/formMixin'
 
 export default {
   name: 'EleFormImage',
-  props: {
-    // 图片链接
-    value: {
-      type: [String, Array]
-    },
-    // 是否剪裁
-    crop: {
-      type: Boolean,
-      default: false
-    },
-    lazy: {
-      type: Boolean,
-      default: true
-    },
-    // 多张上传
-    multiple: {
-      type: [Boolean, Number],
-      default: false
-    },
-    // 显示大小
-    size: {
-      type: Number,
-      default: 150
-    },
-    // 弹窗标题
-    title: String
-  },
+  mixins: [formMixin],
   components: {
     EleUploadImage
   },
@@ -43,8 +24,6 @@ export default {
         size: 150
       }
     }
-  },
-  methods: {},
-  mounted () {}
+  }
 }
 </script>

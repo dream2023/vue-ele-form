@@ -76,6 +76,7 @@
 
 <script>
 import responsiveMixin from './mixins/responsiveMixin'
+import EleFormImage from './components/EleFormImage'
 import EleFormInput from './components/EleFormInput'
 import EleFormSwitch from './components/EleFormSwitch'
 import EleFormPassword from './components/EleFormPassword'
@@ -102,6 +103,7 @@ export default {
   components: {
     EleFormTag,
     EleFormText,
+    EleFormImage,
     EleFormInput,
     EleFormDate,
     EleFormRadio,
