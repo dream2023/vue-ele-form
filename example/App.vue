@@ -41,6 +41,17 @@ export default {
             }
           }
         },
+        video: {
+          label: '上传视频',
+          type: 'video',
+          attrs: {
+            action: 'https://jsonplaceholder.typicode.com/posts/',
+            responseFn ({ id }) {
+              // 根据响应结果, 设置 URL
+              return 'https://s3.pstatp.com/aweme/resource/web/static/image/index/tvc-v2_30097df.mp4?id=' + id
+            }
+          }
+        },
         input: {
           label: '普通输入框',
           type: 'input',
