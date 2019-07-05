@@ -16,11 +16,20 @@ export default {
       formError: {},
       formData: {
         number: 10,
+        text: 1,
         tag: [1, 3, 3],
         // cascader: [17, 18, 20],
         date: '2019-10-20'
       },
       formDesc: {
+        text: {
+          label: '文本类型',
+          type: 'text',
+          options: [
+            { text: '正常', value: 1 },
+            { text: '异常', value: 0 }
+          ]
+        },
         input: {
           label: '普通输入框',
           type: 'input',

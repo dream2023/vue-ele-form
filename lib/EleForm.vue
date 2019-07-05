@@ -94,12 +94,14 @@ import EleFormDatetime from './components/EleFormDatetime'
 import EleFormCheckbox from './components/EleFormCheckbox'
 import EleFormCascader from './components/EleFormCascader'
 import EleFormTransfer from './components/EleFormTransfer'
+import EleFormText from './components/EleFormText'
 import EleFormCheckboxButton from './components/EleFormCheckboxButton'
 
 export default {
   name: 'EleForm',
   components: {
     EleFormTag,
+    EleFormText,
     EleFormInput,
     EleFormDate,
     EleFormRadio,
