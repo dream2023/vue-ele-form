@@ -59,6 +59,13 @@ export default {
             placeholder: '请输入内容'
           }
         },
+        textarea: {
+          label: '文本域',
+          type: 'textarea',
+          attrs: {
+            placeholder: '请输入内容'
+          }
+        },
         password: {
           label: '密码框',
           type: 'password',

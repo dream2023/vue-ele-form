@@ -269,6 +269,7 @@ formDesc: {
 | hide            | 隐藏表单项    |                                                                                            |
 | text            | 静态文本      |                                                                                            |
 | input           | 输入框        | [element-ui input](https://element.eleme.cn/#/zh-CN/component/input)                       |
+| textarea        | 输入框        | [element-ui input](https://element.eleme.cn/#/zh-CN/component/input#wen-ben-yu)            |
 | number          | 数字          | [element-ui number](https://element.eleme.cn/#/zh-CN/component/input-number)               |
 | checkbox        | 复选          | [element-ui checkbox](https://element.eleme.cn/#/zh-CN/component/checkbox)                 |
 | checkbox-button | 复选按钮样式  | [element-ui checkbox](https://element.eleme.cn/#/zh-CN/component/checkbox#an-niu-yang-shi) |
