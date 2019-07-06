@@ -97,6 +97,7 @@ import EleFormCheckbox from './components/EleFormCheckbox'
 import EleFormCascader from './components/EleFormCascader'
 import EleFormTransfer from './components/EleFormTransfer'
 import EleFormText from './components/EleFormText'
+import EleFormRichText from './components/EleFormRichText'
 import EleFormCheckboxButton from './components/EleFormCheckboxButton'
 
 export default {
@@ -123,6 +124,7 @@ export default {
     EleFormDatetime,
     EleFormCheckbox,
     EleFormCascader,
+    EleFormRichText,
     EleFormCheckboxButton
   },
   mixins: [responsiveMixin],
@@ -176,7 +178,7 @@ export default {
       // 内部请求出错
       innerFormError: {},
       // 所有内置组件
-      builtInNames: ['hide', 'text', 'input', 'number', 'checkbox', 'checkbox-button', 'radio', 'date', 'time', 'datetime', 'switch', 'json', 'slider', 'password', 'color', 'select', 'cascader', 'transfer', 'image', 'video', 'file', 'rate', 'tag', 'gallery', 'button']
+      builtInNames: ['hide', 'text', 'input', 'number', 'checkbox', 'checkbox-button', 'radio', 'date', 'time', 'datetime', 'switch', 'json', 'slider', 'password', 'color', 'select', 'cascader', 'transfer', 'image', 'video', 'rich-text', 'rate', 'tag', 'gallery', 'button']
     }
   },
   computed: {

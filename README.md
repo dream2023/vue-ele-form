@@ -286,7 +286,6 @@ formDesc: {
 | transfer        | 穿梭框         | [element-ui transfer](https://element.eleme.cn/#/zh-CN/component/transfer)                 |
 | image           | 上传图片       | [vue-ele-upload-image](https://github.com/dream2023/vue-ele-upload-image)                  |
 | video           | 上传视频       | [vue-ele-upload-video](https://github.com/dream2023/vue-ele-upload-video)                  |
-| file            | 上传文件       | [element-ui upload](https://element.eleme.cn/#/zh-CN/component/upload)                     |
 | rate            | 评分组件       | [element-ui rate](https://element.eleme.cn/#/zh-CN/component/rate)                         |
 | tag             | 标签           | [element-ui tag](https://element.eleme.cn/#/zh-CN/component/tag)                           |
 | rich-text       | 富文本         | [vue2-editor](https://github.com/davidroyer/vue2-editor)                                   |
