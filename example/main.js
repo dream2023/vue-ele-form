@@ -8,7 +8,19 @@ Vue.component(CustomUrl.name, CustomUrl)
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)
-Vue.use(EleForm)
+Vue.use(EleForm, {
+  upload: {
+    action: 'https://www.xxx.com/posts', // 请求地址,
+    data: { token: 'xxx' }, // 附带的参数,
+    responseFn (response) {
+      // 处理响应结果
+      return 'https://www.xxx.com/upload/' + response.id
+    }
+  },
+  image: {
+    limit: 2
+  }
+})
 
 new Vue({
   render: h => h(App)

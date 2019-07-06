@@ -58,9 +58,9 @@ Vue.use(EleForm)
 
 // 在引入 EleForm 时，可以传入一个全局配置对象(可选), 例如:
 Vue.use(EleForm, {
-  // 上传相关(上传图片, 上传视频, 文件上传, 富文本中图片上传)
+  // 上传相关(上传图片, 上传视频, 富文本中图片上传)
   upload: {
-    action: 'https://www.xxx.com/posts' // 请求地址,
+    action: 'https://www.xxx.com/posts', // 请求地址,
     data: { token: 'xxx' }, // 附带的参数,
     responseFn (response) { // 处理响应结果
       return 'https://www.xxx.com/upload/' + response.id
@@ -68,7 +68,7 @@ Vue.use(EleForm, {
   },
   // image类型
   image: {
-    limit: 10 // 所有 image 类型, 上传图片大小为 10 MB
+    limit: 10 // 所有 image 类型, 上传图片大小限制为 10 MB 以内
   },
   // number类型
   number: {
@@ -264,33 +264,32 @@ formDesc: {
 
 #### type 类型列表
 
-| 类型            | 含义           | 属性参考                                                                                   |
-| --------------- | -------------- | ------------------------------------------------------------------------------------------ |
-| hide            | 隐藏表单项     |                                                                                            |
-| text            | 静态文本       |                                                                                            |
-| input           | 输入框         | [element-ui input](https://element.eleme.cn/#/zh-CN/component/input)                       |
-| number          | 数字           | [element-ui number](https://element.eleme.cn/#/zh-CN/component/input-number)               |
-| checkbox        | 复选           | [element-ui checkbox](https://element.eleme.cn/#/zh-CN/component/checkbox)                 |
-| checkbox-button | 复选按钮样式   | [element-ui checkbox](https://element.eleme.cn/#/zh-CN/component/checkbox#an-niu-yang-shi) |
-| radio           | 单选           | [element-ui radio](https://element.eleme.cn/#/zh-CN/component/radio)                       |
-| date            | 日期           | [element-ui date-picker](https://element.eleme.cn/#/zh-CN/component/date-picker)           |
-| time            | 时间           | [element-ui time-picker](https://element.eleme.cn/#/zh-CN/component/time-picker)           |
-| datetime        | 日期时间       | [element-ui datetime-picker](https://element.eleme.cn/#/zh-CN/component/datetime-picker)   |
-| switch          | 开关           | [element-ui switch](https://element.eleme.cn/#/zh-CN/component/switch)                     |
-| json            | JSON 对象/数组 | [v-jsoneditor](https://github.com/yansenlei/VJsoneditor)                                   |
-| slider          | 滑块           | [element-ui slider](https://element.eleme.cn/#/zh-CN/component/slider)                     |
-| password        | 密码           | [element-ui input](https://element.eleme.cn/#/zh-CN/component/input#mi-ma-kuang)           |
-| color           | 颜色选择器     | [element-ui color-picker](https://element.eleme.cn/#/zh-CN/component/color-picker)         |
-| select          | 选择器         | [element-ui select](https://element.eleme.cn/#/zh-CN/component/select)                     |
-| cascader        | 级联选择器     | [element-ui cascader](https://element.eleme.cn/#/zh-CN/component/cascader)                 |
-| transfer        | 穿梭框         | [element-ui transfer](https://element.eleme.cn/#/zh-CN/component/transfer)                 |
-| image           | 上传图片       | [vue-ele-upload-image](https://github.com/dream2023/vue-ele-upload-image)                  |
-| video           | 上传视频       | [vue-ele-upload-video](https://github.com/dream2023/vue-ele-upload-video)                  |
-| rate            | 评分组件       | [element-ui rate](https://element.eleme.cn/#/zh-CN/component/rate)                         |
-| tag             | 标签           | [element-ui tag](https://element.eleme.cn/#/zh-CN/component/tag)                           |
-| rich-text       | 富文本         | [vue2-editor](https://github.com/davidroyer/vue2-editor)                                   |
-| gallery         | 图片/视频展示  | [vue-ele-gallery](https://github.com/dream2023/vue-ele-gallery)                            |
-| button          | 按钮           | [element-ui button](https://element.eleme.cn/#/zh-CN/component/button)                     |
+| 类型            | 含义          | 属性参考                                                                                   |
+| --------------- | ------------- | ------------------------------------------------------------------------------------------ |
+| hide            | 隐藏表单项    |                                                                                            |
+| text            | 静态文本      |                                                                                            |
+| input           | 输入框        | [element-ui input](https://element.eleme.cn/#/zh-CN/component/input)                       |
+| number          | 数字          | [element-ui number](https://element.eleme.cn/#/zh-CN/component/input-number)               |
+| checkbox        | 复选          | [element-ui checkbox](https://element.eleme.cn/#/zh-CN/component/checkbox)                 |
+| checkbox-button | 复选按钮样式  | [element-ui checkbox](https://element.eleme.cn/#/zh-CN/component/checkbox#an-niu-yang-shi) |
+| radio           | 单选          | [element-ui radio](https://element.eleme.cn/#/zh-CN/component/radio)                       |
+| date            | 日期          | [element-ui date-picker](https://element.eleme.cn/#/zh-CN/component/date-picker)           |
+| time            | 时间          | [element-ui time-picker](https://element.eleme.cn/#/zh-CN/component/time-picker)           |
+| datetime        | 日期时间      | [element-ui datetime-picker](https://element.eleme.cn/#/zh-CN/component/datetime-picker)   |
+| switch          | 开关          | [element-ui switch](https://element.eleme.cn/#/zh-CN/component/switch)                     |
+| slider          | 滑块          | [element-ui slider](https://element.eleme.cn/#/zh-CN/component/slider)                     |
+| password        | 密码          | [element-ui input](https://element.eleme.cn/#/zh-CN/component/input#mi-ma-kuang)           |
+| color           | 颜色选择器    | [element-ui color-picker](https://element.eleme.cn/#/zh-CN/component/color-picker)         |
+| select          | 选择器        | [element-ui select](https://element.eleme.cn/#/zh-CN/component/select)                     |
+| cascader        | 级联选择器    | [element-ui cascader](https://element.eleme.cn/#/zh-CN/component/cascader)                 |
+| transfer        | 穿梭框        | [element-ui transfer](https://element.eleme.cn/#/zh-CN/component/transfer)                 |
+| image           | 上传图片      | [vue-ele-upload-image](https://github.com/dream2023/vue-ele-upload-image)                  |
+| video           | 上传视频      | [vue-ele-upload-video](https://github.com/dream2023/vue-ele-upload-video)                  |
+| rate            | 评分组件      | [element-ui rate](https://element.eleme.cn/#/zh-CN/component/rate)                         |
+| tag             | 标签          | [element-ui tag](https://element.eleme.cn/#/zh-CN/component/tag)                           |
+| rich-text       | 富文本        | [vue2-editor](https://github.com/davidroyer/vue2-editor)                                   |
+| gallery         | 图片/视频展示 | [vue-ele-gallery](https://github.com/dream2023/vue-ele-gallery)                            |
+| button          | 按钮          | [element-ui button](https://element.eleme.cn/#/zh-CN/component/button)                     |
 
 [⬆ 回到目录](#目录)
 
