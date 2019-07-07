@@ -1,8 +1,8 @@
 <template>
   <ele-form
-    :formData="formData"
-    :formDesc="formDesc"
-    :requestFn="handleSubmit"
+    :form-data="formData"
+    :form-desc="formDesc"
+    :request-fn="handleSubmit"
     :rules="rules"
     @request-success="handleSuccess"
   ></ele-form>
@@ -86,7 +86,6 @@ export default {
     handleSuccess () {
       this.$message.success('创建成功')
     }
-  },
-  mounted () {}
+  }
 }
 </script>

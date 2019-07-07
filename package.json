@@ -6,7 +6,7 @@
   "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build:lib": "vue build -t lib --name vue-ele-form -d ./dist/ ./src/index.js",
+    "build:lib": "vue build -t lib --name vue-ele-form -d ./dist/ ./lib/index.js",
     "build": "npm run lint & npm run build:lib",
     "lint": "vue-cli-service lint"
   },
