@@ -22,8 +22,7 @@
     "element form",
     "element",
     "element-ui form",
-    "el-form",
-    "datatable"
+    "el-form"
   ],
   "dependencies": {
     "bc-quill-image-resize-module": "^3.0.0",

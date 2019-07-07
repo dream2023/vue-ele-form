@@ -38,9 +38,9 @@ vue-ele-form 是基于 [element-ui form](https://element.eleme.cn/#/zh-CN/compon
   - [默认插槽](#默认插槽)
   - [具名插槽](#具名插槽)
 - [自定义组件](#自定义组件)
-  - [第 1 步: 新建组件](#第-1-步:-新建组件)
-  - [第 2 步: 完善 html](#第-2-步:-完善-html)
-  - [第 3 步: 注册并使用](#第-3-步:-注册并使用)
+  - [第 1 步: 新建组件](#新建组件)
+  - [第 2 步: 完善 html](#完善-html)
+  - [第 3 步: 注册并使用](#注册并使用)
 - [开发规划](#开发规划)
 
 ## 安装
@@ -543,7 +543,7 @@ formDesc: {
 <details>
 <summary>点击查看</summary>
 
-### 第 1 步: 新建组件
+### 新建组件
 
 ```html
 <template> </template>
@@ -573,7 +573,7 @@ formDesc: {
 </script>
 ```
 
-### 第 2 步: 完善 html
+### 完善 html
 
 ```html
 <template>
@@ -607,7 +607,7 @@ formDesc: {
 </script>
 ```
 
-### 第 3 步: 注册并使用
+### 注册并使用
 
 ```js
 // 必须注册到全局
