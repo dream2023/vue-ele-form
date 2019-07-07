@@ -10,11 +10,11 @@ Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.use(EleForm, {
   upload: {
-    action: 'https://www.xxx.com/posts', // 请求地址,
+    action: 'https://jsonplaceholder.typicode.com/posts', // 请求地址,
     data: { token: 'xxx' }, // 附带的参数,
-    responseFn (response) {
+    responseFn (response, file) {
       // 处理响应结果
-      return 'https://www.xxx.com/upload/' + response.id
+      return file.url
     }
   },
   image: {

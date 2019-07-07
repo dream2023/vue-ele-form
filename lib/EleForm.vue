@@ -259,7 +259,6 @@ export default {
     },
     // 验证表单
     async handleValidateForm (e) {
-      console.log(e)
       if (this.rules) {
         this.$refs['form'].validate((valid, invalidFields) => {
           if (valid) {

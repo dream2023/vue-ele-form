@@ -6,13 +6,14 @@
         :key="index"
         @close="handleDelete(index)"
         closable
+        style="margin-right: 10px;"
         v-for="(tag, index) in newValue"
       >{{tag}}</el-tag>
 
       <el-button
         @click="showInput"
         size="small"
-        style="margin-left: 10px"
+        style="margin-right: 10px"
         v-if="!inputVisible"
       >+ 新增</el-button>
     </div>
@@ -77,7 +78,11 @@ export default {
     handleAddTag () {
       let inputValue = this.inputValue
       if (inputValue) {
-        this.newValue.push(inputValue)
+        if (Array.isArray(this.newValue)) {
+          this.newValue.push(inputValue)
+        } else {
+          this.newValue = [inputValue]
+        }
         this.handleChange(this.newValue)
       }
       this.inputValue = ''
@@ -86,21 +91,3 @@ export default {
   }
 }
 </script>
-
-<style>
-.el-tag + .el-tag {
-  margin-left: 10px;
-}
-/* .button-new-tag {
-  margin-left: 10px;
-  height: 32px;
-  line-height: 30px;
-  padding-top: 0;
-  padding-bottom: 0;
-} */
-/* .input-new-tag {
-  width: 90px;
-  margin-left: 10px;
-  vertical-align: bottom;
-} */
-</style>

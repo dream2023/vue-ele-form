@@ -24,7 +24,7 @@ export default {
     // 值
     value: String,
     // 图片大小限制
-    limit: {
+    fileSize: {
       type: Number
     },
     // 文件名
@@ -81,11 +81,11 @@ export default {
         this.$message.error('上传出错了, 请重试!')
         return
       }
-      if (this.limit) {
-        const isLt = file.size / 1024 / 1024 < this.limit
+      if (this.fileSize) {
+        const isLt = file.size / 1024 / 1024 < this.fileSize
 
         if (!isLt) {
-          this.$message.error(`上传头像图片大小不能超过 ${this.limit} MB!`)
+          this.$message.error(`上传头像图片大小不能超过 ${this.fileSize} MB!`)
         }
       }
       const isImg = file.type.indexOf('image') > -1

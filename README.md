@@ -1,20 +1,23 @@
 # vue-ele-form | 一行代码搞定整个表单
 
-⚠️ 目前还未完成
+[![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg)](https://opensource.org/licenses/mit-license.php)
+[![npm](https://img.shields.io/npm/v/vue-ele-form.svg)](https://www.npmjs.com/package/vue-ele-form)
+[![download](https://img.shields.io/npm/dw/vue-ele-form.svg)](https://npmcharts.com/compare/vue-ele-form?minimal=true)
 
 ## 说明
 
 vue-ele-form 是基于 [element-ui form](https://element.eleme.cn/#/zh-CN/component/form) 的二次封装, 实现了表单生成、表单校检、表单布局、响应式表单, 并内置了上传图片, 上传视频, 富文本等 20 多款实用组件, 这一切的一切只需要一行 html 和 数据即可实现, 即保证了质量, 又使得开发速度仿佛坐上 🚀!
 
-> 为了帮助你更好的理解, 如果 star 超过 100, 详细的视频源码讲解
-
 ## 图片演示
 
-<!-- [![演示图](./public/example.gif)](https://codepen.io/dream2023/pen/xoXKBq) -->
+[![演示图](https://raw.githubusercontent.com/dream2023/images/master/vue-ele-form.i8p4mna581b.gif)](https://codepen.io/dream2023/pen/KjGKYW)
+
+## DEMO
+
+[https://codepen.io/dream2023/pen/KjGKYW](https://codepen.io/dream2023/pen/KjGKYW)
 
 ## 目录
 
-- [DEMO](#demo)
 - [安装](#安装)
 - [使用](#使用)
 - [Props](#props)
@@ -38,10 +41,7 @@ vue-ele-form 是基于 [element-ui form](https://element.eleme.cn/#/zh-CN/compon
   - [第 1 步: 新建组件](#第-1-步:-新建组件)
   - [第 2 步: 完善 html](#第-2-步:-完善-html)
   - [第 3 步: 注册并使用](#第-3-步:-注册并使用)
-
-## DEMO
-
-[https://codepen.io/dream2023/pen/xoXKBq](https://codepen.io/dream2023/pen/xoXKBq)
+- [开发规划](#开发规划)
 
 ## 安装
 
@@ -68,7 +68,7 @@ Vue.use(EleForm, {
   },
   // image类型
   image: {
-    limit: 10 // 所有 image 类型, 上传图片大小限制为 10 MB 以内
+    fileSize: 10 // 所有 image 类型, 上传图片大小限制为 10 MB 以内
   },
   // number类型
   number: {
@@ -148,6 +148,9 @@ props: {
 
 ### 响应式相关参数
 
+<details>
+<summary>点击查看</summary>
+
 > width 指表单的包裹元素宽度
 
 - 在指定 labelPosition 和 span 的情况下:
@@ -159,10 +162,14 @@ props: {
   - <code>992px ≤ width < 1200px</code> 时, labelPosition = 'right', span = 16
   - <code>1200px ≤ width < 1920px</code> 时, labelPosition = 'right', span = 14
   - <code>1920px ≤ width </code> 时, labelPosition = 'right', span = 12
+    </details>
 
 [⬆ 回到目录](#目录)
 
 ### formDesc
+
+<details>
+<summary>点击查看</summary>
 
 ```js
 formDesc: {
@@ -260,9 +267,14 @@ formDesc: {
 }
 ```
 
+</details>
+
 [⬆ 回到目录](#目录)
 
 #### type 类型列表
+
+<details>
+<summary>点击查看</summary>
 
 | 类型            | 含义          | 属性参考                                                                                   |
 | --------------- | ------------- | ------------------------------------------------------------------------------------------ |
@@ -292,9 +304,14 @@ formDesc: {
 | gallery         | 图片/视频展示 | [vue-ele-gallery](https://github.com/dream2023/vue-ele-gallery)                            |
 | button          | 按钮          | [element-ui button](https://element.eleme.cn/#/zh-CN/component/button)                     |
 
+</details>
+
 [⬆ 回到目录](#目录)
 
 #### options
+
+<details>
+<summary>点击查看</summary>
 
 ##### 对象数组
 
@@ -352,9 +369,14 @@ formDesc: {
 - `transfer` 组件的 `data` 属性, 这里用 `options` 代替
 - `cascader` 和 `transfer` 的 `options` 格式必须按照其原有的格式
 
+</details>
+
 [⬆ 回到目录](#目录)
 
 ### 请求方式
+
+<details>
+<summary>点击查看</summary>
 
 #### 外部请求
 
@@ -446,9 +468,14 @@ formDesc: {
 </script>
 ```
 
+</details>
+
 [⬆ 回到目录](#目录)
 
 ## 插槽
+
+<details>
+<summary>点击查看</summary>
 
 ### 默认插槽
 
@@ -507,9 +534,14 @@ formDesc: {
 </script>
 ```
 
+</details>
+
 [⬆ 回到目录](#目录)
 
 ## 自定义组件
+
+<details>
+<summary>点击查看</summary>
 
 ### 第 1 步: 新建组件
 
@@ -517,27 +549,34 @@ formDesc: {
 <template> </template>
 
 <script>
-  import formMixin from 'vue-ele-form/mixins/formMixin'
   export default {
-    name: 'custom-url', // name 属性必须填写, 在使用时, 需要和这里定义的 name 一致
-    mixins: [formMixin] // 其实 mixin 做事很简单, 可以参考下面图片
+    name: 'custom-url' // name 属性必须填写, 在使用时, 需要和这里定义的 name 一致
+    props: {
+      // value 是传递过来的值
+      value: String,
+      // desc是此组件的描述, 结构为
+      // { style: {}, class: {}, on: {}, attrs: {} }
+      desc: {
+        type: Object,
+        default() {
+          return {}
+        }
+      }
+    },
+    data () {
+      return {
+        // 用于v-model绑定, 因为 v-model无法绑定props值
+        newValue: this.value
+      }
+    }
   }
 </script>
 ```
-
-![image](<https://raw.githubusercontent.com/dream2023/images/master/carbon%20(1).1f9sbeq2f2p.png>)
 
 ### 第 2 步: 完善 html
 
 ```html
 <template>
-  <!-- 这里就需要注意了! -->
-  <!-- 1.v-model 绑定的是 newValue -->
-  <!-- 2.需要将改变值, 通过 handleChange 传递出去 -->
-  <!-- 3.class 是绑定的类 -->
-  <!-- 4.attrs 是绑定的属性 -->
-  <!-- 5.style 是绑定的样式 -->
-  <!-- 6.on 是绑定的事件 -->
   <el-input
     placeholder="请输入URL"
     v-model="newValue"
@@ -556,6 +595,16 @@ formDesc: {
     >
   </el-input>
 </template>
+<script>
+  export default {
+    // ...
+    methods: {
+      handleChange(value) {
+        this.$emit('input', value) // 当值变化时, 一定要触发input事件
+      }
+    }
+  }
+</script>
 ```
 
 ### 第 3 步: 注册并使用
@@ -578,4 +627,30 @@ export default: {
 }
 ```
 
+⚠️ 这里没有将`默认值`、`全局配置属性`的加载等功能加上, 如果您准备开发自己的第三方组件, 推荐使用内部的 mixin, 可以省略很多步骤, 具体参考: [custom-url 使用 mixin](./example/CustomUrl.vue) 和 [mixin 源码](./lib/mixins/formMixin.js)
+
+</details>
+
 [⬆ 回到目录](#目录)
+
+## 开发规划
+
+- 增加 ts 定义
+- 将富文本组件抽离出来形成单独组件
+- 增加地图组件(作为第三方组件, 可选择性安装)
+- 增加 markdown 组件(作为第三方组件, 可选择性安装)
+- 增加 JSON 编辑器组件(作为第三方组件, 可选择性安装)
+- 增加联动属性(更好的隐藏和显示表单项)
+- 增加单元测试 和 E2E 测试
+
+## 赞助
+
+如果您觉得还行, 请您一定要点一下右上角的 `star`, 如果您觉得对您帮助非常大, 就打赏一下, 不胜感谢 💰
+
+<img width="200"  src="https://raw.githubusercontent.com/dream2023/images/master/WechatIMG969.h2bre65hrl6.png" />
+
+<img width="200"  src="https://raw.githubusercontent.com/dream2023/images/master/WechatIMG968.u0pxwvwxyrh.jpeg" />
+
+## 求职
+
+本人目前正在找前端方面工作, 点击下载[简历](https://github.com/dream2023/images/raw/master/%E5%BC%A0%E8%B6%85%E6%9D%B0-%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E5%B7%A5%E7%A8%8B%E5%B8%88-%E4%B8%AA%E4%BA%BA%E7%AE%80%E5%8E%86.pdf), 如果您有合适的工作, 简历中有联系方式, 请务必联系我
