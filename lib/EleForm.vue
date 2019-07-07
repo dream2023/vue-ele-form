@@ -77,6 +77,8 @@
 <script>
 import responsiveMixin from './mixins/responsiveMixin'
 
+const cloneDeep = require('lodash.clonedeep');
+
 import EleFormTag from './components/EleFormTag'
 import EleFormRate from './components/EleFormRate'
 import EleFormDate from './components/EleFormDate'
@@ -303,7 +305,7 @@ export default {
     // 提交表单
     async handleSubmitForm () {
       // valueFormatter的处理
-      const data = Object.assign({}, this.formData)
+      const data = cloneDeep(this.formData)
       for (const field in data) {
         if (this.formDesc[field] && this.formDesc[field].valueFormatter) {
           data[field] = this.formDesc[field].valueFormatter(data[field])
