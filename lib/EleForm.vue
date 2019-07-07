@@ -305,7 +305,7 @@ export default {
       // valueFormatter的处理
       const data = Object.assign({}, this.formData)
       for (const field in data) {
-        if (this.formDesc[field].valueFormatter) {
+        if (this.formDesc[field] && this.formDesc[field].valueFormatter) {
           data[field] = this.formDesc[field].valueFormatter(data[field])
         }
       }

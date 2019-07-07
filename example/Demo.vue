@@ -24,7 +24,19 @@ export default {
         },
         title: {
           type: 'input',
-          label: '标题'
+          label: '标题',
+          default: '111'
+        },
+        time: {
+          label: '开赛时间',
+          type: 'datetime',
+          default: new Date(),
+          attrs: {
+            clearable: true,
+            'default-time': '12:00:00',
+            format: 'yyyy-MM-dd HH:mm',
+            placeholder: '选择比赛开始时间'
+          }
         },
         desc: {
           type: 'textarea',
@@ -74,7 +86,8 @@ export default {
         }
       },
       rules: {
-        title: { required: true, type: 'string', message: '必须填写标题' }
+        title: { required: true, type: 'string', message: '必须填写标题' },
+        date: { required: true, message: 'date填写标题' }
       }
     }
   },
@@ -86,6 +99,13 @@ export default {
     handleSuccess () {
       this.$message.success('创建成功')
     }
+  },
+  mounted () {
+    setTimeout(() => {
+      this.formData = {
+        time: '2019-07-01 08:00'
+      }
+    }, 2000)
   }
 }
 </script>

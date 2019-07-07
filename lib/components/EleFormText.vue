@@ -15,7 +15,7 @@ export default {
   mixins: [formMixin],
   methods: {
     // 当有 options 是, 可以显示option text
-    initData () {
+    customInit () {
       const val = this.value
       const option = this.options.find((option) => option.value === val)
       if (option) {

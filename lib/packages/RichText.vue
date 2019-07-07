@@ -100,7 +100,7 @@ export default {
       ajax({
         action: this.action,
         file: file,
-        filename: 'image',
+        filename: this.name,
         data: this.data,
         onProgress () { return false },
         onSuccess: (response) => {
