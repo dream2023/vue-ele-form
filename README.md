@@ -62,4 +62,4 @@ Vue.use(EleForm)
 
 ## 求职
 
-本人目前正在找前端方面工作, 点击下载[简历](https://github.com/dream2023/images/raw/master/%E5%BC%A0%E8%B6%85%E6%9D%B0-%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E5%B7%A5%E7%A8%8B%E5%B8%88-%E4%B8%AA%E4%BA%BA%E7%AE%80%E5%8E%86.pdf), 如果您有合适的工作, 简历中有联系方式, 请务必联系我
+本人正在求职前端开发, 您可以[查看简历](https://www.yuque.com/chaojie-vjiel/vbwzgu/uwgcr1), 如果有合适的岗位, 请按照简历中的联系方式联系我哦~
