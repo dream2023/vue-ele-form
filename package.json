@@ -1,7 +1,7 @@
 {
   "name": "vue-ele-form",
   "description": "基于 element-ui 功能强大的表单组件",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "license": "MIT",
   "private": false,
   "scripts": {
