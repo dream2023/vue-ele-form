@@ -8,8 +8,8 @@
 
 vue-ele-form 是基于 [element-ui form](https://element.eleme.cn/#/zh-CN/component/form) 的二次封装, 主要特点:
 
-- 内置 20 多种表单类型, 包括选上传图片、上传视频等;
-- 丰富的第三方扩展(富文本，markdown, 地图, 代码编辑器, json 编辑器)，满足你的更多需求;
+- 内置 20 多种[表单类型](https://www.yuque.com/chaojie-vjiel/vbwzgu/kz163g), 包括选`上传图片`、`上传视频`等;
+- 拥有`富文本`，`markdown`, `地图`, `代码编辑器`, `json 编辑器`等丰富的[第三方扩展](https://www.yuque.com/chaojie-vjiel/vbwzgu/inlpxy)，满足你的更多需求;
 - 内置表单校检;
 - 表单布局 和 响应式表单;
 - 可以通过插槽自定义表单项。
