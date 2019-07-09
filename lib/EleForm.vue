@@ -77,8 +77,6 @@
 <script>
 import responsiveMixin from './mixins/responsiveMixin'
 
-const cloneDeep = require('lodash.clonedeep');
-
 import EleFormTag from './components/EleFormTag'
 import EleFormRate from './components/EleFormRate'
 import EleFormDate from './components/EleFormDate'
@@ -100,9 +98,10 @@ import EleFormDatetime from './components/EleFormDatetime'
 import EleFormCheckbox from './components/EleFormCheckbox'
 import EleFormCascader from './components/EleFormCascader'
 import EleFormTransfer from './components/EleFormTransfer'
-import EleFormRichText from './components/EleFormRichText'
 import EleFormTextarea from './components/EleFormTextarea'
 import EleFormCheckboxButton from './components/EleFormCheckboxButton'
+
+const cloneDeep = require('lodash.clonedeep')
 
 export default {
   name: 'EleForm',
@@ -128,7 +127,6 @@ export default {
     EleFormDatetime,
     EleFormCheckbox,
     EleFormCascader,
-    EleFormRichText,
     EleFormTextarea,
     EleFormCheckboxButton
   },
@@ -183,7 +181,7 @@ export default {
       // 内部请求出错
       innerFormError: {},
       // 所有内置组件
-      builtInNames: ['hide', 'text', 'input', 'textarea', 'number', 'checkbox', 'checkbox-button', 'radio', 'date', 'time', 'datetime', 'switch', 'json', 'slider', 'password', 'color', 'select', 'cascader', 'transfer', 'image', 'video', 'rich-text', 'rate', 'tag', 'gallery', 'button']
+      builtInNames: ['hide', 'text', 'input', 'textarea', 'number', 'checkbox', 'checkbox-button', 'radio', 'date', 'time', 'datetime', 'switch', 'slider', 'password', 'color', 'select', 'cascader', 'transfer', 'image', 'video', 'rate', 'tag', 'gallery', 'button']
     }
   },
   computed: {

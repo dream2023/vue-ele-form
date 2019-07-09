@@ -193,17 +193,6 @@ export default {
             return data
           }
         },
-        'rich-text': {
-          label: '富文本',
-          type: 'rich-text',
-          attrs: {
-            action: 'https://jsonplaceholder.typicode.com/posts/',
-            responseFn ({ id }) {
-              // 根据响应结果, 设置 URL
-              return 'https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg?id=' + id
-            }
-          }
-        },
         tag: {
           label: '标签',
           type: 'tag'
@@ -246,7 +235,6 @@ export default {
   },
   methods: {
     handleSuccess () {
-      debugger
       this.$message.success('创建成功')
     },
     handleSubmit (data) {

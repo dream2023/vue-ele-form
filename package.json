@@ -25,13 +25,11 @@
     "el-form"
   ],
   "dependencies": {
-    "bc-quill-image-resize-module": "^3.0.0",
     "dayjs": "^1.8.14",
     "lodash.clonedeep": "^4.5.0",
     "vue-ele-gallery": "^2.1.3",
     "vue-ele-upload-image": "^2.0.4",
-    "vue-ele-upload-video": "^2.0.3",
-    "vue2-editor": "^2.9.1"
+    "vue-ele-upload-video": "^2.0.3"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.8.0",
