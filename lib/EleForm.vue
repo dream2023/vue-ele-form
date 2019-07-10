@@ -306,7 +306,7 @@ export default {
       const data = cloneDeep(this.formData)
       for (const field in data) {
         if (this.formDesc[field] && this.formDesc[field].valueFormatter) {
-          data[field] = this.formDesc[field].valueFormatter(data[field])
+          data[field] = this.formDesc[field].valueFormatter(data[field], data)
         }
       }
 

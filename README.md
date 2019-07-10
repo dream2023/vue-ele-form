@@ -1,4 +1,4 @@
-# vue-ele-form | 一行代码搞定整个表单
+# vue-ele-form | 基于 element-ui 的数据驱动表单组件
 
 [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg)](https://opensource.org/licenses/mit-license.php)
 [![npm](https://img.shields.io/npm/v/vue-ele-form.svg)](https://www.npmjs.com/package/vue-ele-form)

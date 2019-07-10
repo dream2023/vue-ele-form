@@ -26,9 +26,9 @@ export default {
           type: 'input',
           label: '标题'
         },
-        desc: {
+        content: {
           type: 'textarea',
-          label: '简介'
+          label: '内容'
         },
         type: {
           type: 'radio',
@@ -82,6 +82,13 @@ export default {
     handleSuccess () {
       this.$message.success('创建成功')
     }
+  },
+  mounted () {
+    setTimeout(() => {
+      this.formData = {
+        title: 'eee'
+      }
+    }, 1000)
   }
 }
 </script>
