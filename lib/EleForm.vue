@@ -211,6 +211,7 @@ export default {
             messageArr.push(label + obj[key])
           }
           this.showError(messageArr)
+        // eslint-disable-next-line
         } catch {}
       }
     }
@@ -328,6 +329,7 @@ export default {
               if (msg instanceof Object) {
                 this.innerFormError = msg
               }
+            // eslint-disable-next-line
             } catch {}
           } else if (error instanceof Object) {
             // 返回的是对象类型, 则直接设置
