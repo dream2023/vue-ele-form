@@ -84,11 +84,11 @@ export default {
     }
   },
   mounted () {
-    setTimeout(() => {
-      this.formData = {
-        title: 'eee'
-      }
-    }, 1000)
+    // setTimeout(() => {
+    //   this.formData = {
+    //     title: 'eee'
+    //   }
+    // }, 1000)
   }
 }
 </script>
