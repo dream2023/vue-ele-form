@@ -24,9 +24,11 @@ export default {
   props: {
     value: Array
   },
-  data () {
-    return {
-      newValue: this.value || []
+  methods: {
+    customInit () {
+      if (this.newValue === undefined) {
+        this.newValue = []
+      }
     }
   }
 }

@@ -370,4 +370,16 @@ export default {
   line-height: 2em;
   margin-top: 10px;
 }
+
+.ele-form-full-line.el-date-editor.el-input,
+.el-date-editor.el-input__inner {
+  width: 100%;
+}
+
+.ele-form-full-line.el-cascader {
+  width: 100%;
+}
+.ele-form-full-line.el-select {
+  width: 100%;
+}
 </style>

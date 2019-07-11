@@ -2,6 +2,7 @@
   <el-time-select
     :class="desc.class"
     :style="desc.style"
+    class="ele-form-full-line"
     v-bind="attrs"
     v-model="newValue"
     v-on="onEvents"

@@ -71,25 +71,9 @@ export default {
             placeholder: '请输入内容'
           }
         },
-        radio: {
-          label: '单选框',
-          type: 'radio',
-          options: [
-            { text: '男', value: 0, attrs: { disabled: true } },
-            { text: '女', value: 1 }
-          ]
-        },
         select: {
           label: '选择器',
           type: 'select',
-          options: [
-            { text: '北京', value: 'beijing' },
-            { text: '上海', value: 'shanghai' }
-          ]
-        },
-        checkbox: {
-          label: '多选框',
-          type: 'checkbox',
           options: [
             { text: '北京', value: 'beijing' },
             { text: '上海', value: 'shanghai' }
@@ -149,6 +133,22 @@ export default {
               ]
             }]
           }]
+        },
+        radio: {
+          label: '单选框',
+          type: 'radio',
+          options: [
+            { text: '男', value: 0, attrs: { disabled: true } },
+            { text: '女', value: 1 }
+          ]
+        },
+        checkbox: {
+          label: '多选框',
+          type: 'checkbox',
+          options: [
+            { text: '北京', value: 'beijing' },
+            { text: '上海', value: 'shanghai' }
+          ]
         },
         'checkbox-button': {
           label: '多选框',

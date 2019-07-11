@@ -2,6 +2,7 @@
   <el-date-picker
     :class="desc.class"
     :style="desc.style"
+    class="ele-form-full-line"
     placeholder="选择日期"
     type="date"
     v-bind="attrs"

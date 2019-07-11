@@ -3,6 +3,7 @@
     :class="desc.class"
     :options="options"
     :style="desc.style"
+    class="ele-form-full-line"
     v-bind="attrs"
     v-model="newValue"
     v-on="onEvents"
