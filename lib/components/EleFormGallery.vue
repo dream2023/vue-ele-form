@@ -5,7 +5,18 @@
     :style="desc.style"
     v-bind="attrs"
     v-on="desc.on"
-  />
+  >
+    <template
+      v-for="(render, key) of desc.slot"
+      v-slot:[key]="data"
+    >
+      <extend-slot
+        :data="data"
+        :key="key"
+        :render="render"
+      />
+    </template>
+  </ele-gallery>
 </template>
 
 <script>

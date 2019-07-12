@@ -9,7 +9,7 @@
   >
     <!-- 组件内部插槽 -->
     <template
-      v-for="(render, key) of desc.slots"
+      v-for="(render, key) of desc.slot"
       v-slot:[key]="data"
     >
       <extend-slot
@@ -32,7 +32,14 @@ export default {
   },
   data () {
     return {
-      newValue: this.value || []
+      newValue: []
+    }
+  },
+  methods: {
+    customInit () {
+      if (this.newValue === undefined) {
+        this.newValue = []
+      }
     }
   }
 }

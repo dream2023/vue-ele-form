@@ -44,9 +44,10 @@ Vue.use(EleForm)
 
 ## 开发规划
 
-- 增加 ts 定义
-- 增加地图组件(作为第三方组件)
 - 增加视频源码讲解
+- 增加 ts 定义
+- 增加 daterange 和 datetimerange 和 autocomplete 组件
+- 增加 autocomplete 和 file 组件
 - 增加联动属性(更好的隐藏和显示表单项)
 - 增加去除非 formDesc 定义中字段 formData 的选项
 - 增加单元测试 和 E2E 测试

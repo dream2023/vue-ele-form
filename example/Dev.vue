@@ -55,6 +55,11 @@ export default {
           type: 'input',
           attrs: {
             placeholder: '请输入内容'
+          },
+          slot: {
+            prefix (h) {
+              return h('i', { 'class': 'el-icon-edit el-input__icon' })
+            }
           }
         },
         textarea: {
@@ -77,13 +82,26 @@ export default {
           options: [
             { text: '北京', value: 'beijing' },
             { text: '上海', value: 'shanghai' }
-          ]
+          ],
+          slot: {
+            default (h) {
+              return h('el-option', { attrs: { value: '123', label: '测试' } })
+            },
+            prefix (h) {
+              return h('i', { 'class': 'el-icon-edit el-input__icon' })
+            }
+          }
         },
         cascader: {
           label: '级联选择器',
           type: 'cascader',
           attrs: {
             props: { expandTrigger: 'hover' }
+          },
+          slot: {
+            default (h, data) {
+              return h('span', data['data'].label + '123123')
+            }
           },
           options: [{
             value: 1,
@@ -181,6 +199,11 @@ export default {
         transfer: {
           label: '穿梭框',
           type: 'transfer',
+          slot: {
+            'left-footer' (h) {
+              return h('span', '123')
+            }
+          },
           options () {
             const data = []
             for (let i = 1; i <= 15; i++) {
@@ -216,7 +239,20 @@ export default {
           attrs: {
             size: 100
           },
-          default: ['https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg']
+          default: ['https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg'],
+          slot: {
+            default (h, data) {
+              return h('img', {
+                style: {
+                  width: '200px',
+                  height: '200px'
+                },
+                attrs: {
+                  src: data.source.src
+                }
+              })
+            }
+          }
         },
         button: {
           label: '按钮',
