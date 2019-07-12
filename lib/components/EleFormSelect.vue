@@ -8,7 +8,7 @@
     v-on="onEvents"
   >
     <template
-      v-for="(render, key) of desc.slot"
+      v-for="(render, key) of desc.slots"
       v-slot:[key]
     >
       <extend-slot
@@ -24,7 +24,7 @@
       v-for="option in options"
     >
       <template
-        v-if="desc.slot && desc.slot.default"
+        v-if="desc.slots && desc.slots.default"
         v-slot:default
       >
         <extend-slot

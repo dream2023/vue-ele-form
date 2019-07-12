@@ -56,7 +56,7 @@ export default {
           attrs: {
             placeholder: '请输入内容'
           },
-          slot: {
+          slots: {
             prefix (h) {
               return h('i', { 'class': 'el-icon-edit el-input__icon' })
             }
@@ -83,7 +83,7 @@ export default {
             { text: '北京', value: 'beijing' },
             { text: '上海', value: 'shanghai' }
           ],
-          slot: {
+          slots: {
             default (h) {
               return h('el-option', { attrs: { value: '123', label: '测试' } })
             },
@@ -98,7 +98,7 @@ export default {
           attrs: {
             props: { expandTrigger: 'hover' }
           },
-          slot: {
+          slots: {
             default (h, data) {
               return h('span', data['data'].label + '123123')
             }
@@ -199,7 +199,7 @@ export default {
         transfer: {
           label: '穿梭框',
           type: 'transfer',
-          slot: {
+          slots: {
             'left-footer' (h) {
               return h('span', '123')
             }
@@ -240,7 +240,7 @@ export default {
             size: 100
           },
           default: ['https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg'],
-          slot: {
+          slots: {
             default (h, data) {
               return h('img', {
                 style: {

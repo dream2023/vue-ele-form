@@ -28,7 +28,7 @@ export default {
   },
   data () {
     return {
-      isDev: true
+      isDev: false
     }
   }
 }

@@ -10,7 +10,7 @@
   >
     <!-- 组件内部插槽 -->
     <template
-      v-for="(render, key) of desc.slot"
+      v-for="(render, key) of desc.slots"
       v-slot:[key]
     >
       <extend-slot
