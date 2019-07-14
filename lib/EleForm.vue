@@ -227,30 +227,34 @@ export default {
         return type
       }
     },
+    // 将options转为对象数组
+    getObjArrOptions (options) {
+      return options.map((option) => {
+        if (typeof option === 'string') {
+          // 字符串 转为 对象
+          // 例如 ['男', '女'] => [ { text: '男', value: '男' }, { text: '女', value: '女' } ]
+          return {
+            text: option,
+            value: option
+          }
+        } else {
+          // 对象 直接返回
+          return option
+        }
+      })
+    },
     // 将四种类型: 字符串数组, 对象数组, Promise对象和函数统一为 对象数组
     changeOptions (options, field) {
       if (options) {
         if (options instanceof Array) {
           // 当options为数组时
-          this.formDesc[field].options = options.map((option) => {
-            if (typeof option === 'string') {
-            // 字符串 转为 对象
-            // 例如 ['男', '女'] => [ { text: '男', value: '男' }, { text: '女', value: '女' } ]
-              return {
-                text: option,
-                value: option
-              }
-            } else {
-            // 对象 直接返回
-              return option
-            }
-          })
+          this.formDesc[field].options = this.getObjArrOptions(options)
         } else if (options instanceof Function) {
           // 函数, 递归
           this.changeOptions(options(), field)
         } else if (options instanceof Promise) {
           options.then((options) => {
-            this.formDesc[field].options = options
+            this.formDesc[field].options = this.getObjArrOptions(options)
           })
         } else {
           // 其他报错
