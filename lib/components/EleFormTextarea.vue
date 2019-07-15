@@ -23,7 +23,7 @@
 <script>
 import formMixin from '../mixins/formMixin'
 export default {
-  name: 'EleFormInput',
+  name: 'EleFormTextarea',
   mixins: [formMixin],
   data () {
     return {
