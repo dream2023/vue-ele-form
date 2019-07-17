@@ -17,7 +17,8 @@ export default {
         text: 1,
         tag: [1, 3, 3],
         // cascader: [17, 18, 20],
-        date: '2019-10-20'
+        date: '2019-10-20',
+        datetimerange: [1562601600, 1565539200]
       },
       formDesc: {
         text: {
@@ -224,9 +225,17 @@ export default {
           label: '日期',
           type: 'date'
         },
+        daterange: {
+          label: '日期范围',
+          type: 'daterange'
+        },
         datetime: {
           label: '日期时间',
           type: 'datetime'
+        },
+        datetimerange: {
+          label: '日期时间范围',
+          type: 'datetimerange'
         },
         number: {
           label: '数字',

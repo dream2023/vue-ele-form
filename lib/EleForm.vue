@@ -137,7 +137,7 @@ export default {
       // 内部请求出错
       innerFormError: {},
       // 所有内置组件
-      builtInNames: ['hide', 'text', 'input', 'textarea', 'number', 'checkbox', 'checkbox-button', 'radio', 'date', 'time', 'datetime', 'switch', 'slider', 'password', 'color', 'select', 'cascader', 'transfer', 'image', 'video', 'rate', 'tag', 'gallery', 'button', 'autocomplete']
+      builtInNames: ['hide', 'text', 'input', 'textarea', 'number', 'checkbox', 'checkbox-button', 'radio', 'date', 'daterange', 'datetimerange', 'time', 'datetime', 'switch', 'slider', 'password', 'color', 'select', 'cascader', 'transfer', 'image', 'video', 'rate', 'tag', 'gallery', 'button', 'autocomplete']
     }
   },
   computed: {
@@ -332,10 +332,11 @@ export default {
 }
 
 .ele-form-full-line.el-date-editor.el-input,
-.el-date-editor.el-input__inner {
+.el-date-editor.el-input__inner,
+.ele-form-full-line.el-date-editor--daterange.el-input__inner,
+.ele-form-full-line.el-date-editor--datetimerange.el-input__inner {
   width: 100%;
 }
-
 .ele-form-full-line.el-cascader,
 .ele-form-full-line.el-select,
 .ele-form-full-line.el-autocomplete {
