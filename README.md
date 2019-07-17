@@ -46,8 +46,8 @@ Vue.use(EleForm)
 
 - 增加视频源码讲解
 - 增加 ts 定义
-- 增加 daterange 和 datetimerange 和 autocomplete 组件
-- 增加 autocomplete 和 file 组件
+- 增加 daterange 和 datetimerange 组件
+- 增加 file 组件
 - 增加联动属性(更好的隐藏和显示表单项)
 - 增加去除非 formDesc 定义中字段 formData 的选项
 - 增加单元测试 和 E2E 测试
@@ -57,7 +57,6 @@ Vue.use(EleForm)
 如果您觉得还行, 请您一定要点一下右上角的 `star`, 如果您觉得对您帮助非常大, 就打赏一下, 不胜感谢 💰
 
 <img width="200"  src="https://raw.githubusercontent.com/dream2023/images/master/WechatIMG969.h2bre65hrl6.png" />
-
 <img width="200"  src="https://raw.githubusercontent.com/dream2023/images/master/WechatIMG968.u0pxwvwxyrh.jpeg" />
 
 ## 求职

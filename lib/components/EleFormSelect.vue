@@ -12,6 +12,9 @@
       v-slot:[key]
     >
       <extend-slot
+        :data="{
+          options: desc.options
+        }"
         :key="key"
         :render="render"
       />

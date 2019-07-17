@@ -6,7 +6,6 @@
     v-model="newValue"
     v-on="onEvents"
   >
-    <!-- 组件内部插槽 -->
     <template
       v-for="(render, key) of desc.slots"
       v-slot:[key]

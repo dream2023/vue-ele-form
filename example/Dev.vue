@@ -54,11 +54,48 @@ export default {
           label: '普通输入框',
           type: 'input',
           attrs: {
-            placeholder: '请输入内容'
+            placeholder: '请输入内容',
+            maxlength: 10,
+            test: 123
           },
           slots: {
             prefix (h) {
               return h('i', { 'class': 'el-icon-edit el-input__icon' })
+            }
+          }
+        },
+        autocomplete: {
+          label: '输入建议',
+          type: 'autocomplete',
+          attrs: {
+            'fetchSuggestions' (queryString, cb) {
+              // var restaurants = this.restaurants
+              // var results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants
+              // 调用 callback 返回建议列表的数据
+              const arr = [
+                { 'value': '三全鲜食（北新泾店）', 'address': '长宁区新渔路144号' },
+                { 'value': 'Hot honey 首尔炸鸡（仙霞路）', 'address': '上海市长宁区淞虹路661号' },
+                { 'value': '新旺角茶餐厅', 'address': '上海市普陀区真北路988号创邑金沙谷6号楼113' }
+              ]
+              cb(arr)
+            }
+          },
+          on: {
+            select (item) {
+              console.log(item)
+            }
+          },
+          slots: {
+            suffix (h) {
+              return h('span', {
+                class: 'el-icon-edit el-input__icon'
+              })
+            },
+            default (h, data) {
+              return h('div', {}, [
+                h('div', data.item.value),
+                h('span', data.item.address)
+              ])
             }
           }
         },
@@ -84,7 +121,7 @@ export default {
             { text: '上海', value: 'shanghai' }
           ],
           slots: {
-            default (h) {
+            default (h, data) {
               return h('el-option', { attrs: { value: '123', label: '测试' } })
             },
             prefix (h) {
@@ -101,6 +138,9 @@ export default {
           slots: {
             default (h, data) {
               return h('span', data['data'].label + '123123')
+            },
+            empty (h) {
+              return h('div', 'test')
             }
           },
           options: [{

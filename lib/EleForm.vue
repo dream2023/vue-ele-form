@@ -132,7 +132,7 @@ export default {
       // 内部请求出错
       innerFormError: {},
       // 所有内置组件
-      builtInNames: ['hide', 'text', 'input', 'textarea', 'number', 'checkbox', 'checkbox-button', 'radio', 'date', 'time', 'datetime', 'switch', 'slider', 'password', 'color', 'select', 'cascader', 'transfer', 'image', 'video', 'rate', 'tag', 'gallery', 'button']
+      builtInNames: ['hide', 'text', 'input', 'textarea', 'number', 'checkbox', 'checkbox-button', 'radio', 'date', 'time', 'datetime', 'switch', 'slider', 'password', 'color', 'select', 'cascader', 'transfer', 'image', 'video', 'rate', 'tag', 'gallery', 'button', 'autocomplete']
     }
   },
   computed: {
@@ -331,10 +331,9 @@ export default {
   width: 100%;
 }
 
-.ele-form-full-line.el-cascader {
-  width: 100%;
-}
-.ele-form-full-line.el-select {
+.ele-form-full-line.el-cascader,
+.ele-form-full-line.el-select,
+.ele-form-full-line.el-autocomplete {
   width: 100%;
 }
 </style>
