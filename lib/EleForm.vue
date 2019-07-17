@@ -12,10 +12,10 @@
         <!-- 表单 -->
         <el-form
           :label-position="formLabelPosition"
+          :label-width="labelWidth + 'px'"
           :model="formData"
           :rules="rules"
           @submit.native.prevent="handleValidateForm"
-          label-width="120px"
           ref="form"
         >
           <!-- 默认插槽作为表单项 -->
@@ -123,6 +123,11 @@ export default {
     backBtnText: {
       type: String,
       default: '返回'
+    },
+    // 标签宽度
+    labelWidth: {
+      type: Number,
+      default: 120
     }
   },
   data () {

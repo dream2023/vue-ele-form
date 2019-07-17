@@ -2,6 +2,7 @@
   <ele-form
     :form-data="formData"
     :form-desc="formDesc"
+    :label-width="100"
     :request-fn="handleSubmit"
     :rules="rules"
     @request-success="handleSuccess"
