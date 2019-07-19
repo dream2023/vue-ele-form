@@ -16,13 +16,6 @@ export default {
     return {
       formData: {},
       formDesc: {
-        cover: {
-          type: 'image',
-          label: '文章封面',
-          attrs: {
-            size: 150
-          }
-        },
         title: {
           type: 'input',
           label: '标题'
