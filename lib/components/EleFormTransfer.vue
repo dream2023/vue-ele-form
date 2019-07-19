@@ -27,9 +27,6 @@ import formMixin from '../mixins/formMixin'
 export default {
   name: 'EleFormTransfer',
   mixins: [formMixin],
-  props: {
-    value: Array
-  },
   data () {
     return {
       newValue: []

@@ -15,7 +15,7 @@ export default {
   mixins: [formMixin],
   props: {
     value: {
-      type: Number,
+      type: [Number, String],
       default: 0
     }
   }

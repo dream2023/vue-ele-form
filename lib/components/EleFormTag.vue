@@ -46,9 +46,6 @@ import formMixin from '../mixins/formMixin'
 export default {
   name: 'EleFormTag',
   mixins: [formMixin],
-  props: {
-    value: Array
-  },
   data () {
     return {
       inputVisible: false,

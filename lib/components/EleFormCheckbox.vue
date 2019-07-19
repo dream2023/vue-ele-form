@@ -21,9 +21,6 @@ import formMixin from '../mixins/formMixin'
 export default {
   name: 'EleFormCheckbox',
   mixins: [formMixin],
-  props: {
-    value: Array
-  },
   methods: {
     customInit () {
       if (this.newValue === undefined) {

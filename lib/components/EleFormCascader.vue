@@ -27,9 +27,6 @@ import formMixin from '../mixins/formMixin'
 
 export default {
   name: 'EleFormCascader',
-  mixins: [formMixin],
-  props: {
-    value: Array
-  }
+  mixins: [formMixin]
 }
 </script>
