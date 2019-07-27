@@ -50,7 +50,12 @@ export default {
   mixins: [formMixin],
   data () {
     return {
+      type: ['String'],
       defaultAttrs: {
+        fetchSuggestions (s, cb) {
+          const res = []
+          cb(res)
+        },
         placeholder: '请输入' + this.desc.label
       }
     }

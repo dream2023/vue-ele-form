@@ -13,6 +13,11 @@
 import formMixin from '../mixins/formMixin'
 export default {
   name: 'EleFormRate',
-  mixins: [formMixin]
+  mixins: [formMixin],
+  data () {
+    return {
+      type: 'Number'
+    }
+  }
 }
 </script>

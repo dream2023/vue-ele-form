@@ -16,6 +16,11 @@ import formMixin from '../mixins/formMixin'
 import timeMixin from '../mixins/timeMixin'
 export default {
   name: 'EleFormDatetime',
-  mixins: [formMixin, timeMixin]
+  mixins: [formMixin, timeMixin],
+  data () {
+    return {
+      type: ['Date', 'String', 'Number']
+    }
+  }
 }
 </script>

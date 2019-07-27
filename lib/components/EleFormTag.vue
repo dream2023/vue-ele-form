@@ -48,6 +48,7 @@ export default {
   mixins: [formMixin],
   data () {
     return {
+      type: ['Array'],
       inputVisible: false,
       inputValue: ''
     }

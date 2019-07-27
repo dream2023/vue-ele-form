@@ -27,6 +27,7 @@ export default {
   mixins: [formMixin],
   data () {
     return {
+      type: ['String', 'Number'],
       defaultAttrs: {
         autosize: { minRows: 6 },
         placeholder: '请输入' + this.desc.label

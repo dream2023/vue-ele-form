@@ -25,6 +25,7 @@ export default {
   mixins: [formMixin],
   data () {
     return {
+      type: ['String', 'Number'],
       defaultAttrs: {
         placeholder: '请输入' + this.desc.label
       }

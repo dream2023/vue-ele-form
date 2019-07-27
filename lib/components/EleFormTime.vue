@@ -16,6 +16,7 @@ export default {
   mixins: [formMixin],
   data () {
     return {
+      type: ['String', 'Number', 'Date'],
       defaultAttrs: {
         placeholder: '选择时间'
       }

@@ -13,6 +13,11 @@ import formMixin from '../mixins/formMixin'
 export default {
   name: 'EleFormText',
   mixins: [formMixin],
+  data () {
+    return {
+      type: ['String', 'Number']
+    }
+  },
   methods: {
     // 当有 options 是, 可以显示option text
     customInit () {

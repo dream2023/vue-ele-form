@@ -22,6 +22,7 @@ export default {
   mixins: [formMixin],
   data () {
     return {
+      type: ['String', 'Number', 'Boolean'],
       newValue: this.value || null
     }
   }

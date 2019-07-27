@@ -12,6 +12,11 @@
 import formMixin from '../mixins/formMixin'
 export default {
   name: 'EleFormSwitch',
-  mixins: [formMixin]
+  mixins: [formMixin],
+  data () {
+    return {
+      type: ['Boolean', 'String', 'Number']
+    }
+  }
 }
 </script>

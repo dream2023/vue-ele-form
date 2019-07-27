@@ -31,6 +31,7 @@ export default {
   },
   data () {
     return {
+      type: ['Object', 'Array', 'String'],
       defaultAttrs: {
         title: this.desc.label
       }

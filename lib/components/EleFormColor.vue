@@ -12,6 +12,11 @@
 import formMixin from '../mixins/formMixin'
 export default {
   name: 'EleFormColor',
-  mixins: [formMixin]
+  mixins: [formMixin],
+  data () {
+    return {
+      type: 'String'
+    }
+  }
 }
 </script>

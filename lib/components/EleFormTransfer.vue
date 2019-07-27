@@ -29,6 +29,7 @@ export default {
   mixins: [formMixin],
   data () {
     return {
+      type: 'Array',
       newValue: []
     }
   },

@@ -21,6 +21,12 @@ import formMixin from '../mixins/formMixin'
 export default {
   name: 'EleFormCheckbox',
   mixins: [formMixin],
+  data () {
+    return {
+      type: 'Array',
+      newValue: []
+    }
+  },
   methods: {
     customInit () {
       if (this.newValue === undefined) {
