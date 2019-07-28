@@ -2,7 +2,7 @@
 
 [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg)](https://opensource.org/licenses/mit-license.php)
 [![npm](https://img.shields.io/npm/v/vue-ele-form.svg)](https://www.npmjs.com/package/vue-ele-form)
-[![download](https://img.shields.io/npm/dw/vue-ele-form.svg)](https://npmcharts.com/compare/vue-ele-form?minimal=true)
+[![download](https://img.shields.io/npm/dt/vue-ele-form)](https://npmcharts.com/compare/vue-ele-form?minimal=true)
 
 ## 说明
 
@@ -45,6 +45,7 @@ Vue.use(EleForm)
 
 ## 开发规划
 
+- 可视化编辑
 - 增加视频源码讲解
 - 增加 file 组件
 - 增加联动属性(更好的隐藏和显示表单项)
