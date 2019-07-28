@@ -76,7 +76,7 @@
 
 <script>
 import responsiveMixin from './mixins/responsiveMixin'
-
+import utils from './utils'
 const cloneDeep = require('lodash.clonedeep')
 
 export default {
@@ -186,8 +186,7 @@ export default {
     // 将options转为对象数组
     getObjArrOptions (options) {
       return options.map((option) => {
-        if (typeof option === 'string') {
-          // 字符串 转为 对象
+        if (utils.is(option, ['Number', 'String', 'Boolean'])) {
           // 例如 ['男', '女'] => [ { text: '男', value: '男' }, { text: '女', value: '女' } ]
           return {
             text: option,
