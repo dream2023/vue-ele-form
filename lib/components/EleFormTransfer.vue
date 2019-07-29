@@ -34,10 +34,11 @@ export default {
     }
   },
   methods: {
-    customInit () {
-      if (this.newValue === undefined) {
-        this.newValue = []
+    customInit (val) {
+      if (val === undefined) {
+        val = []
       }
+      return val
     }
   }
 }

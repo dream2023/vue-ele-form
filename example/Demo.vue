@@ -14,7 +14,9 @@ export default {
   name: 'Demo',
   data () {
     return {
-      formData: {},
+      formData: {
+        title: null
+      },
       formDesc: {
         title: {
           type: 'input',
@@ -25,9 +27,9 @@ export default {
           label: '内容'
         },
         type: {
-          type: 'radio',
+          type: 'checkbox',
           label: '类型',
-          default: 1,
+          // default: [1],
           options: [
             { text: '自制', value: 1 },
             { text: '转载', value: 0 }
@@ -79,9 +81,11 @@ export default {
   },
   mounted () {
     // setTimeout(() => {
-    //   this.formData = {
-    //     title: 'eee'
-    //   }
+    //   this.formData.title = 'eee'
+    //   this.formData.type = [1]
+    //   // this.formData = {
+    //   //   title: 'eee'
+    //   // }
     // }, 1000)
   }
 }

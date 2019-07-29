@@ -20,12 +20,12 @@ export default {
   },
   methods: {
     // 当有 options 是, 可以显示option text
-    customInit () {
-      const val = this.value
+    customInit (val) {
       const option = this.options.find((option) => option.value === val)
       if (option) {
-        this.newValue = option.text
+        val = option.text
       }
+      return val
     }
   }
 }
