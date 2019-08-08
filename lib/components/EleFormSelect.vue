@@ -33,7 +33,7 @@
         <extend-slot
           :data="option"
           :key="key"
-          :render="render"
+          :render="desc.slots.default"
         />
       </template>
     </el-option>

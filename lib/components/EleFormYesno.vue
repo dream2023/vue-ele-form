@@ -1,9 +1,10 @@
 <template>
-  <el-button
+  <el-checkbox
     :class="desc.class"
     :style="desc.style"
     v-bind="attrs"
-    v-on="desc.on"
+    v-model="newValue"
+    v-on="onEvents"
   >
     {{desc.title}}
     <template
@@ -12,14 +13,23 @@
     >
       <extend-slot :render="desc.slots.default" />
     </template>
-  </el-button>
+  </el-checkbox>
 </template>
 
 <script>
 import formMixin from '../mixins/formMixin'
-
 export default {
-  name: 'EleFormButton',
-  mixins: [formMixin]
+  name: 'EleFormYesno',
+  mixins: [formMixin],
+  data () {
+    return {
+      type: ['Boolean', 'String', 'Number']
+    }
+  },
+  methods: {
+    customInit (val) {
+      return Boolean(val)
+    }
+  }
 }
 </script>
