@@ -224,8 +224,9 @@ export default {
           type: 'switch'
         },
         yesno: {
-          label: '开关',
-          type: 'yesno'
+          label: 'yesno',
+          type: 'yesno',
+          title: '是否'
         },
         transfer: {
           label: '穿梭框',
