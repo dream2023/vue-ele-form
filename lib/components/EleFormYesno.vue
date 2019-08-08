@@ -18,17 +18,20 @@
 
 <script>
 import formMixin from '../mixins/formMixin'
+import utils from '../utils'
+
 export default {
   name: 'EleFormYesno',
   mixins: [formMixin],
-  data () {
-    return {
-      type: ['Boolean', 'String', 'Number']
-    }
-  },
   methods: {
     customInit (val) {
       return Boolean(val)
+    },
+    handleChange (value) {
+      if (utils.is(this.value, 'Number')) {
+        value = Number(value)
+      }
+      this.$emit('input', value)
     }
   }
 }

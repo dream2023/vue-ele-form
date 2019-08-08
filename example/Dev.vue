@@ -223,6 +223,10 @@ export default {
           label: '开关',
           type: 'switch'
         },
+        yesno: {
+          label: '开关',
+          type: 'yesno'
+        },
         transfer: {
           label: '穿梭框',
           type: 'transfer',
