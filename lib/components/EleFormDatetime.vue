@@ -3,8 +3,6 @@
     :class="desc.class"
     :style="desc.style"
     class="ele-form-full-line"
-    placeholder="选择日期"
-    type="datetime"
     v-bind="attrs"
     v-model="newValue"
     v-on="onEvents"
@@ -19,7 +17,11 @@ export default {
   mixins: [formMixin, timeMixin],
   data () {
     return {
-      type: ['Date', 'String', 'Number']
+      type: ['Date', 'String', 'Number'],
+      defaultAttrs: {
+        type: 'datetime',
+        placeholder: '选择日期'
+      }
     }
   }
 }

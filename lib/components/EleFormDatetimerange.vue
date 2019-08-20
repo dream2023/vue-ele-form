@@ -4,7 +4,6 @@
     :style="desc.style"
     @input="handleChange"
     class="ele-form-full-line"
-    type="datetimerange"
     v-bind="attrs"
     v-model="newValue"
     v-on="onEvents"
@@ -21,6 +20,7 @@ export default {
     return {
       type: 'Array',
       defaultAttrs: {
+        type: 'datetimerange',
         'start-placeholder': '开始日期',
         'end-placeholder': '结束日期'
       }
