@@ -1,7 +1,6 @@
 <template>
   <el-input
     :class="desc.class"
-    :placeholder="'请输入' + desc.label"
     :show-password="true"
     :style="desc.style"
     v-bind="attrs"
