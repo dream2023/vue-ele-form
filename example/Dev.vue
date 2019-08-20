@@ -18,7 +18,8 @@ export default {
         tag: [1, 3, 3],
         // cascader: [17, 18, 20],
         date: '2019-10-20',
-        datetimerange: [1562601600, 1565539200]
+        datetimerange: [1562601600, 1565539200],
+        dates: [new Date()]
       },
       formDesc: {
         text: {
@@ -202,6 +203,22 @@ export default {
         date: {
           label: '日期',
           type: 'date'
+        },
+        dates: {
+          label: '一个或多个日期',
+          type: 'dates'
+        },
+        week: {
+          label: '周',
+          type: 'week'
+        },
+        month: {
+          label: '月',
+          type: 'month'
+        },
+        year: {
+          label: '年',
+          type: 'year'
         },
         daterange: {
           label: '日期范围',
