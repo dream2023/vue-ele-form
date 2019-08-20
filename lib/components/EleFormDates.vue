@@ -17,7 +17,6 @@ export default {
   mixins: [formMixin, timerangeMixin],
   data () {
     return {
-      type: 'Array',
       defaultAttrs: {
         type: 'dates',
         placeholder: '选择一个或多个日期'

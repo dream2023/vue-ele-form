@@ -18,7 +18,6 @@ export default {
   mixins: [formMixin, timerangeMixin],
   data () {
     return {
-      type: 'Array',
       defaultAttrs: {
         type: 'daterange',
         'start-placeholder': '开始日期',
