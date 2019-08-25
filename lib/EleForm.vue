@@ -55,18 +55,34 @@
               </el-col>
             </template>
           </el-row>
-          <!-- 操作按钮去 -->
-          <el-form-item v-if="isShowSubmitBtn || isShowBackBtn">
-            <el-button
-              :loading="isLoading || innerIsLoading"
-              native-type="submit"
-              type="primary"
-              v-if="isShowSubmitBtn"
-            >{{submitBtnText}}</el-button>
-            <el-button
-              @click="goBack"
-              v-if="isShowBackBtn"
-            >{{backBtnText}}</el-button>
+
+          <!-- 操作按钮区 -->
+          <el-form-item
+            :md="formBtnLayout"
+            v-if="isShowSubmitBtn || isShowBackBtn || isShowResetBtn || formBtns"
+          >
+            <!-- 按钮插槽 -->
+            <slot name="form-btn">
+              <el-button
+                :loading="isLoading || innerIsLoading"
+                native-type="submit"
+                type="primary"
+                v-if="isShowSubmitBtn"
+              >{{submitBtnText}}</el-button>
+              <el-button
+                :key="index"
+                @click="btn.click"
+                v-for="(btn, index) of formBtns"
+              >{{btn.text}}</el-button>
+              <el-button
+                @click="goBack"
+                v-if="isShowBackBtn"
+              >{{backBtnText}}</el-button>
+              <el-button
+                @click="resetForm"
+                v-if="isShowResetBtn"
+              >{{resetBtnText}}</el-button>
+            </slot>
           </el-form-item>
         </el-form>
       </el-col>
@@ -104,6 +120,13 @@ export default {
     formError: Object,
     // 提交函数
     requestFn: Function,
+    // 自定义表单按钮
+    formBtns: Array,
+    // 按钮宽度
+    formBtnLayout: {
+      type: Number,
+      default: 24
+    },
     // 是否显示submit按钮
     isShowSubmitBtn: {
       type: Boolean,
@@ -113,6 +136,11 @@ export default {
     isShowBackBtn: {
       type: Boolean,
       default: true
+    },
+    // 是否显示reset按钮
+    isShowResetBtn: {
+      type: Boolean,
+      default: false
     },
     // 提交按钮文本
     submitBtnText: {
@@ -124,10 +152,15 @@ export default {
       type: String,
       default: '返回'
     },
+    // 返回按钮
+    resetBtnText: {
+      type: String,
+      default: '重置'
+    },
     // 标签宽度
     labelWidth: {
-      type: Number,
-      default: 120
+      type: [Number, String],
+      default: 'auto'
     }
   },
   data () {
@@ -318,6 +351,11 @@ export default {
     // 重置表单
     resetForm () {
       this.$refs.form.resetFields()
+
+      // 调用内部方法进行值的重置
+      this.$refs.form.fields.forEach((field) => {
+        this.formData[field.prop] = field.initialValue
+      })
     }
   }
 }
