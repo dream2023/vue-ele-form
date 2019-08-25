@@ -65,20 +65,25 @@
             <slot name="form-btn">
               <el-button
                 :loading="isLoading || innerIsLoading"
+                :size="formBtnSize"
                 native-type="submit"
                 type="primary"
                 v-if="isShowSubmitBtn"
               >{{submitBtnText}}</el-button>
               <el-button
                 :key="index"
+                :size="formBtnSize"
+                :type="btn.type || 'default'"
                 @click="btn.click"
                 v-for="(btn, index) of formBtns"
               >{{btn.text}}</el-button>
               <el-button
+                :size="formBtnSize"
                 @click="goBack"
                 v-if="isShowBackBtn"
               >{{backBtnText}}</el-button>
               <el-button
+                :size="formBtnSize"
                 @click="resetForm"
                 v-if="isShowResetBtn"
               >{{resetBtnText}}</el-button>
@@ -122,6 +127,8 @@ export default {
     requestFn: Function,
     // 自定义表单按钮
     formBtns: Array,
+    // 表单按钮大小
+    formBtnSize: String,
     // 按钮宽度
     formBtnLayout: {
       type: Number,
@@ -152,7 +159,7 @@ export default {
       type: String,
       default: '返回'
     },
-    // 返回按钮
+    // 重置按钮
     resetBtnText: {
       type: String,
       default: '重置'
