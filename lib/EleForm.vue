@@ -3,95 +3,132 @@
     class="ele-form"
     ref="wrapper"
   >
-    <!-- layout布局 -->
-    <el-row
-      justify="center"
-      type="flex"
-    >
-      <el-col :span="formSpan">
-        <!-- 表单 -->
-        <el-form
-          :label-position="formLabelPosition"
-          :label-width="labelWidth + 'px'"
-          :model="formData"
-          :rules="rules"
-          @submit.native.prevent="handleValidateForm"
-          ref="form"
-        >
-          <!-- 默认插槽作为表单项 -->
-          <slot />
-
-          <el-row :gutter="20">
-            <!-- 表单项 -->
-            <template v-for="(formItem, field) of formDesc">
-              <el-col
-                :key="field"
-                :md="formItem.layout || 24"
-                :xs="24"
-                v-if="formItem.type !== 'hide'"
-              >
-                <el-form-item
-                  :error="formErrorObj ? formErrorObj[field] : null"
-                  :label="formItem.label"
-                  :prop="field"
-                >
-                  <!-- 具名 作用域插槽(用于用户自定义显示) -->
-                  <slot
-                    :data="formData[field]"
-                    :desc="formItem"
-                    :name="field"
-                  >
-                    <component
-                      :desc="formItem"
-                      :is="getComponentName(formItem.type)"
-                      v-model="formData[field]"
-                    />
-                  </slot>
-                  <div
-                    class="ele-form-tip"
-                    v-if="formItem.tip"
-                  >{{formItem.tip}}</div>
-                </el-form-item>
-              </el-col>
-            </template>
-          </el-row>
-
-          <!-- 操作按钮区 -->
+    <!-- inline模式 -->
+    <template v-if="inline">
+      <el-form
+        :inline="true"
+        :label-position="labelPosition || 'right'"
+        :label-width="computedLabelWidth"
+        :model="formData"
+        :rules="rules"
+        @submit.native.prevent="handleValidateForm"
+        ref="form"
+        v-bind="formAttrs"
+      >
+        <!-- 默认插槽作为表单项 -->
+        <slot />
+        <template v-for="(formItem, field) of formDesc">
           <el-form-item
-            :md="formBtnLayout"
-            v-if="isShowSubmitBtn || isShowBackBtn || isShowResetBtn || formBtns"
+            :error="formErrorObj ? formErrorObj[field] : null"
+            :key="field"
+            :label="formItem.label"
+            :prop="field"
+            v-if="formItem.type !== 'hide'"
           >
-            <!-- 按钮插槽 -->
-            <slot name="form-btn">
-              <el-button
-                :loading="isLoading || innerIsLoading"
-                :size="formBtnSize"
-                native-type="submit"
-                type="primary"
-                v-if="isShowSubmitBtn"
-              >{{submitBtnText}}</el-button>
-              <el-button
-                :key="index"
-                :size="formBtnSize"
-                :type="btn.type || 'default'"
-                @click="btn.click"
-                v-for="(btn, index) of formBtns"
-              >{{btn.text}}</el-button>
-              <el-button
-                :size="formBtnSize"
-                @click="goBack"
-                v-if="isShowBackBtn"
-              >{{backBtnText}}</el-button>
-              <el-button
-                :size="formBtnSize"
-                @click="resetForm"
-                v-if="isShowResetBtn"
-              >{{resetBtnText}}</el-button>
+            <!-- 具名 作用域插槽(用于用户自定义显示) -->
+            <slot
+              :data="formData[field]"
+              :desc="formItem"
+              :name="field"
+            >
+              <component
+                :desc="formItem"
+                :is="getComponentName(formItem.type)"
+                v-model="formData[field]"
+              />
             </slot>
+            <div
+              class="ele-form-tip"
+              v-if="formItem.tip"
+            >{{formItem.tip}}</div>
           </el-form-item>
-        </el-form>
-      </el-col>
-    </el-row>
+        </template>
+        <!-- 操作按钮区 -->
+        <el-form-item v-if="btns.length">
+          <!-- 按钮插槽 -->
+          <slot name="form-btn">
+            <el-button
+              :key="index"
+              @click="btn.click"
+              v-bind="btn.attrs"
+              v-for="(btn, index) of btns"
+            >{{btn.text}}</el-button>
+          </slot>
+        </el-form-item>
+      </el-form>
+    </template>
+
+    <!-- layout布局模式 -->
+    <template v-else>
+      <el-row
+        justify="center"
+        type="flex"
+      >
+        <el-col :span="formSpan">
+          <!-- 表单 -->
+          <el-form
+            :label-position="formLabelPosition"
+            :label-width="computedLabelWidth"
+            :model="formData"
+            :rules="rules"
+            @submit.native.prevent="handleValidateForm"
+            ref="form"
+            v-bind="formAttrs"
+          >
+            <!-- 默认插槽作为表单项 -->
+            <slot />
+
+            <el-row :gutter="20">
+              <!-- 表单项 -->
+              <template v-for="(formItem, field) of formDesc">
+                <el-col
+                  :key="field"
+                  :md="formItem.layout || 24"
+                  :xs="24"
+                  v-if="formItem.type !== 'hide'"
+                >
+                  <el-form-item
+                    :error="formErrorObj ? formErrorObj[field] : null"
+                    :label="formItem.label"
+                    :prop="field"
+                  >
+                    <!-- 具名 作用域插槽(用于用户自定义显示) -->
+                    <slot
+                      :data="formData[field]"
+                      :desc="formItem"
+                      :name="field"
+                    >
+                      <component
+                        :desc="formItem"
+                        :is="getComponentName(formItem.type)"
+                        v-model="formData[field]"
+                      />
+                    </slot>
+                    <div
+                      class="ele-form-tip"
+                      v-if="formItem.tip"
+                    >{{formItem.tip}}</div>
+                  </el-form-item>
+                </el-col>
+              </template>
+            </el-row>
+
+            <!-- 操作按钮区 -->
+            <el-form-item v-if="btns.length">
+              <!-- 按钮插槽 -->
+              <slot name="form-btn">
+                <el-button
+                  :key="index"
+                  @click="btn.click"
+                  v-bind="btn.attrs"
+                  v-for="(btn, index) of btns"
+                >{{btn.text}}</el-button>
+              </slot>
+            </el-form-item>
+          </el-form>
+        </el-col>
+      </el-row>
+    </template>
   </div>
 </template>
 
@@ -114,6 +151,13 @@ export default {
       type: Object,
       required: true
     },
+    // 行内模式
+    inline: {
+      type: Boolean,
+      default: false
+    },
+    // 表单自身属性
+    formAttrs: Object,
     // 校检规则
     rules: Object,
     // 提交状态
@@ -129,30 +173,25 @@ export default {
     formBtns: Array,
     // 表单按钮大小
     formBtnSize: String,
-    // 按钮宽度
-    formBtnLayout: {
-      type: Number,
-      default: 24
-    },
     // 是否显示submit按钮
     isShowSubmitBtn: {
       type: Boolean,
       default: true
     },
-    // 是否显示back按钮
+    // 是否显示back按钮 (默认值取决于是否为inline)
     isShowBackBtn: {
       type: Boolean,
-      default: true
+      default: null
     },
     // 是否显示reset按钮
     isShowResetBtn: {
       type: Boolean,
       default: false
     },
-    // 提交按钮文本
+    // 提交按钮文本 (默认值取决于是否为inline)
     submitBtnText: {
       type: String,
-      default: '提交'
+      default: null
     },
     // 返回按钮
     backBtnText: {
@@ -168,7 +207,11 @@ export default {
     labelWidth: {
       type: [Number, String],
       default: 'auto'
-    }
+    },
+    // 标签位置
+    labelPosition: String,
+    // 不填则响应式, 填则固定
+    span: Number
   },
   data () {
     return {
@@ -181,6 +224,84 @@ export default {
     }
   },
   computed: {
+    // 按钮
+    btns () {
+      const formBtnSize = this.formBtnSize
+      const btns = []
+      // 提交按钮
+      if (this.isShowSubmitBtn) {
+        btns.push({
+          attrs: {
+            type: 'primary',
+            size: formBtnSize,
+            loading: this.isLoading || this.innerIsLoading,
+            'native-type': 'submit'
+          },
+          text: this.computedSubmitBtnText,
+          click () {}
+        })
+      }
+
+      // 自定义按钮
+      if (this.formBtns) {
+        const customBtns = this.formBtns.map((btn) => ({
+          attrs: {
+            type: btn.type,
+            size: formBtnSize
+          },
+          text: btn.text,
+          click: btn.click
+        }))
+        btns.concat(customBtns)
+      }
+
+      // 返回按钮
+      if (this.computedIsShowBackBtn) {
+        btns.push({
+          attrs: {
+            size: formBtnSize
+          },
+          text: this.backBtnText,
+          click: this.goBack
+        })
+      }
+
+      // 重置按钮
+      if (this.isShowResetBtn) {
+        btns.push({
+          attrs: {
+            size: formBtnSize
+          },
+          text: this.resetBtnText,
+          click: this.resetForm
+        })
+      }
+      return btns
+    },
+    // 是否显示返回按钮(inline和非inline模式导致的)
+    computedIsShowBackBtn () {
+      if (utils.is(this.isShowBackBtn, 'Boolean')) {
+        return this.isShowBackBtn
+      } else {
+        return !this.inline
+      }
+    },
+    // 提交按钮默认值
+    computedSubmitBtnText () {
+      if (utils.is(this.submitBtnText, 'String')) {
+        return this.submitBtnText
+      } else {
+        return this.inline ? '查询' : '提交'
+      }
+    },
+    // 标签宽度
+    computedLabelWidth () {
+      if (isNaN(Number(this.labelWidth))) {
+        return this.labelWidth
+      } else {
+        return this.labelWidth + 'px'
+      }
+    },
     // 表单错误信息
     formErrorObj () {
       return Object.assign({}, this.innerFormError, this.formError)
@@ -371,8 +492,8 @@ export default {
 <style>
 .ele-form-tip {
   color: #909399;
-  line-height: 2em;
-  margin-top: 10px;
+  line-height: 1.5em;
+  margin-top: 3px;
 }
 
 .ele-form-full-line.el-date-editor.el-input,
