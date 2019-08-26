@@ -57,10 +57,7 @@
           </el-row>
 
           <!-- 操作按钮区 -->
-          <el-form-item
-            :md="formBtnLayout"
-            v-if="isShowSubmitBtn || isShowBackBtn || isShowResetBtn || formBtns"
-          >
+          <el-form-item v-if="isShowSubmitBtn || isShowBackBtn || isShowResetBtn || formBtns">
             <!-- 按钮插槽 -->
             <slot name="form-btn">
               <el-button
@@ -129,11 +126,6 @@ export default {
     formBtns: Array,
     // 表单按钮大小
     formBtnSize: String,
-    // 按钮宽度
-    formBtnLayout: {
-      type: Number,
-      default: 24
-    },
     // 是否显示submit按钮
     isShowSubmitBtn: {
       type: Boolean,
@@ -168,7 +160,11 @@ export default {
     labelWidth: {
       type: [Number, String],
       default: 'auto'
-    }
+    },
+    // 标签位置
+    labelPosition: String,
+    // 不填则响应式, 填则固定
+    span: Number
   },
   data () {
     return {
