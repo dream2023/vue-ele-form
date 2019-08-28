@@ -8,13 +8,13 @@
 
 vue-ele-form 是基于 [element-ui form](https://element.eleme.cn/#/zh-CN/component/form) 的二次封装, 主要特点:
 
-- 内置 20 多种[表单类型](https://www.yuque.com/chaojie-vjiel/vbwzgu/kz163g), 包括选`单选`、`多选`、`标签`、`级联选择器`等;
-- 拥有`上传图片增强`, `上传视频增强`, `富文本`，`markdown`, `地图`, `代码编辑器`, `json 编辑器`等丰富的[第三方扩展](https://www.yuque.com/chaojie-vjiel/vbwzgu/inlpxy)，满足你的更多需求;
-- 配备[可视化生成表单工具](https://github.com/dream2023/vue-ele-form-generator);
-- 内置表单校检;
-- 表单布局 和 响应式表单;
-- 可以通过插槽自定义表单项;
-- 压缩后只有几十 KB 大小。
+-   内置 20 多种[表单类型](https://www.yuque.com/chaojie-vjiel/vbwzgu/kz163g), 包括选`单选`、`多选`、`标签`、`级联选择器`等;
+-   拥有`上传图片增强`, `上传视频增强`, `富文本`，`markdown`, `地图`, `代码编辑器`, `json 编辑器`等丰富的[第三方扩展](https://www.yuque.com/chaojie-vjiel/vbwzgu/inlpxy)，满足你的更多需求;
+-   配备[可视化生成表单工具](https://github.com/dream2023/vue-ele-form-generator);
+-   内置表单校检;
+-   表单布局 和 响应式表单;
+-   可以通过插槽自定义表单项;
+-   压缩后只有几十 KB 大小。
 
 而上面所说的一切只需要一行 html 和 数据即可实现, 即保证了质量, 又使得开发速度仿佛坐上 🚀!
 
@@ -36,7 +36,6 @@ vue-ele-form 是基于 [element-ui form](https://element.eleme.cn/#/zh-CN/compon
 
 项目地址: [https://github.com/dream2023/vue-ele-form-generator](https://github.com/dream2023/vue-ele-form-generator)
 
-
 ## 安装
 
 ```bash
@@ -53,15 +52,15 @@ Vue.use(EleForm)
 
 ## 开发规划
 
-- 增加视频源码讲解
-- 增加 file 组件
-- 增加联动属性(更好的隐藏和显示表单项)
-- 增加去除非 formDesc 定义中字段 formData 的选项
-- 增加单元测试 和 E2E 测试
+-   增加视频源码讲解
+-   增加 file 组件
+-   增加联动属性(更好的隐藏和显示表单项)
+-   增加去除非 formDesc 定义中字段 formData 的选项
+-   增加单元测试 和 E2E 测试
 
 ## 脑图
 
-![image](https://raw.githubusercontent.com/dream2023/images/master/vue-ele-form_%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E8%A1%A8%E5%8D%95.u9s7qrz02aa.png)
+![image](https://cdn.nlark.com/yuque/0/2019/svg/364322/1566722156127-631087a1-626e-40de-b94a-bb1943e150e7.svg)
 
 地址: [http://naotu.baidu.com/file/34476f28500bd20d0ab9fbef03a1cf0b?token=b6e652d3bf040481](http://naotu.baidu.com/file/34476f28500bd20d0ab9fbef03a1cf0b?token=b6e652d3bf040481)
 
