@@ -44,7 +44,10 @@
           </el-form-item>
         </template>
         <!-- 操作按钮区 -->
-        <el-form-item v-if="btns.length">
+        <el-form-item
+          style="margin-left: 5px;"
+          v-if="btns.length"
+        >
           <!-- 按钮插槽 -->
           <slot name="form-btn">
             <el-button
@@ -57,6 +60,10 @@
         </el-form-item>
       </el-form>
     </template>
+
+    <!-- inline模式和layout模式区别: -->
+    <!-- 1.layout模式 labelPosition 和 span 响应式, inline模式 无响应式 -->
+    <!-- 2.layout模式 form-item 宽度占满整行, inline模式 只占自身的宽度 -->
 
     <!-- layout布局模式 -->
     <template v-else>
