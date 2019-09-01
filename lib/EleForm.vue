@@ -259,7 +259,7 @@ export default {
           text: btn.text,
           click: btn.click
         }))
-        btns.concat(customBtns)
+        btns = [...btns, customBtns]
       }
 
       // 返回按钮
