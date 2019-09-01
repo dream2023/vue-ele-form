@@ -234,7 +234,7 @@ export default {
     // 按钮
     btns () {
       const formBtnSize = this.formBtnSize
-      const btns = []
+      let btns = []
       // 提交按钮
       if (this.isShowSubmitBtn) {
         btns.push({
@@ -259,7 +259,7 @@ export default {
           text: btn.text,
           click: btn.click
         }))
-        btns = [...btns, customBtns]
+        btns = [...btns, ...customBtns]
       }
 
       // 返回按钮

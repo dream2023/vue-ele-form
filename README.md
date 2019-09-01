@@ -52,11 +52,13 @@ Vue.use(EleForm)
 
 ## 开发规划
 
--   增加视频源码讲解
 -   增加 file 组件
+-   增加视频源码讲解
 -   增加联动属性(更好的隐藏和显示表单项)
 -   增加去除非 formDesc 定义中字段 formData 的选项
 -   增加单元测试 和 E2E 测试
+-   国际化
+-   iview 和 ant-design for vue 支持
 
 ## 脑图
 
