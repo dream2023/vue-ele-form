@@ -146,6 +146,7 @@ const cloneDeep = require('lodash.clonedeep')
 
 export default {
   name: 'EleForm',
+  // 响应式单独抽离出来作为mixin, 具体实现请到 responsiveMixin 中查看
   mixins: [responsiveMixin],
   props: {
     // 表单描述
@@ -185,7 +186,8 @@ export default {
       type: Boolean,
       default: true
     },
-    // 是否显示back按钮 (默认值取决于是否为inline)
+    // 是否显示back按钮
+    // 默认值: 当 inline 为true时, 不显示; inline 为 false时, 显示. 具体请看计算属性: computedIsShowBackBtn
     isShowBackBtn: {
       type: Boolean,
       default: null
@@ -195,7 +197,8 @@ export default {
       type: Boolean,
       default: false
     },
-    // 提交按钮文本 (默认值取决于是否为inline)
+    // 提交按钮文本
+    // 默认值: 当 inline 为true时, 值为 '查询'; inline 为 false 时,  值为 '提交'. 具体请看计算属性: computedSubmitBtnText
     submitBtnText: {
       type: String,
       default: null
@@ -215,13 +218,17 @@ export default {
       type: [Number, String],
       default: 'auto'
     },
-    // 标签位置
+    // 标签位置(layout模式为响应式, inline模式无)
     labelPosition: String,
-    // 不填则响应式, 填则固定
+    // 不填则响应式, 填则固定(layout模式为响应式, inline模式无)
     span: Number
   },
   data () {
     return {
+      // 表单标签位置
+      formLabelPosition: 'right',
+      // 表单宽度
+      formSpan: 22,
       // 是否正在请求中
       innerIsLoading: false,
       // 内部请求出错
@@ -285,7 +292,7 @@ export default {
       }
       return btns
     },
-    // 是否显示返回按钮(inline和非inline模式导致的)
+    // 是否显示返回按钮(inline和layout模式下不同)
     computedIsShowBackBtn () {
       if (utils.is(this.isShowBackBtn, 'Boolean')) {
         return this.isShowBackBtn
@@ -293,7 +300,7 @@ export default {
         return !this.inline
       }
     },
-    // 提交按钮默认值
+    // 提交按钮默认值(inline和layout模式下不同)
     computedSubmitBtnText () {
       if (utils.is(this.submitBtnText, 'String')) {
         return this.submitBtnText
@@ -301,7 +308,7 @@ export default {
         return this.inline ? '查询' : '提交'
       }
     },
-    // 标签宽度
+    // 标签宽度(数字和字符串两种处理)
     computedLabelWidth () {
       if (isNaN(Number(this.labelWidth))) {
         return this.labelWidth
@@ -317,26 +324,17 @@ export default {
   watch: {
     // 处理options参数
     formDesc: {
-      handler: function (desc) {
-        for (const field in desc) {
+      handler (desc) {
+        Object.keys(desc).forEach(field => {
           this.changeOptions(desc[field].options, field)
-        }
+        })
       },
       immediate: true
     },
     formErrorObj (obj) {
       // 后端异常的弹窗警告
       if (obj) {
-        try {
-          let messageArr = []
-          for (const key in obj) {
-            const formItem = this.formDesc[key]
-            const label = formItem && formItem.label ? formItem.label + ': ' : key + ': '
-            messageArr.push(label + obj[key])
-          }
-          this.showError(messageArr)
-        // eslint-disable-next-line
-        } catch {}
+        this.processError(obj)
       }
     }
   },
@@ -370,12 +368,13 @@ export default {
     changeOptions (options, field) {
       if (options) {
         if (options instanceof Array) {
-          // 当options为数组时
+          // 当options为数组时: 直接获取
           this.formDesc[field].options = this.getObjArrOptions(options)
         } else if (options instanceof Function) {
-          // 函数, 递归
+          // 当options为函数: 执行函数并递归
           this.changeOptions(options(), field)
         } else if (options instanceof Promise) {
+          // 当options为Promise时: 等待Promise结束, 并获取值
           options.then((options) => {
             this.formDesc[field].options = this.getObjArrOptions(options)
           })
@@ -386,18 +385,47 @@ export default {
       }
     },
     // 验证表单
-    async handleValidateForm (e) {
+    async handleValidateForm () {
       if (this.rules) {
+        // 当传递了验证规则
         this.$refs['form'].validate((valid, invalidFields) => {
           if (valid) {
+            // 提交
             this.handleSubmitForm()
           } else {
-            this.processValidError(invalidFields)
+            // 显示错误
+            this.processError(invalidFields)
           }
         })
       } else {
+        // 提交
         this.handleSubmitForm()
       }
+    },
+
+    // 处理错误
+    processError (errObj) {
+      try {
+        const messageArr = Object.keys(errObj).reduce((acc, key) => {
+          const formItem = this.formDesc[key]
+          const label = formItem && formItem.label ? formItem.label + ': ' : key + ': '
+          if (errObj[key] instanceof Array) {
+            // errorObj: { name: [ { filed: 'name',  message: 'name is required' }] }
+            // 内部校检结果返回的错误信息样式
+            errObj[key].forEach((item) => {
+              acc.push(label + item.message)
+            })
+          } else {
+            // errorObj: { name: 'name is required' }
+            // 外部校检返回的错误信息
+            acc.push(label + errObj[key])
+          }
+
+          return acc
+        }, [])
+        this.showError(messageArr)
+      // eslint-disable-next-line
+      } catch {}
     },
 
     // 显示错误
@@ -414,27 +442,15 @@ export default {
       }
     },
 
-    // 处理表单错误
-    processValidError (invalidFields) {
-      let messageArr = []
-      for (const key in invalidFields) {
-        const formItem = this.formDesc[key]
-        const label = formItem && formItem.label ? formItem.label + ': ' : key + ': '
-        invalidFields[key].forEach((item) => {
-          messageArr.push(label + item.message)
-        })
-      }
-
-      this.showError(messageArr)
-    },
-
     // 提交表单
     async handleSubmitForm () {
+      // 为了不影响原值, 这里进行 clone
+      let data = cloneDeep(this.formData)
       // valueFormatter的处理
-      const data = cloneDeep(this.formData)
       for (const field in data) {
-        if (this.formDesc[field] && this.formDesc[field].valueFormatter) {
-          data[field] = this.formDesc[field].valueFormatter(data[field], data)
+        const formItem = this.formDesc[field]
+        if (formItem && formItem.valueFormatter) {
+          data[field] = formItem.valueFormatter(data[field], data)
         }
       }
 
