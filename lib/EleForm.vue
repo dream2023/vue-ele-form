@@ -325,9 +325,11 @@ export default {
     // 处理options参数
     formDesc: {
       handler (desc) {
-        Object.keys(desc).forEach(field => {
-          this.changeOptions(desc[field].options, field)
-        })
+        if (desc) {
+          Object.keys(desc).forEach(field => {
+            this.changeOptions(desc[field].options, field)
+          })
+        }
       },
       immediate: true
     },
