@@ -5,8 +5,9 @@
     "license": "MIT",
     "private": false,
     "scripts": {
-        "serve": "vue-cli-service serve",
-        "build:lib": "vue build -t lib --name vue-ele-form -d ./dist/ ./lib/index.js",
+        "build:entry": "node build/build-entry.js",
+        "serve": "npm run build:entry && vue-cli-service serve",
+        "build:lib": "npm run build:entry && vue build -t lib --name vue-ele-form -d ./dist/ ./lib/index.js",
         "build": "npm run lint & npm run build:lib",
         "lint": "vue-cli-service lint"
     },
@@ -40,6 +41,7 @@
         "element-ui": "^2.11.1",
         "eslint": "^5.16.0",
         "eslint-plugin-vue": "^5.0.0",
+        "json-templater": "^1.2.0",
         "lint-staged": "^8.1.5",
         "vue": "^2.6.10",
         "vue-template-compiler": "^2.6.10"

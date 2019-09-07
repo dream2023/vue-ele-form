@@ -510,6 +510,9 @@ export default {
         this.formData[field.prop] = field.initialValue
       })
     }
+  },
+  created () {
+    this.builtInNames = this.$EleFormBuiltInNames
   }
 }
 </script>
