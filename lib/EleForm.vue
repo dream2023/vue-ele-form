@@ -392,7 +392,7 @@ export default {
             }
 
             // 3.触发 options
-            if (typeof formItem.options === 'function') {
+            if (formItem.isReloadOptions && typeof formItem.options === 'function') {
               this.changeOptions(formItem.options, field)
             }
           })
