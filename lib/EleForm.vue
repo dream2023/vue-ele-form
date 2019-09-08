@@ -238,7 +238,7 @@ export default {
       // 内部请求出错
       innerFormError: {},
       // 所有内置组件
-      builtInNames: ['hide', 'text', 'input', 'textarea', 'number', 'checkbox', 'checkbox-button', 'radio', 'date', 'dates', 'week', 'month', 'year', 'daterange', 'datetimerange', 'time', 'datetime', 'switch', 'slider', 'password', 'color', 'select', 'cascader', 'transfer', 'rate', 'tag', 'gallery', 'button', 'autocomplete', 'yesno']
+      builtInNames: []
     }
   },
   computed: {
