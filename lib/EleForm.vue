@@ -33,8 +33,10 @@
                 :name="field"
               >
                 <component
+                  :_disabled="formItem._disabled"
                   :desc="formItem"
                   :is="getComponentName(formItem.type)"
+                  :options="formItem._options"
                   v-model="formData[field]"
                 />
               </slot>
@@ -95,7 +97,7 @@
                     :key="field"
                     :md="formItem.layout || 24"
                     :xs="24"
-                    v-if="formItem.type !== 'hide'"
+                    v-if="formItem.type !== 'hide' && formItem._vif"
                   >
                     <el-form-item
                       :error="formErrorObj ? formErrorObj[field] : null"
@@ -109,8 +111,10 @@
                         :name="field"
                       >
                         <component
+                          :_disabled="formItem._disabled"
                           :desc="formItem"
                           :is="getComponentName(formItem.type)"
+                          :options="formItem._options"
                           v-model="formData[field]"
                         />
                       </slot>
@@ -146,6 +150,7 @@
 <script>
 import responsiveMixin from './mixins/responsiveMixin'
 import utils from './utils'
+import { throttle } from 'throttle-debounce'
 const cloneDeep = require('lodash.clonedeep')
 
 export default {
@@ -342,9 +347,59 @@ export default {
       if (obj) {
         this.processError(obj)
       }
+    },
+    formData: {
+      handler (formData) {
+        if (formData) {
+          // 联动属性检测
+          this.checkLinkage()
+        }
+      },
+      deep: true,
+      immediate: true
     }
   },
   methods: {
+    // 检测联动
+    checkLinkage () {
+      if (this.checkVifFn) {
+        this.checkLinkageFn()
+      } else {
+        this.checkLinkageFn = throttle(300, () => {
+          const formDesc = this.formDesc
+          const formData = this.formData
+          Object.keys(formDesc).forEach((field) => {
+            const formItem = formDesc[field]
+            // 1.触发显示 / 隐藏
+            if (typeof formItem.vif === 'function') {
+              this.formDesc[field]._vif = formItem.vif(formData)
+            } else {
+              this.formDesc[field]._vif = true
+            }
+            // 兼容处理
+            if (typeof formItem.vif === 'boolean') {
+              this.formDesc[field]._vif = formItem.vif
+            }
+
+            // 2.触发禁用 / 启用
+            if (typeof formItem.disabled === 'function') {
+              this.formDesc[field]._disabled = formItem.disabled(formData)
+            }
+
+            // 兼容处理
+            if (typeof formItem.disabled === 'boolean') {
+              this.formDesc[field]._disabled = formItem.disabled
+            }
+
+            // 3.触发 options
+            if (typeof formItem.options === 'function') {
+              this.changeOptions(formItem.options, field)
+            }
+          })
+        })
+        this.checkLinkageFn()
+      }
+    },
     // 组件名称
     getComponentName (type) {
       if (this.builtInNames.includes(type)) {
@@ -375,14 +430,14 @@ export default {
       if (options) {
         if (options instanceof Array) {
           // 当options为数组时: 直接获取
-          this.formDesc[field].options = this.getObjArrOptions(options)
+          this.formDesc[field]._options = this.getObjArrOptions(options)
         } else if (options instanceof Function) {
           // 当options为函数: 执行函数并递归
-          this.changeOptions(options(), field)
+          this.changeOptions(options(this.formData), field)
         } else if (options instanceof Promise) {
           // 当options为Promise时: 等待Promise结束, 并获取值
           options.then((options) => {
-            this.formDesc[field].options = this.getObjArrOptions(options)
+            this.formDesc[field]._options = this.getObjArrOptions(options)
           })
         } else {
           // 其他报错

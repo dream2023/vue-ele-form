@@ -1,7 +1,7 @@
 {
     "name": "vue-ele-form",
     "description": "基于 element-ui 的数据驱动表单组件",
-    "version": "0.3.22",
+    "version": "0.3.23",
     "license": "MIT",
     "private": false,
     "scripts": {
@@ -28,6 +28,7 @@
     "dependencies": {
         "dayjs": "^1.8.15",
         "lodash.clonedeep": "^4.5.0",
+        "throttle-debounce": "^2.1.0",
         "vue-ele-gallery": "^2.1.3"
     },
     "devDependencies": {
