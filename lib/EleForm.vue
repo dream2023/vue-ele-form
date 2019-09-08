@@ -18,30 +18,32 @@
         <!-- 默认插槽作为表单项 -->
         <slot />
         <template v-for="(formItem, field) of formDesc">
-          <el-form-item
-            :error="formErrorObj ? formErrorObj[field] : null"
-            :key="field"
-            :label="formItem.label"
-            :prop="field"
-            v-if="formItem.type !== 'hide'"
-          >
-            <!-- 具名 作用域插槽(用于用户自定义显示) -->
-            <slot
-              :data="formData[field]"
-              :desc="formItem"
-              :name="field"
+          <slot :name="field + '-wrapper'">
+            <el-form-item
+              :error="formErrorObj ? formErrorObj[field] : null"
+              :key="field"
+              :label="formItem.label"
+              :prop="field"
+              v-if="formItem.type !== 'hide'"
             >
-              <component
+              <!-- 具名 作用域插槽(用于用户自定义显示) -->
+              <slot
+                :data="formData[field]"
                 :desc="formItem"
-                :is="getComponentName(formItem.type)"
-                v-model="formData[field]"
-              />
-            </slot>
-            <div
-              class="ele-form-tip"
-              v-if="formItem.tip"
-            >{{formItem.tip}}</div>
-          </el-form-item>
+                :name="field"
+              >
+                <component
+                  :desc="formItem"
+                  :is="getComponentName(formItem.type)"
+                  v-model="formData[field]"
+                />
+              </slot>
+              <div
+                class="ele-form-tip"
+                v-if="formItem.tip"
+              >{{formItem.tip}}</div>
+            </el-form-item>
+          </slot>
         </template>
         <!-- 操作按钮区 -->
         <el-form-item
@@ -63,7 +65,7 @@
 
     <!-- inline模式和layout模式区别: -->
     <!-- 1.layout模式 labelPosition 和 span 响应式, inline模式 无响应式 -->
-    <!-- 2.layout模式 form-item 宽度占满整行, inline模式 只占自身的宽度 -->
+    <!-- 2.layout模式 form-item 宽度占满整行, inline模式 只占自身的宽度, 且form-item的layout属性无效 -->
 
     <!-- layout布局模式 -->
     <template v-else>
@@ -88,35 +90,37 @@
             <el-row :gutter="20">
               <!-- 表单项 -->
               <template v-for="(formItem, field) of formDesc">
-                <el-col
-                  :key="field"
-                  :md="formItem.layout || 24"
-                  :xs="24"
-                  v-if="formItem.type !== 'hide'"
-                >
-                  <el-form-item
-                    :error="formErrorObj ? formErrorObj[field] : null"
-                    :label="formItem.label"
-                    :prop="field"
+                <slot :name="field + '-wrapper'">
+                  <el-col
+                    :key="field"
+                    :md="formItem.layout || 24"
+                    :xs="24"
+                    v-if="formItem.type !== 'hide'"
                   >
-                    <!-- 具名 作用域插槽(用于用户自定义显示) -->
-                    <slot
-                      :data="formData[field]"
-                      :desc="formItem"
-                      :name="field"
+                    <el-form-item
+                      :error="formErrorObj ? formErrorObj[field] : null"
+                      :label="formItem.label"
+                      :prop="field"
                     >
-                      <component
+                      <!-- 具名 作用域插槽(用于用户自定义显示) -->
+                      <slot
+                        :data="formData[field]"
                         :desc="formItem"
-                        :is="getComponentName(formItem.type)"
-                        v-model="formData[field]"
-                      />
-                    </slot>
-                    <div
-                      class="ele-form-tip"
-                      v-if="formItem.tip"
-                    >{{formItem.tip}}</div>
-                  </el-form-item>
-                </el-col>
+                        :name="field"
+                      >
+                        <component
+                          :desc="formItem"
+                          :is="getComponentName(formItem.type)"
+                          v-model="formData[field]"
+                        />
+                      </slot>
+                      <div
+                        class="ele-form-tip"
+                        v-if="formItem.tip"
+                      >{{formItem.tip}}</div>
+                    </el-form-item>
+                  </el-col>
+                </slot>
               </template>
             </el-row>
 
