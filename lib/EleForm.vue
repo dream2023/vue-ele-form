@@ -24,7 +24,7 @@
               :key="field"
               :label="formItem.label"
               :prop="field"
-              v-if="formItem.type !== 'hide'"
+              v-if="formItem.type !== 'hide' && formItem._vif"
             >
               <!-- 具名 作用域插槽(用于用户自定义显示) -->
               <slot
