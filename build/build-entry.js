@@ -60,10 +60,12 @@ debugger
 const builtInNamesTemplate = getBuiltInNameTemplate(ComponentNames)
 
 const MAIN_TEMPLATE = `import EleForm from './EleForm'
+import EleFormGroup from './EleFormGroup'
 {{include}}
 
 const components = [
   EleForm,
+  EleFormGroup,
 {{install}}
 ]
 
@@ -87,6 +89,7 @@ if (typeof window !== 'undefined' && window.Vue) {
 export default {
   install,
   EleForm,
+  EleFormGroup,
 {{install}}
 }
 `
