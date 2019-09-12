@@ -1,8 +1,7 @@
 <template>
   <el-tabs
-    :value="computedActiveName"
-    type="border-card"
-    v-bind="tabAttrs"
+    v-bind="attrs"
+    v-model="currentName"
     v-on="tabOn"
   >
     <el-tab-pane
@@ -17,6 +16,7 @@
         :formBtns="formBtns[key]"
         :rules="rules[key]"
         v-bind="$attrs"
+        v-if="key === currentName"
         v-on="$listeners"
       />
     </el-tab-pane>
@@ -48,9 +48,17 @@ export default {
     }
   },
   computed: {
-    computedActiveName () {
-      return this.activeName || Object.keys(this.formDesc)[0]
+    attrs () {
+      return Object.assign({}, { type: 'border-card' }, this.tabAttrs)
     }
+  },
+  data () {
+    return {
+      currentName: ''
+    }
+  },
+  created () {
+    this.currentName = this.activeName || Object.keys(this.formDesc)[0]
   }
 }
 </script>
