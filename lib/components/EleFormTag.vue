@@ -1,43 +1,24 @@
 <template>
-  <div>
-    <div>
-      <el-tag
-        :disable-transitions="false"
-        :key="index"
-        @close="handleDelete(index)"
-        closable
-        style="margin-right: 10px;"
-        v-for="(tag, index) in newValue"
-      >{{tag}}</el-tag>
-
-      <el-button
-        @click="showInput"
-        size="small"
-        style="margin-right: 10px"
-        v-if="!inputVisible"
-      >+ 新增</el-button>
-    </div>
-    <div v-if="inputVisible">
-      <el-input
-        @keydown.native.enter.prevent="handleAddTag"
-        autofocus
-        id="ele-form-tag"
-        ref="saveTagInput"
-        size="small"
-        v-model="inputValue"
-      ></el-input>
-      <el-button
-        @click="handleAddTag"
-        size="small"
-        type="primary"
-      >添加</el-button>
-      <el-button
-        @click="handleCancel"
-        size="small"
-        type="success"
-      >完成</el-button>
-    </div>
-  </div>
+  <el-select
+    :class="desc.class"
+    :style="desc.style"
+    allow-create
+    class="ele-form-full-line"
+    default-first-option
+    filterable
+    multiple
+    ref="select-tag"
+    v-bind="attrs"
+    v-model="newValue"
+    v-on="onEvents"
+  >
+    <el-option
+      :key="tag.value"
+      :label="tag.value"
+      :value="tag.value"
+      v-for="tag in options"
+    ></el-option>
+  </el-select>
 </template>
 
 <script>
@@ -46,46 +27,30 @@ import formMixin from '../mixins/formMixin'
 export default {
   name: 'EleFormTag',
   mixins: [formMixin],
-  data () {
+  data  () {
     return {
-      type: ['Array'],
-      inputVisible: false,
-      inputValue: ''
+      originHandleOptionSelect: null,
+      type: ['Array']
     }
   },
   methods: {
-    // 删除
-    handleDelete (index) {
-      this.newValue.splice(index, 1)
-      this.handleChange(this.newValue)
-    },
+    handleOptionSelect (option, byClick) {
+      const newValue = this.newValue || []
 
-    showInput () {
-      // 展示输入框
-      this.inputVisible = true
-      this.$nextTick(() => {
-        this.$refs.saveTagInput.$refs.input.focus()
-      })
-    },
-    // 取消添加
-    handleCancel () {
-      this.inputVisible = false
-      this.inputValue = ''
-    },
-    // 添加tag
-    handleAddTag () {
-      let inputValue = this.inputValue
-      if (inputValue) {
-        if (Array.isArray(this.newValue)) {
-          this.newValue.push(inputValue)
-        } else {
-          this.newValue = [inputValue]
-        }
-        this.handleChange(this.newValue)
+      // tag不存在, 则添加, 存在则不处理
+      if (!newValue.includes(option.value)) {
+        this.originHandleOptionSelect.call(this.$refs['select-tag'], option, byClick)
+      } else {
+        this.$message.error(`${option.value} 已存在`)
       }
-      this.inputValue = ''
-      this.$refs.saveTagInput.$refs.input.focus()
     }
+  },
+  mounted () {
+    this.$nextTick(() => {
+      // element-ui bug: https://github.com/ElemeFE/element/issues/17433
+      this.originHandleOptionSelect = this.$refs['select-tag'].handleOptionSelect
+      this.$refs['select-tag'].handleOptionSelect = this.handleOptionSelect
+    })
   }
 }
 </script>

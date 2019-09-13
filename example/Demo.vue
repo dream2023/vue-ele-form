@@ -2,7 +2,6 @@
   <ele-form
     :form-data="formData"
     :form-desc="formDesc"
-    :label-width="100"
     :request-fn="handleSubmit"
     :rules="rules"
     @request-success="handleSuccess"
@@ -15,54 +14,14 @@ export default {
   data () {
     return {
       formData: {
-        title: null
+        title: null,
+        label: ['1', '13', '56']
       },
       formDesc: {
-        title: {
-          type: 'input',
-          label: '标题'
-        },
-        content: {
-          type: 'textarea',
-          label: '内容'
-        },
-        type: {
-          type: 'checkbox',
-          label: '类型',
-          // default: [1],
-          options: [
-            { text: '自制', value: 1 },
-            { text: '转载', value: 0 }
-          ]
-        },
-        category: {
-          type: 'cascader',
-          label: '分区',
-          options: [
-            {
-              value: 'dongman',
-              label: '动漫',
-              children: [
-                { value: 'dongmanzatan', label: '动漫杂谈' },
-                { value: 'donghuajishu', label: '动画技术' },
-                { value: 'dongmanzixun', label: '动漫资讯' }
-              ]
-            },
-            {
-              value: 'biancheng',
-              label: '编程',
-              children: [
-                { value: 'vue', label: 'Vue' },
-                { value: 'css', label: 'CSS' },
-                { value: 'html', label: 'HTML' },
-                { value: 'js', label: 'JavaScript' }
-              ]
-            }
-          ]
-        },
         label: {
           type: 'tag',
-          label: '标签'
+          label: '标签',
+          options: ['zhang', 'li', 'wang']
         }
       },
       rules: {
