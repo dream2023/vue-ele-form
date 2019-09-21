@@ -4,7 +4,9 @@ import EleForm from '../lib/index'
 import 'element-ui/lib/theme-chalk/index.css'
 import ElementUI from 'element-ui'
 import CustomUrl from './CustomUrl'
+import EleFormGroup from '../lib/EleFormGroup'
 Vue.component(CustomUrl.name, CustomUrl)
+Vue.component(EleFormGroup.name, EleFormGroup)
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)

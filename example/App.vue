@@ -5,30 +5,28 @@
       shadow="never"
       style="max-width: 1250px;margin: 20px auto;"
     >
-      <dev v-if="isDev" />
-      <demo v-else />
+      <dev v-if="show === 'dev'" />
+      <demo v-if="show === 'demo'" />
+      <group v-if="show === 'group'" />
     </el-card>
-
-    <!-- <el-button
-      @click="isDev = !isDev"
-      style="margin-top: 50px"
-    >切换模式</el-button>-->
   </div>
 </template>
 
 <script>
 import Dev from './Dev'
 import Demo from './Demo'
+import Group from './Group'
 
 export default {
   name: 'App',
   components: {
     Dev,
-    Demo
+    Demo,
+    Group
   },
   data () {
     return {
-      isDev: false
+      show: 'group'
     }
   }
 }

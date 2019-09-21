@@ -1,138 +1,73 @@
 <template>
   <el-tabs
     v-bind="attrs"
-    v-model="currentName"
+    v-model="currentGroupId"
     v-on="tabOn"
   >
     <el-tab-pane
-      :key="key"
-      :label="item.label"
-      :name="key"
-      v-for="(item, key) of formDesc"
+      :key="item.groupId"
+      :label="item.groupLabel"
+      :name="item.groupId"
+      v-for="item of computedGroups"
     >
       <ele-form
-        :form-data="formData[key]"
-        :form-desc="item.desc"
-        :formBtns="formBtns[key]"
-        :rules="rules[key]"
-        v-bind="$attrs"
-        v-if="key === currentName"
-        v-on="$listeners"
+        v-bind="item.form"
+        v-if="item.groupId === currentGroupId"
+        v-on="item.on"
       />
     </el-tab-pane>
   </el-tabs>
 </template>
 
 <script>
+import utils from './utils'
+
 export default {
   name: 'EleFormGroup',
+  inheritAttrs: false,
   props: {
     // 自定义tab属性， 具体参考：https://element.eleme.cn/#/zh-CN/component/tabs#tabs-attributes
     tabAttrs: Object,
     // tab的事件, 具体参考：https://element.eleme.cn/#/zh-CN/component/tabs#tabs-events
     tabOn: Object,
+    // 分组
+    groups: {
+      type: Array,
+      required: true
+    },
     // 默认激活的tab
-    activeName: String,
-    /**
-      * formDesc: {
-      *   groupKey1: {
-      *     label: '分组1',
-      *     desc: {
-      *       // 表单项1
-      *       name: {
-      *         type: 'input',
-      *         label: '姓名'
-      *       },
-      *       // 表单项2
-      *       job: {
-      *         type: 'input',
-      *         label: '工作'
-      *       }
-      *     }
-      *   },
-      *   groupKey2: {
-      *     label: '分组2',
-      *     desc: {
-      *       // 表单项1
-      *       oldPassword: {
-      *         type: 'password',
-      *         label: '旧密码'
-      *       },
-      *       // 表单项2
-      *       newPassword: {
-      *         type: 'password',
-      *         label: '新密码'
-      *       },
-      *       // 表单项3
-      *       confirmPassword: {
-      *         type: 'password',
-      *         label: '确定新密码'
-      *       }
-      *     }
-      *   }
-     */
-    formDesc: {
-      type: Object,
-      required: true
-    },
-    /**
-     * formData: {
-     *    groupKey1: {
-     *       name: '张xx',
-     *       job: '前端'
-     *    },
-     *    groupKey2: {
-     *       oldPassword: '123',
-     *       newPassword: null,
-     *       confirmPassword: null
-     *    }
-     * }
-     */
-    formData: {
-      type: Object,
-      required: true
-    },
-    /**
-     * rules: {
-     *    groupKey1: {
-     *       // ...
-     *    },
-     *    groupKey2: {
-     *       // ...
-     *    }
-     * }
-     */
-    rules: {
-      type: Object,
-      default () { return {} }
-    },
-    /**
-     * formBtns: {
-     *    groupKey1: {
-     *       // ...
-     *    },
-     *    groupKey2: {
-     *       // ...
-     *    }
-     * }
-     */
-    formBtns: {
-      type: Object,
-      default () { return {} }
-    }
+    activeGroupId: [String, Number]
   },
   computed: {
+    // tabs的属性
     attrs () {
       return Object.assign({}, { type: 'border-card' }, this.tabAttrs)
+    },
+    // 修改form属性
+    computedGroups () {
+      return this.groups.map((item) => {
+        item.form = Object.assign({}, this.$attrs, item.form)
+        item.on = Object.assign({}, this.$listeners, item.on)
+        return item
+      })
     }
   },
   data () {
     return {
-      currentName: ''
+      currentGroupId: ''
     }
   },
+  methods: {},
   created () {
-    this.currentName = this.activeName || Object.keys(this.formDesc)[0]
+    // 获取默认激活的分组
+    if (utils.isDef(this.activeGroupId)) {
+      this.currentGroupId = this.activeGroupId
+    } else {
+      // 使用groups中的第一个
+      if (this.groups.length) {
+        this.currentGroupId = this.groups[0].groupId
+      }
+    }
   }
 }
 </script>
