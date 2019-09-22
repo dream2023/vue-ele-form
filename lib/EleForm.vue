@@ -336,12 +336,13 @@ export default {
     formDesc: {
       handler (desc) {
         if (desc) {
-          // 检查联动
-          this.checkLinkage()
           // 设置 options
           Object.keys(desc).forEach(field => {
             this.changeOptions(desc[field].options, field)
           })
+
+          // 检查联动
+          this.checkLinkage()
         }
       },
       immediate: true
@@ -359,8 +360,7 @@ export default {
           this.checkLinkage()
         }
       },
-      deep: true,
-      immediate: true
+      deep: true
     }
   },
   methods: {
@@ -376,32 +376,28 @@ export default {
             const formItem = formDesc[field]
             // 1.触发显示 / 隐藏
             if (typeof formItem.vif === 'function') {
-              const vif = formItem.vif(formData)
+              const vif = Boolean(formItem.vif(formData))
               this.formDesc[field]._vif = vif
+
               if (!vif) {
                 // 如果隐藏, 则删除值
                 this.formData[field] = null
               }
+            } else if (typeof formItem.vif === 'boolean') {
+              this.formDesc[field]._vif = formItem.vif
             } else {
               this.formDesc[field]._vif = true
-            }
-            // 兼容处理
-            if (typeof formItem.vif === 'boolean') {
-              this.formDesc[field]._vif = formItem.vif
             }
 
             // 2.触发禁用 / 启用
             if (typeof formItem.disabled === 'function') {
               this.formDesc[field]._disabled = formItem.disabled(formData)
-            }
-
-            // 兼容处理
-            if (typeof formItem.disabled === 'boolean') {
+            } else if (typeof formItem.disabled === 'boolean') {
               this.formDesc[field]._disabled = formItem.disabled
             }
 
-            // 3.触发 options
-            if (formItem.isReloadOptions && typeof formItem.options === 'function') {
+            // 3.重新获取 options
+            if (formItem._vif && formItem.isReloadOptions && typeof formItem.options === 'function') {
               this.changeOptions(formItem.options, field, true)
             }
           })
@@ -452,17 +448,22 @@ export default {
           // 其他报错
           throw new TypeError('options的类型不正确, options及options请求结果类型可为: 字符串数组, 对象数组, 函数和Promise, 当前值为: ' + options + ', 不属于以上四种类型')
         }
+      } else {
+        if (this.formDesc[field]._options) {
+          // 如果new options为null / undefined, 且 old Options 存在, 则设置
+          this.setOptions([], field, resetValue)
+        }
       }
     },
     // 设置options
     setOptions (options, field, resetValue) {
-      options = this.getObjArrOptions(options)
-      const _options = this.formDesc[field]._options
-      this.formDesc[field]._options = options
+      const newOptions = this.getObjArrOptions(options)
+      const oldOptions = this.formDesc[field]._options
+      this.formDesc[field] = Object.assign({}, this.formDesc[field], { '_options': newOptions })
 
-      // 原 _options 存在 且和原来不相等, 则重置 value 值
-      if (resetValue && _options && !equal(options, _options)) {
-        this.formData[field] = []
+      // 原 oldOptions 存在(初次加载时不存在)且和原来不相等, 则重置 value 值
+      if (resetValue && oldOptions && !equal(newOptions, oldOptions)) {
+        this.formData[field] = null
       }
     },
     // 验证表单
