@@ -1,32 +1,21 @@
 <template>
   <div>
-    <el-card
-      header="ele-form演示"
-      shadow="never"
-      style="max-width: 1250px;margin: 20px auto;"
-    >
-      <dev v-if="show === 'dev'" />
-      <demo v-if="show === 'demo'" />
-      <group v-if="show === 'group'" />
-    </el-card>
+    <form-desc-demo />
+    <!-- <form-desc-props /> -->
   </div>
 </template>
 
 <script>
-import Dev from './Dev'
-import Demo from './Demo'
-import Group from './Group'
-
+import FormDescDemo from './FormDescDemo'
+// import FormDescProps from './FormDescProps'
 export default {
   name: 'App',
   components: {
-    Dev,
-    Demo,
-    Group
+    FormDescDemo
+    // FormDescProps
   },
   data () {
     return {
-      show: 'group'
     }
   }
 }

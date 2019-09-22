@@ -152,6 +152,7 @@ import responsiveMixin from './mixins/responsiveMixin'
 import utils from './utils'
 import { throttle } from 'throttle-debounce'
 const cloneDeep = require('lodash.clonedeep')
+const equal = require('fast-deep-equal')
 
 export default {
   name: 'EleForm',
@@ -335,6 +336,9 @@ export default {
     formDesc: {
       handler (desc) {
         if (desc) {
+          // 检查联动
+          this.checkLinkage()
+          // 设置 options
           Object.keys(desc).forEach(field => {
             this.changeOptions(desc[field].options, field)
           })
@@ -372,7 +376,12 @@ export default {
             const formItem = formDesc[field]
             // 1.触发显示 / 隐藏
             if (typeof formItem.vif === 'function') {
-              this.formDesc[field]._vif = formItem.vif(formData)
+              const vif = formItem.vif(formData)
+              this.formDesc[field]._vif = vif
+              if (!vif) {
+                // 如果隐藏, 则删除值
+                this.formData[field] = null
+              }
             } else {
               this.formDesc[field]._vif = true
             }
@@ -393,7 +402,7 @@ export default {
 
             // 3.触发 options
             if (formItem.isReloadOptions && typeof formItem.options === 'function') {
-              this.changeOptions(formItem.options, field)
+              this.changeOptions(formItem.options, field, true)
             }
           })
         })
@@ -426,23 +435,34 @@ export default {
       })
     },
     // 将四种类型: 字符串数组, 对象数组, Promise对象和函数统一为 对象数组
-    changeOptions (options, field) {
+    changeOptions (options, field, resetValue = false) {
       if (options) {
         if (options instanceof Array) {
           // 当options为数组时: 直接获取
-          this.formDesc[field]._options = this.getObjArrOptions(options)
+          this.setOptions(options, field, resetValue)
         } else if (options instanceof Function) {
           // 当options为函数: 执行函数并递归
-          this.changeOptions(options(this.formData), field)
+          this.changeOptions(options(this.formData), field, resetValue)
         } else if (options instanceof Promise) {
           // 当options为Promise时: 等待Promise结束, 并获取值
           options.then((options) => {
-            this.formDesc[field]._options = this.getObjArrOptions(options)
+            this.changeOptions(options, field, resetValue)
           })
         } else {
           // 其他报错
-          throw new TypeError(options, 'options的类型不正确, 支持字符串数组, 对象数组, 函数和Promise四种类型')
+          throw new TypeError('options的类型不正确, options及options请求结果类型可为: 字符串数组, 对象数组, 函数和Promise, 当前值为: ' + options + ', 不属于以上四种类型')
         }
+      }
+    },
+    // 设置options
+    setOptions (options, field, resetValue) {
+      options = this.getObjArrOptions(options)
+      const _options = this.formDesc[field]._options
+      this.formDesc[field]._options = options
+
+      // 原 _options 存在 且和原来不相等, 则重置 value 值
+      if (resetValue && _options && !equal(options, _options)) {
+        this.formData[field] = []
       }
     },
     // 验证表单

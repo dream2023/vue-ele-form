@@ -1,12 +1,11 @@
 import Vue from 'vue'
 import App from './App.vue'
-import EleForm from '../lib/index'
+import EleForm from 'vue-ele-form/lib/index.js'
 import 'element-ui/lib/theme-chalk/index.css'
 import ElementUI from 'element-ui'
 import CustomUrl from './CustomUrl'
-import EleFormGroup from '../lib/EleFormGroup'
+import codemirror from './codemirror'
 Vue.component(CustomUrl.name, CustomUrl)
-Vue.component(EleFormGroup.name, EleFormGroup)
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)
@@ -19,6 +18,7 @@ Vue.use(EleForm, {
       return file.url
     }
   },
+  codemirror: codemirror,
   image: {
     limit: 2
   }

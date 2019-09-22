@@ -23,10 +23,19 @@
 
 <script>
 import formMixin from '../mixins/formMixin'
+import utils from '../utils'
 
 export default {
   name: 'EleFormTransfer',
   mixins: [formMixin],
+  props: {
+    value: {
+      type: Array,
+      default () {
+        return []
+      }
+    }
+  },
   data () {
     return {
       type: 'Array',
@@ -35,7 +44,7 @@ export default {
   },
   methods: {
     customInit (val) {
-      if (val === undefined) {
+      if (utils.isUnDef(val)) {
         val = []
       }
       return val
