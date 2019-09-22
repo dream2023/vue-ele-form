@@ -55,7 +55,7 @@ const includeComponentTemplate = getComponentsTemplate(ComponentNames)
 
 // 获取安装模板
 const installTemplate = getInstallTemplate(ComponentNames)
-debugger
+
 // 内置组件名称
 const builtInNamesTemplate = getBuiltInNameTemplate(ComponentNames)
 
