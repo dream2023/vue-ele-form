@@ -48,7 +48,7 @@ export default {
   mixins: [formMixin],
   data  () {
     return {
-      type: ['Boolean', 'Number', 'String']
+      type: ['Boolean', 'Number', 'String', 'Array']
     }
   }
 }
