@@ -1,54 +1,59 @@
 <template>
-  <demo-card
-    :formDesc="formDesc"
-    :initCode="initCode"
-    :request-fn="handleSubmit"
-    @request-success="handleSuccess"
-    field="formDesc"
-    title="form-desc props属性详解"
-    type="attr"
-  />
+  <el-card
+    header="form-desc props详细说明"
+    class="demo-card"
+    shadow="never"
+  >
+    <div class="form-desc-props">
+      <ele-form
+        :formData="formData"
+        :formDesc="formDesc"
+        :isResponsive="false"
+        :request-fn="handleSubmit"
+        @request-success="handleSuccess"
+      />
+      <codemirror
+        @input="handleCodeChange"
+        v-model="code"
+      />
+    </div>
+  </el-card>
 </template>
 
 <script>
-import DemoCard from './DemoCard'
-
 export default {
-  name: 'Demo',
-  components: {
-    DemoCard
-  },
   data () {
     return {
-      formDesc: {},
-      initCode: `{
+      formDesc: { },
+      code:
+`{
   name: {
-    // 类型: ele-form 内置了20多种类型 和 多种扩展类型
+    // 1.类型: ele-form 内置了20多种类型 和 多种扩展类型
     // https://www.yuque.com/chaojie-vjiel/vbwzgu/kz163g
     type: 'input',
-    // form-item 的 label 属性值
+    // 2.form-item 的 label 属性值
     label: '姓名',
-    // 渲染组件的属性, 具体可参考相应类型组件的属性
+    // 3.渲染组件的属性, 具体可参考相应类型组件的属性
     // 例如, input组件属性列表有: https://element.eleme.cn/#/zh-CN/component/input#input-attributes
     attrs: {
       maxlength: 4
     },
-    // 栅格布局, 值范围为: 1 - 24
+    // 4.栅格布局, 值范围为: 1 - 24
     layout: 12,
-    // 提示
+    // 5.提示
     tip: '名字不能超过4个字'
   },
   job: {
     type: 'select',
     label: '职位',
     layout: 12,
-    // 默认值
+    // 6.默认值
     default: 1,
-    // select / radio / checkbox 等 options 列表
+    // 7.optinos: select / radio / checkbox 等 options 列表
     // 类型可以为 对象数组 / 基本类型数组 / Promise对象 / 函数
     // https://www.yuque.com/chaojie-vjiel/vbwzgu/rgenav
     options: [
-      // 对象数组类型
+      // 7.1 对象数组类型
       // text: 显示文本, value: 值, attrs: option的自定义属性
       { text: '前端工程工程师', value: 1 },
       { text: '后端工程工程师', value: 2 },
@@ -58,17 +63,17 @@ export default {
   language: {
     type: 'checkbox',
     label: '所学语言',
-    // 联动 隐藏 / 显示, 另外还有 联动启动 / 禁用
+    // 8.联动: 隐藏 / 显示, 另外还有 联动启动 / 禁用
     // https://www.yuque.com/chaojie-vjiel/vbwzgu/loffm6
     vif (data) { return data.job },
-    // 是否开启联动加载options
+    // 9.是否开启联动加载options
     isReloadOptions: true,
-    // 函数类型的 options
+    // 7.2 函数类型的 options
     options (data) {
       let language = []
       switch(data.job) {
         case 1:
-          // options内容为: 基本类型数组
+          // 7.3 options内容为: 基本类型数组
           language = ['html', 'js', 'css']
           break
         case 2:
@@ -80,9 +85,48 @@ export default {
       }
       return language
     }
+  },
+  girlFriend: {
+    type: 'radio',
+    label: '有无女朋友',
+    options: [ { text: '有', value: 1 }, { text: '无', value: 0 } ],
+    // 10. 对最终请求的值进行处理
+    valueFormatter (value) {
+      return Boolean(value)
+    },
+    // 11. 事件
+    on: {
+      change (val) {
+        console.log(val) // 请看控制台
+      }
+    }
+  },
+  motto: {
+    type: 'text',
+    label: '人生格言',
+    default: '编程改变世界',
+    // 12. 样式
+    style: {
+      color: 'red'
+    },
+    // 13. class 类
+    class: ['motto-text']
+  },
+  activity: {
+    type: 'tag',
+    label: '喜爱的运动',
+    default: '篮球,足球,羽毛球',
+    // 14. 对显示的值进行处理 (这里将字符串分割为数组)
+    displayFormatter (value) {
+      return typeof value === 'string' ? value.split(',') : value
+    }
   }
 }
-`
+`,
+      formData: {
+        job: null,
+        language: []
+      }
     }
   },
   methods: {
@@ -92,7 +136,24 @@ export default {
     },
     handleSuccess () {
       this.$message.success('创建成功')
+    },
+    handleCodeChange (code) {
+      try {
+        /* eslint-disable */
+        const codeData = eval('(' + code + ')')
+        this.formDesc = codeData
+      } catch {}
     }
+  },
+  created () {
+    this.handleCodeChange(this.code)
   }
 }
 </script>
+
+
+<style>
+.form-desc-props .CodeMirror {
+  height: 400px !important;
+}
+</style>

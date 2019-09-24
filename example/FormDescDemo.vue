@@ -1,27 +1,35 @@
 <template>
-  <demo-card
-    :formDesc="formDesc"
-    :initCode="initCode"
-    :request-fn="handleSubmit"
-    @request-success="handleSuccess"
-    field="formDesc"
-    title="form-desc 简单示例"
-    type="attr"
-  />
+  <el-card
+    header="form-desc 简单示例"
+    class="demo-card"
+    shadow="never"
+  >
+    <div class="form-desc-demo">
+      <div style="width: 600px">
+        <ele-form
+          :formData="formData"
+          :formDesc="formDesc"
+          :request-fn="handleSubmit"
+          @request-success="handleSuccess"
+        />
+      </div>
+      <div style="margin-left: 50px;width: 500px;">
+        <codemirror
+          @input="handleCodeChange"
+          v-model="code"
+        />
+      </div>
+    </div>
+  </el-card>
 </template>
 
 <script>
-import DemoCard from './DemoCard'
-
 export default {
-  name: 'Demo',
-  components: {
-    DemoCard
-  },
   data () {
     return {
       formDesc: {},
-      initCode: `{
+      code:
+`{
   author: {
     type: 'input',
     label: '作者',
@@ -69,7 +77,8 @@ export default {
       }
     }
   }
-}`
+}`,
+      formData: {}
     }
   },
   methods: {
@@ -79,7 +88,27 @@ export default {
     },
     handleSuccess () {
       this.$message.success('创建成功')
+    },
+    handleCodeChange (code) {
+      try {
+        /* eslint-disable */
+        const codeData = eval('(' + code + ')')
+        this.formDesc = codeData
+      } catch {}
     }
+  },
+  created () {
+    this.handleCodeChange(this.code)
   }
 }
 </script>
+
+<style>
+.form-desc-demo {
+  display: flex;
+  justify-content: center;
+}
+.form-desc-demo .CodeMirror {
+  height: 700px !important;
+}
+</style>

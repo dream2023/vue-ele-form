@@ -1,14 +1,15 @@
 {
   "name": "vue-ele-form",
   "description": "基于 element-ui 的数据驱动表单组件",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "license": "MIT",
   "private": false,
   "scripts": {
     "build:entry": "node build/build-entry.js",
     "serve": "npm run build:entry && vue-cli-service serve",
     "build:lib": "npm run build:entry && vue build -t lib --name vue-ele-form -d ./dist/ ./lib/index.js",
-    "build": "npm run lint & npm run build:lib",
+    "build:docs": "vue-cli-service build",
+    "build": "npm run lint && npm run build:entry & npm run build:lib && npm run build:docs",
     "lint": "vue-cli-service lint lib/* example/*"
   },
   "repository": {
