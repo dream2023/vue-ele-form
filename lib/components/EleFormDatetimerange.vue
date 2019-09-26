@@ -13,6 +13,8 @@
 <script>
 import formMixin from '../mixins/formMixin'
 import timerangeMixin from '../mixins/timerangeMixin'
+import { t } from 'element-ui/src/locale'
+
 export default {
   name: 'EleFormDatetimerange',
   mixins: [formMixin, timerangeMixin],
@@ -20,8 +22,8 @@ export default {
     return {
       defaultAttrs: {
         type: 'datetimerange',
-        'start-placeholder': '开始日期',
-        'end-placeholder': '结束日期'
+        'start-placeholder': t('ele-form.startDate'),
+        'end-placeholder': t('ele-form.endDate')
       }
     }
   }

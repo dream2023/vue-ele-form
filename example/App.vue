@@ -1,9 +1,14 @@
 <template>
   <div>
     <app-header />
-    <div style="margin-top: 80px" class="ele-form-demo-list">
+    <div
+      class="ele-form-demo-list"
+      style="margin-top: 80px"
+    >
       <form-desc-demo />
       <form-desc-props />
+      <form-group />
+      <form-desc-type />
     </div>
   </div>
 </template>
@@ -12,6 +17,9 @@
 import AppHeader from './AppHeader'
 import FormDescDemo from './FormDescDemo'
 import FormDescProps from './FormDescProps'
+import FormGroup from './FormGroup'
+import FormDescType from './FormDescType'
+
 export default {
   name: 'App',
   provide: {
@@ -25,7 +33,9 @@ export default {
   components: {
     AppHeader,
     FormDescDemo,
-    FormDescProps
+    FormDescProps,
+    FormGroup,
+    FormDescType
   },
   data () {
     return {}

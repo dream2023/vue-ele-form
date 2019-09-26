@@ -23,11 +23,12 @@
 
 <script>
 import formMixin from '../mixins/formMixin'
+import { t } from 'element-ui/src/locale'
 
 export default {
   name: 'EleFormTag',
   mixins: [formMixin],
-  data  () {
+  data () {
     return {
       originHandleOptionSelect: null,
       type: ['Array']
@@ -39,9 +40,13 @@ export default {
 
       // tag不存在, 则添加, 存在则不处理
       if (!newValue.includes(option.value)) {
-        this.originHandleOptionSelect.call(this.$refs['select-tag'], option, byClick)
+        this.originHandleOptionSelect.call(
+          this.$refs['select-tag'],
+          option,
+          byClick
+        )
       } else {
-        this.$message.error(`${option.value} 已存在`)
+        this.$message.error(option.value + t('ele-form.tagError'))
       }
     }
   },

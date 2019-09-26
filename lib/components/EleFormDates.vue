@@ -12,6 +12,8 @@
 <script>
 import formMixin from '../mixins/formMixin'
 import timerangeMixin from '../mixins/timerangeMixin'
+import { t } from 'element-ui/src/locale'
+
 export default {
   name: 'EleFormDates',
   mixins: [formMixin, timerangeMixin],
@@ -19,7 +21,7 @@ export default {
     return {
       defaultAttrs: {
         type: 'dates',
-        placeholder: '选择一个或多个日期'
+        placeholder: t('ele-form.dates')
       }
     }
   }

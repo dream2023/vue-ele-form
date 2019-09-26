@@ -11,6 +11,8 @@
 
 <script>
 import formMixin from '../mixins/formMixin'
+import { t } from 'element-ui/src/locale'
+
 export default {
   name: 'EleFormTime',
   mixins: [formMixin],
@@ -18,7 +20,7 @@ export default {
     return {
       type: ['String', 'Number', 'Date'],
       defaultAttrs: {
-        placeholder: '选择时间'
+        placeholder: t('ele-form.time')
       }
     }
   }

@@ -12,6 +12,8 @@
 <script>
 import formMixin from '../mixins/formMixin'
 import timeMixin from '../mixins/timeMixin'
+import { t } from 'element-ui/src/locale'
+
 export default {
   name: 'EleFormWeek',
   mixins: [formMixin, timeMixin],
@@ -20,8 +22,8 @@ export default {
       type: ['Date', 'String', 'Number'],
       defaultAttrs: {
         type: 'week',
-        format: 'yyyy 第 WW 周',
-        placeholder: '选择周'
+        format: t('ele-form.weekFormat'),
+        placeholder: t('ele-form.week')
       }
     }
   }

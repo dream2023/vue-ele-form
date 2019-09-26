@@ -44,6 +44,8 @@
 </template>
 
 <script>
+import { t } from 'element-ui/src/locale'
+
 import formMixin from '../mixins/formMixin'
 export default {
   name: 'EleFormAutocomplete',
@@ -56,7 +58,7 @@ export default {
           const res = []
           cb(res)
         },
-        placeholder: '请输入' + this.desc.label
+        placeholder: t('ele-form.input') + this.desc.label
       }
     }
   },

@@ -22,6 +22,8 @@
 
 <script>
 import formMixin from '../mixins/formMixin'
+import { t } from 'element-ui/src/locale'
+
 export default {
   name: 'EleFormTextarea',
   mixins: [formMixin],
@@ -30,7 +32,7 @@ export default {
       type: ['String', 'Number'],
       defaultAttrs: {
         autosize: { minRows: 6 },
-        placeholder: '请输入' + this.desc.label
+        placeholder: t('ele-form.input') + this.desc.label
       }
     }
   }

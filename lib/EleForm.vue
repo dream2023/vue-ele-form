@@ -43,7 +43,7 @@
               <div
                 class="ele-form-tip"
                 v-if="formItem.tip"
-              >{{formItem.tip}}</div>
+              >{{ formItem.tip }}</div>
             </el-form-item>
           </slot>
         </template>
@@ -59,7 +59,7 @@
               @click="btn.click"
               v-bind="btn.attrs"
               v-for="(btn, index) of btns"
-            >{{btn.text}}</el-button>
+            >{{ btn.text }}</el-button>
           </slot>
         </el-form-item>
       </el-form>
@@ -121,7 +121,7 @@
                       <div
                         class="ele-form-tip"
                         v-if="formItem.tip"
-                      >{{formItem.tip}}</div>
+                      >{{ formItem.tip }}</div>
                     </el-form-item>
                   </el-col>
                 </slot>
@@ -137,7 +137,7 @@
                   @click="btn.click"
                   v-bind="btn.attrs"
                   v-for="(btn, index) of btns"
-                >{{btn.text}}</el-button>
+                >{{ btn.text }}</el-button>
               </slot>
             </el-form-item>
           </el-form>
@@ -151,13 +151,16 @@
 import responsiveMixin from './mixins/responsiveMixin'
 import utils from './utils'
 import { throttle } from 'throttle-debounce'
+import localeMixin from 'element-ui/src/mixins/locale'
+import { t } from 'element-ui/src/locale'
+
 const cloneDeep = require('lodash.clonedeep')
 const equal = require('fast-deep-equal')
 
 export default {
   name: 'EleForm',
   // 响应式单独抽离出来作为mixin, 具体实现请到 responsiveMixin 中查看
-  mixins: [responsiveMixin],
+  mixins: [responsiveMixin, localeMixin],
   props: {
     // 表单描述
     formDesc: {
@@ -216,12 +219,16 @@ export default {
     // 返回按钮
     backBtnText: {
       type: String,
-      default: '返回'
+      default () {
+        return t('ele-form.backBtnText')
+      }
     },
     // 重置按钮
     resetBtnText: {
       type: String,
-      default: '重置'
+      default () {
+        return t('ele-form.resetBtnText')
+      }
     },
     // 标签宽度
     labelWidth: {
@@ -262,13 +269,13 @@ export default {
             'native-type': 'submit'
           },
           text: this.computedSubmitBtnText,
-          click () {}
+          click () { }
         })
       }
 
       // 自定义按钮
       if (this.formBtns) {
-        const customBtns = this.formBtns.map((btn) => ({
+        const customBtns = this.formBtns.map(btn => ({
           attrs: {
             type: btn.type,
             size: formBtnSize
@@ -315,7 +322,9 @@ export default {
       if (utils.is(this.submitBtnText, 'String')) {
         return this.submitBtnText
       } else {
-        return this.inline ? '查询' : '提交'
+        return this.inline
+          ? t('ele-form.submitBtnTextInline')
+          : t('ele-form.submitBtnText')
       }
     },
     // 标签宽度(数字和字符串两种处理)
@@ -372,7 +381,7 @@ export default {
         this.checkLinkageFn = throttle(300, () => {
           const formDesc = this.formDesc
           const formData = this.formData
-          Object.keys(formDesc).forEach((field) => {
+          Object.keys(formDesc).forEach(field => {
             const formItem = formDesc[field]
             // 1.触发显示 / 隐藏
             if (typeof formItem.vif === 'function') {
@@ -397,7 +406,11 @@ export default {
             }
 
             // 3.重新获取 options
-            if (formItem._vif && formItem.isReloadOptions && typeof formItem.options === 'function') {
+            if (
+              formItem._vif &&
+              formItem.isReloadOptions &&
+              typeof formItem.options === 'function'
+            ) {
               this.changeOptions(formItem.options, field, true)
             }
           })
@@ -417,7 +430,7 @@ export default {
     },
     // 将options转为对象数组
     getObjArrOptions (options) {
-      return options.map((option) => {
+      return options.map(option => {
         if (utils.is(option, ['Number', 'String', 'Boolean'])) {
           // 例如 ['男', '女'] => [ { text: '男', value: '男' }, { text: '女', value: '女' } ]
           return {
@@ -441,12 +454,16 @@ export default {
           this.changeOptions(options(this.formData), field, resetValue)
         } else if (options instanceof Promise) {
           // 当options为Promise时: 等待Promise结束, 并获取值
-          options.then((options) => {
+          options.then(options => {
             this.changeOptions(options, field, resetValue)
           })
         } else {
           // 其他报错
-          throw new TypeError('options的类型不正确, options及options请求结果类型可为: 字符串数组, 对象数组, 函数和Promise, 当前值为: ' + options + ', 不属于以上四种类型')
+          throw new TypeError(
+            'options的类型不正确, options及options请求结果类型可为: 字符串数组, 对象数组, 函数和Promise, 当前值为: ' +
+            options +
+            ', 不属于以上四种类型'
+          )
         }
       } else {
         if (this.formDesc[field]._options) {
@@ -459,7 +476,9 @@ export default {
     setOptions (options, field, resetValue) {
       const newOptions = this.getObjArrOptions(options)
       const oldOptions = this.formDesc[field]._options
-      this.formDesc[field] = Object.assign({}, this.formDesc[field], { '_options': newOptions })
+      this.formDesc[field] = Object.assign({}, this.formDesc[field], {
+        _options: newOptions
+      })
 
       // 原 oldOptions 存在(初次加载时不存在)且和原来不相等, 则重置 value 值
       if (resetValue && oldOptions && !equal(newOptions, oldOptions)) {
@@ -490,11 +509,12 @@ export default {
       try {
         const messageArr = Object.keys(errObj).reduce((acc, key) => {
           const formItem = this.formDesc[key]
-          const label = formItem && formItem.label ? formItem.label + ': ' : key + ': '
+          const label =
+            formItem && formItem.label ? formItem.label + ': ' : key + ': '
           if (errObj[key] instanceof Array) {
             // errorObj: { name: [ { filed: 'name',  message: 'name is required' }] }
             // 内部校检结果返回的错误信息样式
-            errObj[key].forEach((item) => {
+            errObj[key].forEach(item => {
               acc.push(label + item.message)
             })
           } else {
@@ -506,8 +526,8 @@ export default {
           return acc
         }, [])
         this.showError(messageArr)
-      // eslint-disable-next-line
-      } catch {}
+        // eslint-disable-next-line
+      } catch { }
     },
 
     // 显示错误
@@ -518,8 +538,12 @@ export default {
           return h('div', { style: { marginBottom: '8px' } }, msg)
         })
         this.$notify.error({
-          title: '表单填写错误',
-          message: h('div', { style: { minWidth: '300px', marginTop: '12px' } }, messageArr)
+          title: t('ele-form.formError'),
+          message: h(
+            'div',
+            { style: { minWidth: '300px', marginTop: '12px' } },
+            messageArr
+          )
         })
       }
     },
@@ -554,8 +578,8 @@ export default {
               if (msg instanceof Object) {
                 this.innerFormError = msg
               }
-            // eslint-disable-next-line
-            } catch {}
+              // eslint-disable-next-line
+            } catch { }
           } else if (error instanceof Object) {
             // 返回的是对象类型, 则直接设置
             this.innerFormError = error
@@ -586,7 +610,7 @@ export default {
       this.$refs.form.resetFields()
 
       // 调用内部方法进行值的重置
-      this.$refs.form.fields.forEach((field) => {
+      this.$refs.form.fields.forEach(field => {
         this.formData[field.prop] = field.initialValue
       })
     }
