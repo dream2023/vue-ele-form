@@ -1,9 +1,5 @@
 <template>
-  <el-card
-    header="form-desc props详细说明"
-    class="demo-card"
-    shadow="never"
-  >
+  <el-card header="form-desc props详细说明" class="demo-card" shadow="never">
     <div class="form-desc-props">
       <ele-form
         :formData="formData"
@@ -12,21 +8,18 @@
         :request-fn="handleSubmit"
         @request-success="handleSuccess"
       />
-      <codemirror
-        @input="handleCodeChange"
-        v-model="code"
-      />
+      <codemirror @input="handleCodeChange" v-model="code" />
     </div>
   </el-card>
 </template>
 
 <script>
 export default {
+  inject: ['checkType'],
   data () {
     return {
-      formDesc: { },
-      code:
-`{
+      formDesc: {},
+      code: `{
   name: {
     // 1.类型: ele-form 内置了20多种类型 和 多种扩展类型
     // https://www.yuque.com/chaojie-vjiel/vbwzgu/kz163g
@@ -141,11 +134,13 @@ export default {
       try {
         /* eslint-disable */
         const codeData = eval('(' + code + ')')
-        this.formDesc = codeData
+        if (this.checkType(codeData)) {
+          this.formDesc = codeData
+        }
       } catch {}
     }
   },
-  created () {
+  created() {
     this.handleCodeChange(this.code)
   }
 }

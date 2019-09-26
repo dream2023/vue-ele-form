@@ -22,15 +22,15 @@ vue-ele-form 是基于 [element-ui form](https://element.eleme.cn/#/zh-CN/compon
 
 ## 图片演示
 
-[![演示图](https://raw.githubusercontent.com/dream2023/images/master/vue-ele-form.i8p4mna581b.gif)](https://codepen.io/dream2023/pen/KjGKYW)
+[![演示图](https://raw.githubusercontent.com/dream2023/images/master/vue-ele-form.i8p4mna581b.gif)](https://dream2023.github.io/vue-ele-form/)
+
+## DEMO
+
+[https://dream2023.github.io/vue-ele-form/](https://dream2023.github.io/vue-ele-form/)
 
 ## 文档
 
 [https://www.yuque.com/chaojie-vjiel/vbwzgu](https://www.yuque.com/chaojie-vjiel/vbwzgu)
-
-## DEMO
-
-[https://codepen.io/dream2023/pen/KjGKYW](https://codepen.io/dream2023/pen/KjGKYW)
 
 ## 可视化生成表单
 

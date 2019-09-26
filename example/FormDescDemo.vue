@@ -1,9 +1,5 @@
 <template>
-  <el-card
-    header="form-desc 简单示例"
-    class="demo-card"
-    shadow="never"
-  >
+  <el-card header="form-desc 简单示例" class="demo-card" shadow="never">
     <div class="form-desc-demo">
       <div style="width: 600px">
         <ele-form
@@ -14,10 +10,7 @@
         />
       </div>
       <div style="margin-left: 50px;width: 500px;">
-        <codemirror
-          @input="handleCodeChange"
-          v-model="code"
-        />
+        <codemirror @input="handleCodeChange" v-model="code" />
       </div>
     </div>
   </el-card>
@@ -25,11 +18,11 @@
 
 <script>
 export default {
+  inject: ['checkType'],
   data () {
     return {
       formDesc: {},
-      code:
-`{
+      code: `{
   author: {
     type: 'input',
     label: '作者',
@@ -93,11 +86,13 @@ export default {
       try {
         /* eslint-disable */
         const codeData = eval('(' + code + ')')
-        this.formDesc = codeData
+        if (this.checkType(codeData)) {
+          this.formDesc = codeData
+        }
       } catch {}
     }
   },
-  created () {
+  created() {
     this.handleCodeChange(this.code)
   }
 }

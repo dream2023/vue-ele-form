@@ -1,7 +1,7 @@
 <template>
   <div>
     <app-header />
-    <div class="ele-form-demo-list">
+    <div style="margin-top: 80px" class="ele-form-demo-list">
       <form-desc-demo />
       <form-desc-props />
     </div>
@@ -14,14 +14,21 @@ import FormDescDemo from './FormDescDemo'
 import FormDescProps from './FormDescProps'
 export default {
   name: 'App',
+  provide: {
+    // 检查类型是否合法
+    checkType (data) {
+      return Object.keys(data).every(key =>
+        this.$EleFormBuiltInNames.includes(data[key].type)
+      )
+    }
+  },
   components: {
     AppHeader,
     FormDescDemo,
     FormDescProps
   },
   data () {
-    return {
-    }
+    return {}
   }
 }
 </script>
