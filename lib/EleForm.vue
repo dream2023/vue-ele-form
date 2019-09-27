@@ -30,6 +30,8 @@
               <slot
                 :data="formData[field]"
                 :desc="formItem"
+                :field="field"
+                :formData="formData"
                 :name="field"
               >
                 <component
