@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import utils from './utils'
+import utils from './tools/utils'
 
 export default {
   name: 'EleFormGroup',

@@ -28,7 +28,6 @@
   ],
   "dependencies": {
     "dayjs": "^1.8.15",
-    "fast-deep-equal": "^2.0.1",
     "lodash.clonedeep": "^4.5.0",
     "throttle-debounce": "^2.1.0",
     "vue-ele-gallery": "^2.1.3"

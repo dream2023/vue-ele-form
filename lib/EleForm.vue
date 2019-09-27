@@ -149,13 +149,12 @@
 
 <script>
 import responsiveMixin from './mixins/responsiveMixin'
-import utils from './utils'
+import utils from './tools/utils'
 import { throttle } from 'throttle-debounce'
 import localeMixin from 'element-ui/src/mixins/locale'
 import { t } from 'element-ui/src/locale'
-
+import { equal, intersection } from './tools/set'
 const cloneDeep = require('lodash.clonedeep')
-const equal = require('fast-deep-equal')
 
 export default {
   name: 'EleForm',
@@ -480,9 +479,18 @@ export default {
         _options: newOptions
       })
 
-      // 原 oldOptions 存在(初次加载时不存在)且和原来不相等, 则重置 value 值
-      if (resetValue && oldOptions && !equal(newOptions, oldOptions)) {
-        this.formData[field] = null
+      // 是否需要重置值
+      if (resetValue && oldOptions !== undefined) {
+        const newOptionValues = new Set(Array.isArray(newOptions) ? newOptions.map((item) => item.value) : [])
+        const oldOptionValues = new Set(Array.isArray(oldOptions) ? oldOptions.map((item) => item.value) : [])
+
+        // 1.没并集 & 2.原 oldOptions 且和 newOptions 不相等, 则重置 value 值
+        const isIntersection = intersection(newOptionValues, oldOptionValues).size
+        const isEqual = equal(newOptionValues, oldOptionValues)
+
+        if (!isIntersection && !isEqual) {
+          this.formData[field] = null
+        }
       }
     },
     // 验证表单

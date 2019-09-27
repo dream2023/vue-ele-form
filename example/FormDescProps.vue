@@ -1,5 +1,9 @@
 <template>
-  <el-card header="form-desc props详细说明" class="demo-card" shadow="never">
+  <el-card
+    class="demo-card"
+    header="form-desc props详细说明"
+    shadow="never"
+  >
     <div class="form-desc-props">
       <ele-form
         :formData="formData"
@@ -8,7 +12,10 @@
         :request-fn="handleSubmit"
         @request-success="handleSuccess"
       />
-      <codemirror @input="handleCodeChange" v-model="code" />
+      <codemirror
+        @input="handleCodeChange"
+        v-model="code"
+      />
     </div>
   </el-card>
 </template>
@@ -61,19 +68,20 @@ export default {
     vif (data) { return data.job },
     // 9.是否开启联动加载options
     isReloadOptions: true,
+    default: ['html'],
     // 7.2 函数类型的 options
     options (data) {
-      let language = []
+      let language = ['html', 'js', 'css']
       switch(data.job) {
         case 1:
           // 7.3 options内容为: 基本类型数组
-          language = ['html', 'js', 'css']
+          // language = ['html', 'js', 'css']
           break
         case 2:
-          language = ['java', 'go', 'nodejs']
+          language = language.concat(['java', 'go', 'nodejs'])
           break
         case 3:
-          language = ['swift', 'Kotlin', 'flutter']
+          language = language.concat(['swift', 'Kotlin', 'flutter'])
           break
       }
       return language
@@ -137,10 +145,10 @@ export default {
         if (this.checkType(codeData)) {
           this.formDesc = codeData
         }
-      } catch {}
+      } catch { }
     }
   },
-  created() {
+  created () {
     this.handleCodeChange(this.code)
   }
 }

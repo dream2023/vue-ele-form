@@ -23,7 +23,7 @@
 
 <script>
 import formMixin from '../mixins/formMixin'
-import utils from '../utils'
+import utils from '../tools/utils'
 
 export default {
   name: 'EleFormTransfer',
