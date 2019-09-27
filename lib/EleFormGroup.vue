@@ -14,7 +14,29 @@
         v-bind="item.form"
         v-if="item.groupId === currentGroupId"
         v-on="item.on"
-      />
+      >
+        <template
+          v-for="(formItem, key, index) of item.form.formDesc"
+          v-slot:[key]="{desc, field}"
+        >
+          <slot
+            :data="item.form.formData[field]"
+            :desc="desc"
+            :field="field"
+            :formData="item.form.formData"
+            :name="item.groupId + '-' + key"
+          >
+            <component
+              :_disabled="desc._disabled"
+              :desc="desc"
+              :is="getComponentName(desc.type)"
+              :key="index"
+              :options="desc._options"
+              v-model="item.form.formData[field]"
+            />
+          </slot>
+        </template>
+      </ele-form>
     </el-tab-pane>
   </el-tabs>
 </template>
@@ -57,7 +79,17 @@ export default {
       currentGroupId: ''
     }
   },
-  methods: {},
+  methods: {
+    getComponentName (type) {
+      if (this.$EleFormBuiltInNames.includes(type)) {
+        // 内置组件
+        return 'ele-form-' + type
+      } else {
+        // 外部组件
+        return type
+      }
+    }
+  },
   created () {
     // 获取默认激活的分组
     if (utils.isDef(this.activeGroupId)) {
