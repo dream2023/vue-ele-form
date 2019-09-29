@@ -36,6 +36,14 @@
             />
           </slot>
         </template>
+
+        <!-- 按钮插槽 -->
+        <template v-slot:form-btn="{ btns }">
+          <slot
+            :btns="btns"
+            :name="item.groupId + '-form-btn'"
+          ></slot>
+        </template>
       </ele-form>
     </el-tab-pane>
   </el-tabs>

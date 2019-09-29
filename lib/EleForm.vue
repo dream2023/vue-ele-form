@@ -55,7 +55,10 @@
           v-if="btns.length"
         >
           <!-- 按钮插槽 -->
-          <slot name="form-btn">
+          <slot
+            :btns="btns"
+            name="form-btn"
+          >
             <el-button
               :key="index"
               @click="btn.click"
@@ -136,7 +139,10 @@
             <!-- 操作按钮区 -->
             <el-form-item v-if="btns.length">
               <!-- 按钮插槽 -->
-              <slot name="form-btn">
+              <slot
+                :btns="btns"
+                name="form-btn"
+              >
                 <el-button
                   :key="index"
                   @click="btn.click"
