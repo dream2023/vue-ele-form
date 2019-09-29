@@ -1,5 +1,9 @@
 <template>
-  <el-card header="form-desc 简单示例" class="demo-card" shadow="never">
+  <el-card
+    class="demo-card"
+    header="form-desc 简单示例"
+    shadow="never"
+  >
     <div class="form-desc-demo">
       <div style="width: 600px">
         <ele-form
@@ -10,7 +14,10 @@
         />
       </div>
       <div style="margin-left: 50px;width: 500px;">
-        <codemirror @input="handleCodeChange" v-model="code" />
+        <codemirror
+          @input="handleCodeChange"
+          v-model="code"
+        />
       </div>
     </div>
   </el-card>
@@ -89,10 +96,10 @@ export default {
         if (this.checkType(codeData)) {
           this.formDesc = codeData
         }
-      } catch {}
+      } catch { }
     }
   },
-  created() {
+  created () {
     this.handleCodeChange(this.code)
   }
 }

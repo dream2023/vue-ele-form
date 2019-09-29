@@ -100,6 +100,7 @@
                     :md="formItem.layout || 24"
                     :xs="24"
                     v-if="formItem.type !== 'hide' && formItem._vif"
+                    v-show="formItem._vshow"
                   >
                     <el-form-item
                       :error="formErrorObj ? formErrorObj[field] : null"
@@ -386,7 +387,7 @@ export default {
           const formData = this.formData
           Object.keys(formDesc).forEach(field => {
             const formItem = formDesc[field]
-            // 1.触发显示 / 隐藏
+            // 1.触发 v-if 显示 / 隐藏
             if (typeof formItem.vif === 'function') {
               const vif = Boolean(formItem.vif(formData))
               this.formDesc[field]._vif = vif
@@ -401,14 +402,24 @@ export default {
               this.formDesc[field]._vif = true
             }
 
-            // 2.触发禁用 / 启用
+            // 2.触发 v-show 显示 / 隐藏
+            if (typeof formItem.vshow === 'function') {
+              const vshow = Boolean(formItem.vshow(formData))
+              this.formDesc[field]._vshow = vshow
+            } else if (typeof formItem.vshow === 'boolean') {
+              this.formDesc[field]._vshow = formItem._vshow
+            } else {
+              this.formDesc[field]._vshow = true
+            }
+
+            // 3.触发 disabled 禁用 / 启用
             if (typeof formItem.disabled === 'function') {
               this.formDesc[field]._disabled = formItem.disabled(formData)
             } else if (typeof formItem.disabled === 'boolean') {
               this.formDesc[field]._disabled = formItem.disabled
             }
 
-            // 3.重新获取 options
+            // 4.重新获取 options
             if (
               formItem._vif &&
               formItem.isReloadOptions &&

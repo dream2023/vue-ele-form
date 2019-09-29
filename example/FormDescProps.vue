@@ -102,6 +102,11 @@ export default {
       }
     }
   },
+  girlFriendName: {
+    type: 'input',
+    label: '女朋友姓名',
+    vshow (data) { return data.girlFriend }
+  }
   motto: {
     type: 'text',
     label: '人生格言',
