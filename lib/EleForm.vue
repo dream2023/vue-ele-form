@@ -52,6 +52,7 @@
         <!-- 操作按钮区 -->
         <el-form-item
           style="margin-left: 5px;"
+          class="ele-form-btns"
           v-if="btns.length"
         >
           <!-- 按钮插槽 -->
@@ -137,7 +138,7 @@
             </el-row>
 
             <!-- 操作按钮区 -->
-            <el-form-item v-if="btns.length">
+            <el-form-item v-if="btns.length"  class="ele-form-btns">
               <!-- 按钮插槽 -->
               <slot
                 :btns="btns"
