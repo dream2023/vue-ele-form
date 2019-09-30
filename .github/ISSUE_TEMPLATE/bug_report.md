@@ -4,35 +4,21 @@ about: Create a report to help us improve
 title: ''
 labels: ''
 assignees: ''
-
 ---
 
-**Describe the bug**
-A clear and concise description of what the bug is.
+**BUG 描述**
 
-**To Reproduce**
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+**Vue版本**
 
-**Expected behavior**
-A clear and concise description of what you expected to happen.
+**ElementUI版本**
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
+**vue-ele-form版本**
 
-**Desktop (please complete the following information):**
- - OS: [e.g. iOS]
- - Browser [e.g. chrome, safari]
- - Version [e.g. 22]
+**复现代码**
+没有复现代码的bug report 一律会被关闭
 
-**Smartphone (please complete the following information):**
- - Device: [e.g. iPhone6]
- - OS: [e.g. iOS8.1]
- - Browser [e.g. stock browser, safari]
- - Version [e.g. 22]
+**复现步骤**
 
-**Additional context**
-Add any other context about the problem here.
+**预期结果**
+
+**实际结果**
