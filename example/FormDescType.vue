@@ -291,6 +291,11 @@ export default {
     type: 'color',
     default: '#409EFF'
   },
+  image: {
+    label: '图片预览',
+    type: 'image',
+    default: 'https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg'
+  },
   gallery: {
     label: '图片/视频展示',
     type: 'gallery',

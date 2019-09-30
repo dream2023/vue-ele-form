@@ -1,9 +1,9 @@
 ---
-name: Bug report
-about: Create a report to help us improve
+name: 报告Bug
+about: 报告问题以便我们改进
 title: ''
-labels: ''
-assignees: ''
+labels: 'bug'
+assignees: 'dream2023'
 ---
 
 **BUG 描述**
