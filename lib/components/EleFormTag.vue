@@ -23,7 +23,6 @@
 
 <script>
 import formMixin from '../mixins/formMixin'
-import { t } from '../locale'
 
 export default {
   name: 'EleFormTag',
@@ -32,6 +31,13 @@ export default {
     return {
       originHandleOptionSelect: null,
       type: ['Array']
+    }
+  },
+  computed: {
+    defaultAttrs () {
+      return {
+        placeholder: this.t('ele-form.input') + this.desc.label
+      }
     }
   },
   methods: {
@@ -46,7 +52,7 @@ export default {
           byClick
         )
       } else {
-        this.$message.error(option.value + t('ele-form.tagError'))
+        this.$message.error(option.value + this.t('ele-form.tagError'))
       }
     }
   },

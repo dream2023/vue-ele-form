@@ -27,6 +27,13 @@ import formMixin from '../mixins/formMixin'
 
 export default {
   name: 'EleFormCascader',
-  mixins: [formMixin]
+  mixins: [formMixin],
+  computed: {
+    defaultAttrs () {
+      return {
+        placeholder: this.t('ele-form.select') + this.desc.label
+      }
+    }
+  }
 }
 </script>

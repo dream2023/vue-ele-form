@@ -51,8 +51,8 @@
         </template>
         <!-- 操作按钮区 -->
         <el-form-item
-          style="margin-left: 5px;"
           class="ele-form-btns"
+          style="margin-left: 5px;"
           v-if="btns.length"
         >
           <!-- 按钮插槽 -->
@@ -138,7 +138,10 @@
             </el-row>
 
             <!-- 操作按钮区 -->
-            <el-form-item v-if="btns.length"  class="ele-form-btns">
+            <el-form-item
+              class="ele-form-btns"
+              v-if="btns.length"
+            >
               <!-- 按钮插槽 -->
               <slot
                 :btns="btns"
@@ -228,19 +231,9 @@ export default {
       default: null
     },
     // 返回按钮
-    backBtnText: {
-      type: String,
-      default () {
-        return t('ele-form.backBtnText')
-      }
-    },
+    backBtnText: String,
     // 重置按钮
-    resetBtnText: {
-      type: String,
-      default () {
-        return t('ele-form.resetBtnText')
-      }
-    },
+    resetBtnText: String,
     // 标签宽度
     labelWidth: {
       type: [Number, String],
@@ -303,7 +296,7 @@ export default {
           attrs: {
             size: formBtnSize
           },
-          text: this.backBtnText,
+          text: this.backBtnText || t('ele-form.backBtnText'),
           click: this.goBack
         })
       }
@@ -314,7 +307,7 @@ export default {
           attrs: {
             size: formBtnSize
           },
-          text: this.resetBtnText,
+          text: this.resetBtnText || t('ele-form.resetBtnText'),
           click: this.resetForm
         })
       }

@@ -22,16 +22,23 @@
 
 <script>
 import formMixin from '../mixins/formMixin'
-import { t } from '../locale'
 
 export default {
   name: 'EleFormPassword',
   mixins: [formMixin],
   data () {
     return {
-      type: ['Number', 'String'],
-      defaultAttrs: {
-        placeholder: t('ele-form.input') + this.desc.label
+      type: ['Number', 'String']
+    }
+  },
+  computed: {
+    defaultAttrs () {
+      return {
+        fetchSuggestions (s, cb) {
+          const res = []
+          cb(res)
+        },
+        placeholder: this.t('ele-form.input') + this.desc.label
       }
     }
   }

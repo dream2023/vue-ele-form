@@ -44,7 +44,6 @@
 </template>
 
 <script>
-import { t } from '../locale'
 
 import formMixin from '../mixins/formMixin'
 export default {
@@ -52,17 +51,19 @@ export default {
   mixins: [formMixin],
   data () {
     return {
-      type: ['String'],
-      defaultAttrs: {
+      type: ['String']
+    }
+  },
+  computed: {
+    defaultAttrs () {
+      return {
         fetchSuggestions (s, cb) {
           const res = []
           cb(res)
         },
-        placeholder: t('ele-form.input') + this.desc.label
+        placeholder: this.t('ele-form.input') + this.desc.label
       }
-    }
-  },
-  computed: {
+    },
     slots () {
       return this.desc && this.desc.slots ? this.desc.slots : {}
     }

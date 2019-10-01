@@ -12,17 +12,20 @@
 <script>
 import formMixin from '../mixins/formMixin'
 import timeMixin from '../mixins/timeMixin'
-import { t } from '../locale'
 
 export default {
   name: 'EleFormDate',
   mixins: [formMixin, timeMixin],
   data () {
     return {
-      type: ['Date', 'String', 'Number'],
-      defaultAttrs: {
+      type: ['Date', 'String', 'Number']
+    }
+  },
+  computed: {
+    defaultAttrs () {
+      return {
         type: 'date',
-        placeholder: t('ele-form.date')
+        placeholder: this.t('ele-form.date')
       }
     }
   }

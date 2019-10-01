@@ -22,17 +22,20 @@
 
 <script>
 import formMixin from '../mixins/formMixin'
-import { t } from '../locale'
 
 export default {
   name: 'EleFormTextarea',
   mixins: [formMixin],
   data () {
     return {
-      type: ['String', 'Number'],
-      defaultAttrs: {
+      type: ['String', 'Number']
+    }
+  },
+  computed: {
+    defaultAttrs () {
+      return {
         autosize: { minRows: 6 },
-        placeholder: t('ele-form.input') + this.desc.label
+        placeholder: this.t('ele-form.input') + this.desc.label
       }
     }
   }

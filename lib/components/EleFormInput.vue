@@ -20,16 +20,19 @@
 
 <script>
 import formMixin from '../mixins/formMixin'
-import { t } from '../locale'
 
 export default {
   name: 'EleFormInput',
   mixins: [formMixin],
   data () {
     return {
-      type: ['String', 'Number'],
-      defaultAttrs: {
-        placeholder: t('ele-form.input') + this.desc.label
+      type: ['String', 'Number']
+    }
+  },
+  computed: {
+    defaultAttrs () {
+      return {
+        placeholder: this.t('ele-form.input') + this.desc.label
       }
     }
   }
