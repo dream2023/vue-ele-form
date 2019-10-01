@@ -12,7 +12,7 @@
 <script>
 import formMixin from '../mixins/formMixin'
 import timerangeMixin from '../mixins/timerangeMixin'
-import { t } from 'element-ui/src/locale'
+import { t } from '../locale'
 
 export default {
   name: 'EleFormDates',

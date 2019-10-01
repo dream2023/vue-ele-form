@@ -22,7 +22,7 @@
 
 <script>
 import formMixin from '../mixins/formMixin'
-import { t } from 'element-ui/src/locale'
+import { t } from '../locale'
 
 export default {
   name: 'EleFormTextarea',

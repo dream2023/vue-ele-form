@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { t } from 'element-ui/src/locale'
+import { t } from '../locale'
 
 import formMixin from '../mixins/formMixin'
 export default {

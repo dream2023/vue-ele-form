@@ -164,7 +164,7 @@ import responsiveMixin from './mixins/responsiveMixin'
 import utils from './tools/utils'
 import { throttle } from 'throttle-debounce'
 import localeMixin from 'element-ui/src/mixins/locale'
-import { t } from 'element-ui/src/locale'
+import { t } from './locale'
 import { equal, intersection } from './tools/set'
 const cloneDeep = require('lodash.clonedeep')
 
