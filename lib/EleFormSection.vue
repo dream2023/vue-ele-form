@@ -2,9 +2,14 @@
   <ele-form
     :formDesc="formDesc"
     class="ele-form-section"
+    ref="section"
     v-bind="$attrs"
     v-on="$listeners"
   >
+    <!-- 默认插槽 -->
+    <template v-slot:default>
+      <slot />
+    </template>
     <template v-slot:form-content="{ formDesc, formData, formErrorObj }">
       <div
         :key="index"
@@ -14,7 +19,7 @@
         <slot
           :icon="section.icon"
           :title="section.title"
-          name="header"
+          name="section-header"
         >
           <div class="ele-form-section-header">
             <i
@@ -69,6 +74,21 @@
         </div>
       </div>
     </template>
+
+    <!-- 按钮区插槽 -->
+    <template v-slot:form-btn="{ btns }">
+      <slot
+        :btns="getBtns(btns)"
+        name="form-btn"
+      >
+        <el-button
+          :key="index"
+          @click="btn.click"
+          v-bind="btn.attrs"
+          v-for="(btn, index) of btns"
+        >{{ btn.text }}</el-button>
+      </slot>
+    </template>
   </ele-form>
 </template>
 
@@ -77,10 +97,6 @@ export default {
   name: 'EleFormSection',
   inheritAttrs: false,
   props: {
-    card: {
-      type: Boolean,
-      default: false
-    },
     sections: {
       type: Array,
       required: true
@@ -96,8 +112,16 @@ export default {
   data () {
     return {}
   },
-  methods: {},
-  mounted () { }
+  methods: {
+    getBtns (btns) {
+      return btns.map((item) => {
+        item.click = item.click.bind(this.$refs.section)
+        return item
+      })
+    }
+  },
+  mounted () {
+  }
 }
 </script>
 
@@ -110,5 +134,6 @@ export default {
   padding: 18px 0;
   border-bottom: 1px solid #ebeef5;
   box-sizing: border-box;
+  margin-bottom: 15px;
 }
 </style>
