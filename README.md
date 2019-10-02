@@ -16,6 +16,7 @@ vue-ele-form 是基于 [element-ui form](https://element.eleme.cn/#/zh-CN/compon
 - [表单分组](https://www.yuque.com/chaojie-vjiel/vbwzgu/ue72yy);
 - [联动](https://www.yuque.com/chaojie-vjiel/vbwzgu/rgenav)显示/隐藏、启用/禁用、重新获取 options 值
 - 可以通过[插槽](https://www.yuque.com/chaojie-vjiel/vbwzgu/cmerhn)自定义表单项;
+- 支持[国际化](https://www.yuque.com/chaojie-vjiel/vbwzgu/gh11wg);
 - 压缩后只有几十 KB 大小。
 
 而上面所说的一切只需要一行 html 和 数据即可实现, 即保证了质量, 又使得开发速度仿佛坐上 🚀!
@@ -54,11 +55,12 @@ Vue.use(EleForm)
 
 ## 开发规划
 
-- 更新演示 DEMO
+- 增加树形组件
+- 增加mock功能
+- 重写文档
 - 增加 CI 和 CD
 - 增加视频源码讲解
 - 增加单元测试 和 E2E 测试
-- 国际化
 - 增加 iview 和 ant-design for vue 支持
 
 ## 脑图

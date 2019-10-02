@@ -8,6 +8,7 @@
       <form-desc-demo />
       <form-desc-props />
       <form-group />
+      <form-section />
       <form-desc-type />
     </div>
   </div>
@@ -18,6 +19,7 @@ import AppHeader from './AppHeader'
 import FormDescDemo from './FormDescDemo'
 import FormDescProps from './FormDescProps'
 import FormGroup from './FormGroup'
+import FormSection from './FormSection'
 import FormDescType from './FormDescType'
 
 export default {
@@ -34,6 +36,7 @@ export default {
     AppHeader,
     FormDescDemo,
     FormDescProps,
+    FormSection,
     FormGroup,
     FormDescType
   },
