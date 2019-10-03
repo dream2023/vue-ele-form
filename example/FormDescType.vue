@@ -296,27 +296,6 @@ export default {
     type: 'image',
     default: 'https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg'
   },
-  gallery: {
-    label: '图片/视频展示',
-    type: 'gallery',
-    attrs: {
-      size: 100
-    },
-    default: ['https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg'],
-    slots: {
-      default (h, data) {
-        return h('img', {
-          style: {
-            width: '200px',
-            height: '200px'
-          },
-          attrs: {
-            src: data.source.src
-          }
-        })
-      }
-    }
-  },
   button: {
     label: '按钮',
     type: 'button',
