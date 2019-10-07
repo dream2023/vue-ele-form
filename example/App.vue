@@ -9,6 +9,7 @@
       <form-desc-props />
       <form-group />
       <form-section />
+      <form-dialog />
       <form-desc-type />
     </div>
   </div>
@@ -20,6 +21,7 @@ import FormDescDemo from './FormDescDemo'
 import FormDescProps from './FormDescProps'
 import FormGroup from './FormGroup'
 import FormSection from './FormSection'
+import FormDialog from './FormDialog'
 import FormDescType from './FormDescType'
 
 export default {
@@ -38,6 +40,7 @@ export default {
     FormDescProps,
     FormSection,
     FormGroup,
+    FormDialog,
     FormDescType
   },
   data () {

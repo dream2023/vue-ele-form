@@ -225,6 +225,11 @@ export default {
       type: Boolean,
       default: true
     },
+    // 是否显示 cancel 取消按钮
+    isShowCancelBtn: {
+      type: Boolean,
+      default: false
+    },
     // 是否显示back按钮
     // 默认值: 当 inline 为true时, 不显示; inline 为 false时, 显示. 具体请看计算属性: computedIsShowBackBtn
     isShowBackBtn: {
@@ -246,6 +251,8 @@ export default {
     backBtnText: String,
     // 重置按钮
     resetBtnText: String,
+    // 取消按钮
+    cancelBtnText: String,
     // 标签宽度
     labelWidth: {
       type: [Number, String],
@@ -308,6 +315,17 @@ export default {
           },
           text: this.backBtnText || t('ele-form.backBtnText'),
           click: this.goBack
+        })
+      }
+
+      // 取消按钮
+      if (this.isShowCancelBtn) {
+        btns.push({
+          attrs: {
+            size: formBtnSize
+          },
+          text: this.cancelBtnText || t('ele-form.cancelBtnText'),
+          click: this.handleCancelClick
         })
       }
 
@@ -522,7 +540,7 @@ export default {
       }
     },
     // 验证表单
-    async handleValidateForm () {
+    handleValidateForm () {
       if (this.rules) {
         // 当传递了验证规则
         this.$refs['form'].validate((valid, invalidFields) => {
@@ -640,6 +658,10 @@ export default {
         // 浏览器history API
         history.back()
       }
+    },
+    // 点击取消按钮
+    handleCancelClick () {
+      this.$emit('close')
     },
     // 重置表单
     resetForm () {

@@ -62,12 +62,14 @@ const builtInNamesTemplate = getBuiltInNameTemplate(ComponentNames)
 const MAIN_TEMPLATE = `import locale from './locale'
 import EleForm from './EleForm'
 import EleFormGroup from './EleFormGroup'
+import EleFormDialog from './EleFormDialog'
 import EleFormSection from './EleFormSection'
 {{include}}
 
 const components = [
   EleForm,
   EleFormGroup,
+  EleFormDialog,
   EleFormSection,
 {{install}}
 ]
@@ -94,6 +96,7 @@ export default {
   install,
   EleForm,
   EleFormGroup,
+  EleFormDialog,
   EleFormSection,
 {{install}}
 }
