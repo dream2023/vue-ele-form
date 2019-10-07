@@ -106,7 +106,7 @@ export default {
     type: 'input',
     label: '女朋友姓名',
     vshow (data) { return data.girlFriend }
-  }
+  },
   motto: {
     type: 'text',
     label: '人生格言',
@@ -150,7 +150,9 @@ export default {
         if (this.checkType(codeData)) {
           this.formDesc = codeData
         }
-      } catch { }
+      } catch (error) {
+        console.log(code, error)
+      }
     }
   },
   created () {
