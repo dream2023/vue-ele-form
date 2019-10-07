@@ -4,48 +4,50 @@
     v-model="currentGroupId"
     v-on="tabOn"
   >
-    <el-tab-pane
-      :key="item.groupId"
-      :label="item.groupLabel"
-      :name="item.groupId"
-      v-for="item of computedGroups"
-    >
-      <ele-form
-        v-bind="item.form"
-        v-if="item.groupId === currentGroupId"
-        v-on="item.on"
+    <template v-for="item of computedGroups">
+      <el-tab-pane
+        :key="item.groupId"
+        :label="item.groupLabel"
+        :name="item.groupId"
+        v-if="getVif(item)"
       >
-        <template
-          v-for="(formItem, key, index) of item.form.formDesc"
-          v-slot:[key]="{desc, field}"
+        <ele-form
+          v-bind="item.form"
+          v-if="item.groupId === currentGroupId"
+          v-on="item.on"
         >
-          <slot
-            :data="item.form.formData[field]"
-            :desc="desc"
-            :field="field"
-            :formData="item.form.formData"
-            :name="item.groupId + '-' + key"
+          <template
+            v-for="(formItem, key, index) of item.form.formDesc"
+            v-slot:[key]="{desc, field}"
           >
-            <component
-              :_disabled="desc._disabled"
+            <slot
+              :data="item.form.formData[field]"
               :desc="desc"
-              :is="desc.type"
-              :key="index"
-              :options="desc._options"
-              v-model="item.form.formData[field]"
-            />
-          </slot>
-        </template>
+              :field="field"
+              :formData="item.form.formData"
+              :name="item.groupId + '-' + key"
+            >
+              <component
+                :_disabled="desc._disabled"
+                :desc="desc"
+                :is="desc.type"
+                :key="index"
+                :options="desc._options"
+                v-model="item.form.formData[field]"
+              />
+            </slot>
+          </template>
 
-        <!-- 按钮插槽 -->
-        <template v-slot:form-btn="{ btns }">
-          <slot
-            :btns="btns"
-            :name="item.groupId + '-form-btn'"
-          ></slot>
-        </template>
-      </ele-form>
-    </el-tab-pane>
+          <!-- 按钮插槽 -->
+          <template v-slot:form-btn="{ btns }">
+            <slot
+              :btns="btns"
+              :name="item.groupId + '-form-btn'"
+            ></slot>
+          </template>
+        </ele-form>
+      </el-tab-pane>
+    </template>
   </el-tabs>
 </template>
 
@@ -69,6 +71,10 @@ export default {
     activeGroupId: [String, Number]
   },
   computed: {
+    // 所有组的表单值
+    allFormData () {
+      return this.computedGroups.reduce((acc, group) => Object.assign(acc, group.form.formData), {})
+    },
     // tabs的属性
     attrs () {
       return Object.assign({}, { type: 'border-card' }, this.tabAttrs)
@@ -88,6 +94,15 @@ export default {
     }
   },
   methods: {
+    getVif (group) {
+      if (typeof group.vif === 'function') {
+        return group.vif(this.allFormData)
+      } else if (typeof group.vif === 'boolean') {
+        return group.vif
+      } else {
+        return true
+      }
+    },
     getComponentName (type) {
       if (this.$EleFormBuiltInNames.includes(type)) {
         // 内置组件
