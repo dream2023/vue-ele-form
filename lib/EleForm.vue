@@ -287,7 +287,7 @@ export default {
   computed: {
     // 是否显示模拟数按钮
     isShowMockBtn () {
-      return this.mock || Object.keys(this.formDesc).some((field) => this.formDesc[field].mock)
+      return !utils.isProd() && (this.mock || Object.keys(this.formDesc).some((field) => this.formDesc[field].mock))
     },
     // 按钮
     btns () {
@@ -410,7 +410,7 @@ export default {
             this.changeOptions(desc[field].options, field)
 
             // 设置 mock 状态
-            if (process.env.NODE_ENV !== 'production' && this.mock && utils.isUnDef(desc[field].mock)) {
+            if (!utils.isProd() && this.mock && utils.isUnDef(desc[field].mock)) {
               desc[field].mock = true
             }
           })
