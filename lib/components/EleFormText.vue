@@ -15,6 +15,7 @@ export default {
   mixins: [formMixin],
   data () {
     return {
+      mockRule: '@ctitle',
       type: ['String', 'Number']
     }
   },

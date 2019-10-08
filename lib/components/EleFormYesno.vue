@@ -23,6 +23,11 @@ import utils from '../tools/utils'
 export default {
   name: 'EleFormYesno',
   mixins: [formMixin],
+  data () {
+    return {
+      mockRule: '@boolean'
+    }
+  },
   methods: {
     customInit (val) {
       return Boolean(val)

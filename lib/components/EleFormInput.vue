@@ -26,6 +26,7 @@ export default {
   mixins: [formMixin],
   data () {
     return {
+      mockRule: '@string',
       type: ['String', 'Number']
     }
   },

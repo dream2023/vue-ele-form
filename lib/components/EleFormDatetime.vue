@@ -18,6 +18,7 @@ export default {
   mixins: [formMixin, timeMixin],
   data () {
     return {
+      mockRule: '@datetime',
       type: ['Date', 'String', 'Number']
     }
   },

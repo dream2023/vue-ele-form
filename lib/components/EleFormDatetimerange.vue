@@ -17,12 +17,28 @@ import timerangeMixin from '../mixins/timerangeMixin'
 export default {
   name: 'EleFormDatetimerange',
   mixins: [formMixin, timerangeMixin],
+  data () {
+    return {
+      mockRule: 'custom'
+    }
+  },
   computed: {
     defaultAttrs () {
       return {
         type: 'datetimerange',
         'start-placeholder': this.t('ele-form.startDate'),
         'end-placeholder': this.t('ele-form.endDate')
+      }
+    }
+  },
+  methods: {
+    getCustomMockData () {
+      const date1 = this.mockFn('@datetime')
+      const date2 = this.mockFn('@datetime')
+      if (date1 > date2) {
+        return [date2, date1]
+      } else {
+        return [date1, date2]
       }
     }
   }

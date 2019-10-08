@@ -18,6 +18,11 @@ export default {
       type: [Number, String],
       default: 0
     }
+  },
+  data () {
+    return {
+      mockRule: '@integer(-100, 100)'
+    }
   }
 }
 </script>

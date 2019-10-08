@@ -28,10 +28,44 @@ import formMixin from '../mixins/formMixin'
 export default {
   name: 'EleFormCascader',
   mixins: [formMixin],
+  data () {
+    return {
+      mockRule: 'custom'
+    }
+  },
   computed: {
     defaultAttrs () {
       return {
-        placeholder: this.t('ele-form.select') + this.desc.label
+        placeholder: this.t('ele-form.select') + this.desc.label,
+        props: {
+          value: 'value',
+          label: 'label',
+          children: 'children'
+        }
+      }
+    }
+  },
+  methods: {
+    getCustomMockData () {
+      const optionsTo2D = function (tree, key, stack = [], pathList = []) {
+        if (!tree) return
+        for (let data of tree) {
+          stack.push(data[key])
+          if (data.children && data.children.length) {
+            optionsTo2D(data.children, key, stack, pathList)
+          } else {
+            pathList.push([...stack])
+          }
+          stack.pop(data[key])
+        }
+        return pathList
+      }
+      const props = Object.assign({ value: 'value' }, this.attrs.props)
+      const options = optionsTo2D(this.options, props.value)
+      if (this.attrs && this.attrs.multiple) {
+        return this.randomFn.multiple(options)
+      } else {
+        return this.randomFn.pick(options)
       }
     }
   }

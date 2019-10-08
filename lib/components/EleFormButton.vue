@@ -20,6 +20,11 @@ import formMixin from '../mixins/formMixin'
 
 export default {
   name: 'EleFormButton',
-  mixins: [formMixin]
+  mixins: [formMixin],
+  data () {
+    return {
+      mockRule: false
+    }
+  }
 }
 </script>

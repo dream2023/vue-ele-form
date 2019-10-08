@@ -33,6 +33,7 @@ export default {
   data () {
     return {
       type: 'Array',
+      mockRule: 'checkbox',
       newValue: []
     }
   },

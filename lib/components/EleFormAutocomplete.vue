@@ -51,7 +51,8 @@ export default {
   mixins: [formMixin],
   data () {
     return {
-      type: ['String']
+      type: ['String'],
+      mockRule: '@string'
     }
   },
   computed: {

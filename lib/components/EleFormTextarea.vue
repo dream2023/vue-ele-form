@@ -28,6 +28,7 @@ export default {
   mixins: [formMixin],
   data () {
     return {
+      mockRule: '@cparagraph',
       type: ['String', 'Number']
     }
   },

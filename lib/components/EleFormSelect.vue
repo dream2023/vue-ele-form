@@ -48,6 +48,7 @@ export default {
   mixins: [formMixin],
   data () {
     return {
+      mockRule: 'radio',
       type: ['Boolean', 'Number', 'String', 'Array']
     }
   },

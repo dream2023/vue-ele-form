@@ -29,6 +29,7 @@ export default {
         width: '150px',
         height: '150px'
       },
+      mockRule: '@image',
       defaultAttrs: {
         fit: 'cover'
       }

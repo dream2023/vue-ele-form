@@ -16,12 +16,22 @@ import timerangeMixin from '../mixins/timerangeMixin'
 export default {
   name: 'EleFormDates',
   mixins: [formMixin, timerangeMixin],
+  data () {
+    return {
+      mockRule: 'custom'
+    }
+  },
   computed: {
     defaultAttrs () {
       return {
         type: 'dates',
         placeholder: this.t('ele-form.dates')
       }
+    }
+  },
+  methods: {
+    getCustomMockData () {
+      return Array.from({ length: this.randomFn.integer(0, 5) }, () => this.randomFn.date())
     }
   }
 }

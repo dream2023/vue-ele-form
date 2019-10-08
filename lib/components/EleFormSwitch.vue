@@ -15,6 +15,11 @@ import utils from '../tools/utils'
 export default {
   name: 'EleFormSwitch',
   mixins: [formMixin],
+  data () {
+    return {
+      mockRule: '@boolean'
+    }
+  },
   methods: {
     customInit (val) {
       return Boolean(val)

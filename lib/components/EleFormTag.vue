@@ -29,6 +29,7 @@ export default {
   mixins: [formMixin],
   data () {
     return {
+      mockRule: 'custom',
       originHandleOptionSelect: null,
       type: ['Array']
     }
@@ -54,6 +55,9 @@ export default {
       } else {
         this.$message.error(option.value + this.t('ele-form.tagError'))
       }
+    },
+    getCustomMockData () {
+      return Array.from({ length: this.randomFn.integer(0, 5) }, () => this.randomFn.cword(3, 5))
     }
   },
   mounted () {

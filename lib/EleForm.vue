@@ -45,6 +45,7 @@
                     :desc="formItem"
                     :is="formItem.type"
                     :options="formItem._options"
+                    :ref="field"
                     v-model="formData[field]"
                   />
                 </slot>
@@ -136,6 +137,7 @@
                             :desc="formItem"
                             :is="formItem.type"
                             :options="formItem._options"
+                            :ref="field"
                             v-model="formData[field]"
                           />
                         </slot>
@@ -181,12 +183,14 @@ import { throttle } from 'throttle-debounce'
 import localeMixin from 'element-ui/src/mixins/locale'
 import { t } from './locale'
 import { equal, intersection } from './tools/set'
+import provide from './tools/provide'
 const cloneDeep = require('lodash.clonedeep')
 
 export default {
   name: 'EleForm',
   // 响应式单独抽离出来作为mixin, 具体实现请到 responsiveMixin 中查看
   mixins: [responsiveMixin, localeMixin],
+  provide: provide,
   props: {
     // 表单描述
     formDesc: {
@@ -207,6 +211,11 @@ export default {
     formAttrs: Object,
     // 校检规则
     rules: Object,
+    // 模拟数据
+    mock: {
+      type: Boolean,
+      default: false
+    },
     // 提交状态
     isLoading: {
       type: Boolean,
@@ -276,10 +285,26 @@ export default {
     }
   },
   computed: {
+    // 是否显示模拟数按钮
+    isShowMockBtn () {
+      return this.mock || Object.keys(this.formDesc).some((field) => this.formDesc[field].mock)
+    },
     // 按钮
     btns () {
       const formBtnSize = this.formBtnSize
       let btns = []
+      // 模拟数据
+      if (this.isShowMockBtn) {
+        btns.push({
+          attrs: {
+            type: 'primary',
+            size: formBtnSize
+          },
+          text: t('ele-form.mockBtnText'),
+          click: this.reMockData
+        })
+      }
+
       // 提交按钮
       if (this.isShowSubmitBtn) {
         btns.push({
@@ -383,6 +408,11 @@ export default {
 
             // 设置 options
             this.changeOptions(desc[field].options, field)
+
+            // 设置 mock 状态
+            if (process.env.NODE_ENV !== 'production' && this.mock && utils.isUnDef(desc[field].mock)) {
+              desc[field].mock = true
+            }
           })
 
           // 检查联动
@@ -408,6 +438,12 @@ export default {
     }
   },
   methods: {
+    // 重新模拟数据
+    reMockData () {
+      Object.keys(this.formDesc).forEach((field) => {
+        this.$refs[field][0].mockData()
+      })
+    },
     // 检测联动
     checkLinkage () {
       if (this.checkVifFn) {

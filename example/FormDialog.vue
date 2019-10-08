@@ -73,10 +73,10 @@ export default {
         },
         date: {
           type: 'date',
-          label: '年龄',
+          label: '日期',
           valueFormatter (value) {
             const date = new Date(value * 1000)
-            return date.getFullYear() + '/' + date.getMonth() + '/' + date.getDate()
+            return date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate()
           }
         },
         address: {

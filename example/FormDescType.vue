@@ -9,6 +9,7 @@
         <ele-form
           :formData="formData"
           :formDesc="formDesc"
+          :mock="true"
           :request-fn="handleSubmit"
           @request-success="handleSuccess"
         />
@@ -110,9 +111,6 @@ export default {
       { text: '上海', value: 'shanghai' }
     ],
     slots: {
-      default (h, data) {
-        return h('el-option', { attrs: { value: '123', label: '测试' } })
-      },
       prefix (h) {
         return h('i', { 'class': 'el-icon-edit el-input__icon' })
       }
@@ -235,7 +233,10 @@ export default {
   },
   datetime: {
     label: '日期时间',
-    type: 'datetime'
+    type: 'datetime',
+    mock () {
+      return '2019-10-10 10:10'
+    }
   },
   datetimerange: {
     label: '日期时间范围',
@@ -243,7 +244,8 @@ export default {
   },
   number: {
     label: '数字',
-    type: 'number'
+    type: 'number',
+    mock: '@integer(0, 100)'
   },
   switch: {
     label: '开关',
