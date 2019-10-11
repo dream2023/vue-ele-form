@@ -5,6 +5,7 @@
   "license": "MIT",
   "private": false,
   "scripts": {
+    "commit": "git-cz",
     "build:entry": "node build/build-entry.js",
     "serve": "npm run build:entry && vue-cli-service serve",
     "build:lib": "npm run build:entry && vue-cli-service build --target lib --name vue-ele-form --dest ./dist/ ./lib/index.js",
@@ -48,9 +49,20 @@
     "lint-staged": "^8.1.5",
     "mockjs": "^1.0.1-beta3",
     "vue-ele-form-codemirror": "^0.1.0",
-    "vue-template-compiler": "^2.6.10"
+    "vue-template-compiler": "^2.6.10",
+    "@commitlint/cli": "^8.2.0",
+    "@commitlint/config-conventional": "^8.2.0",
+    "commitizen": "^4.0.3",
+    "cz-conventional-changelog": "^3.0.2",
+    "husky": "^3.0.8"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-conventional-changelog"
+    }
   },
   "gitHooks": {
-    "pre-commit": "npm run lint"
+    "pre-commit": "npm run lint",
+    "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
   }
 }
