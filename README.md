@@ -53,15 +53,20 @@ import EleForm from 'vue-ele-form'
 Vue.use(EleForm)
 ```
 
-## 开发规划
+## [开发规划](https://github.com/dream2023/vue-ele-form/projects/1)
 
 - 增加树形组件
-- 增加 mock 功能
 - 重写文档
 - 增加 CI 和 CD
 - 增加视频源码讲解
 - 增加单元测试 和 E2E 测试
 - 增加 iview 和 ant-design for vue 支持
+
+## 贡献指北
+
+- 如果发现了 BUG, 不要着急, 先去 [issues](https://github.com/dream2023/vue-ele-form/issues) 里搜索一下, 如果没有找到类似的解决方案, 可以提一个 BUG, 如果知道怎么修复它就更好了, 请参考 [贡献指北](./CONTRIBUTING.md)文档;
+- 如果有新功能 或者 建议, 也需要先在 [issues](https://github.com/dream2023/vue-ele-form/issues) 中提出来, 如果能用代码实现, 就更好了, 请参考 [贡献指北](./CONTRIBUTING.md)文档;
+- 如果想贡献代码, 可以在[开发规划](https://github.com/dream2023/vue-ele-form/projects)中找一个未完成的功能, 进行完善, 请参考 [贡献指北](./CONTRIBUTING.md) 文档。
 
 ## 脑图
 
