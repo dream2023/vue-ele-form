@@ -60,9 +60,5 @@
     "commitizen": {
       "path": "node_modules/cz-conventional-changelog"
     }
-  },
-  "gitHooks": {
-    "pre-commit": "npm run lint",
-    "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
   }
 }
