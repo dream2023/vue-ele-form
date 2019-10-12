@@ -33,14 +33,13 @@
   "dependencies": {
     "dayjs": "^1.8.15",
     "lodash.clonedeep": "^4.5.0",
-    "throttle-debounce": "^2.1.0"
-  },
-  "peerDependencies": {
-    "core-js": "^2.6.5",
-    "element-ui": "^2.11.1",
-    "vue": "^2.6.10"
+    "throttle-debounce": "^2.1.0",
+    "mockjs": "^1.0.1-beta3"
   },
   "devDependencies": {
+    "core-js": "^2.6.5",
+    "element-ui": "^2.11.1",
+    "vue": "^2.6.10",
     "@vue/cli-plugin-babel": "^3.8.0",
     "@vue/cli-plugin-eslint": "^3.8.0",
     "@vue/cli-service": "^3.8.0",
@@ -50,7 +49,6 @@
     "eslint-plugin-vue": "^5.0.0",
     "json-templater": "^1.2.0",
     "lint-staged": "^8.1.5",
-    "mockjs": "^1.0.1-beta3",
     "vue-ele-form-codemirror": "^0.1.0",
     "vue-template-compiler": "^2.6.10",
     "@commitlint/cli": "^8.2.0",
