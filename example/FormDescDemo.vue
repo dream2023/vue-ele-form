@@ -10,6 +10,7 @@
           :formData="formData"
           :formDesc="formDesc"
           :request-fn="handleSubmit"
+          :rules="rules"
           @request-success="handleSuccess"
         />
       </div>
@@ -28,6 +29,14 @@ export default {
   inject: ['checkType'],
   data () {
     return {
+      rules: {
+        author: [
+          { required: true, message: '请输入作者', trigger: 'blur' }
+        ],
+        title: [
+          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+        ]
+      },
       formDesc: {},
       code: `{
   author: {
@@ -38,7 +47,10 @@ export default {
   },
   title: {
     type: 'input',
-    label: '标题'
+    label: '标题',
+    rules: [
+      { required: true, message: '请输入标题', trigger: 'blur' }
+    ]
   },
   content: {
     type: 'textarea',
