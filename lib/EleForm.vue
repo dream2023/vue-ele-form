@@ -414,7 +414,7 @@ export default {
         }
 
         if (formRules || formItemRules) {
-          rules[field] = [...(formRules || []), ...(formItemRules || [])]
+          rules[field] = [...(formItemRules || []), ...(formRules || [])]
         }
 
         return rules
