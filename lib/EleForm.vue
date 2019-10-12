@@ -10,7 +10,7 @@
         :label-position="labelPosition || 'right'"
         :label-width="computedLabelWidth"
         :model="formData"
-        :rules="rules"
+        :rules="computedRules"
         @submit.native.prevent="handleValidateForm"
         ref="form"
         v-bind="formAttrs"
@@ -95,7 +95,7 @@
             :label-position="formLabelPosition"
             :label-width="computedLabelWidth"
             :model="formData"
-            :rules="rules"
+            :rules="computedRules"
             @submit.native.prevent="handleValidateForm"
             ref="form"
             v-bind="formAttrs"
@@ -210,7 +210,10 @@ export default {
     // 表单自身属性
     formAttrs: Object,
     // 校检规则
-    rules: Object,
+    rules: {
+      type: Object,
+      default () { return {} }
+    },
     // 模拟数据
     mock: {
       type: Boolean,
@@ -395,6 +398,27 @@ export default {
     // 表单错误信息
     formErrorObj () {
       return Object.assign({}, this.innerFormError, this.formError)
+    },
+    // 校检规则
+    computedRules () {
+      return Object.keys(this.formDesc).reduce((rules, field) => {
+        let formRules = rules[field]
+        let formItemRules = this.formDesc[field].rules
+
+        // 转为数组
+        if (formRules && !Array.isArray(formRules)) {
+          formRules = [formRules]
+        }
+        if (formItemRules && !Array.isArray(formItemRules)) {
+          formItemRules = [formItemRules]
+        }
+
+        if (formRules || formItemRules) {
+          rules[field] = [...(formRules || []), ...(formItemRules || [])]
+        }
+
+        return rules
+      }, this.rules || {})
     }
   },
   watch: {
@@ -577,7 +601,7 @@ export default {
     },
     // 验证表单
     handleValidateForm () {
-      if (this.rules) {
+      if (this.computedRules) {
         // 当传递了验证规则
         this.$refs['form'].validate((valid, invalidFields) => {
           if (valid) {
