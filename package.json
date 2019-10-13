@@ -12,7 +12,7 @@
     "build:lib": "npm run bootstrap && npm run build:entry && vue-cli-service build --target lib --name vue-ele-form --dest ./dist/ ./lib/index.js",
     "build:docs": "npm run bootstrap && vue-cli-service build",
     "build": "npm run bootstrap && npm run lint && npm run build:entry & npm run build:lib && npm run build:docs",
-    "lint": "vue-cli-service lint lib/* example/*",
+    "lint": "vue-cli-service --mode production lint lib/* example/*",
     "release": "standard-version",
     "pub": "npm run bootstrap && sh build/git-release.sh && git push --follow-tags origin master && npm publish"
   },
