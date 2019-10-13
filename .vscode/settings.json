@@ -1,0 +1,50 @@
+{
+  // 函数前面插入空格
+  "javascript.format.insertSpaceBeforeFunctionParenthesis": true,
+  "typescript.format.insertSpaceBeforeFunctionParenthesis": true,
+  // 对象不加空格
+  "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
+  "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
+  // 单引号
+  "javascript.preferences.quoteStyle": "single",
+  "typescript.preferences.quoteStyle": "single",
+  // 换行
+  "vetur.format.defaultFormatterOptions": {
+    "js-beautify-html": {
+      "wrap_attributes": "auto"
+    },
+    "prettyhtml": {
+      "printWidth": 100,
+      "wrapAttributes": true,
+      "sortAttributes": true
+    },
+    "prettier": {
+      "semi": false,
+      "singleQuote": true,
+      "jsxSingleQuote": true
+    }
+  },
+  // prettier 单引号
+  "prettier.jsxSingleQuote": true,
+  "prettier.singleQuote": true,
+  // 不加分号
+  "prettier.semi": false,
+  // 对象不加空格
+  "eslint.autoFixOnSave": false,
+  // eslint检测的文件类型
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "html",
+    {
+      "language": "vue",
+      "autoFix": true
+    }
+  ],
+  "vetur.format.defaultFormatter.js": "vscode-typescript",
+  "vetur.format.defaultFormatter.ts": "prettier-tslint",
+  // 格式化
+  "[javascript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  }
+}
