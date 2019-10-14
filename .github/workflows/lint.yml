@@ -5,6 +5,10 @@ on:
     paths:
       - lib/**
       - example/**
+  pull_request:
+    paths:
+      - lib/**
+      - example/**
 
 jobs:
   lint:
