@@ -4,7 +4,7 @@ const isProd = process.env.NODE_ENV === 'production'
 module.exports = {
   css: { extract: false },
   outputDir: 'docs',
-  publicPath: isProd ? '/vue-ele-form' : '/',
+  publicPath: isProd ? './' : '/',
   configureWebpack: {
     entry: './example/main.js',
     output: {
