@@ -2,9 +2,9 @@ name: push
 
 on:
   push:
-  paths:
-    - lib/**
-    - example/**
+    paths:
+      - lib/**
+      - example/**
 
 jobs:
   lint:
