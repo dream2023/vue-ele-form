@@ -1,0 +1,17 @@
+name: pull-request
+
+on:
+  pull_request:
+    branches: master
+    paths:
+      - lib/**
+      - example/**
+
+jobs:
+  pull-request:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+
+      - name: build
+        run: yarn build
