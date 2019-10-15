@@ -68,6 +68,7 @@ export default {
   },
   methods: {
     handleSubmit (data) {
+      /* eslint-disable */
       console.log(data)
       return Promise.resolve()
     },

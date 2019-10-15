@@ -1,0 +1,20 @@
+name: push
+
+on:
+  push:
+    paths:
+      - lib/**
+      - example/**
+  pull_request:
+    paths:
+      - lib/**
+      - example/**
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - run: |
+          yarn
+          yarn lint
