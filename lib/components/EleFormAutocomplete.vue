@@ -7,38 +7,14 @@
     v-model="newValue"
     v-on="onEvents"
   >
-    <template
-      v-if="slots.default"
-      v-slot:default="data"
-    >
-      <extend-slot
-        :data="data"
-        :render="slots.default"
-      />
+    <!-- 作用域插槽 -->
+    <template v-for="(render, key) of desc.slots" v-slot:[key]="data">
+      <extend-slot :data="data" :key="key" :render="render" />
     </template>
-    <template
-      v-if="slots.prefix"
-      v-slot:prefix
-    >
-      <extend-slot :render="slots.prefix" />
-    </template>
-    <template
-      v-if="slots.suffix"
-      v-slot:suffix
-    >
-      <extend-slot :render="slots.suffix" />
-    </template>
-    <template
-      v-if="slots.append"
-      v-slot:append
-    >
-      <extend-slot :render="slots.append" />
-    </template>
-    <template
-      v-if="slots.append"
-      v-slot:append
-    >
-      <extend-slot :render="slots.append" />
+
+    <!-- 非作用域插槽 -->
+    <template v-for="(render, key) of desc.slots" v-slot:[key]>
+      <extend-slot :key="key" :render="render" />
     </template>
   </el-autocomplete>
 </template>

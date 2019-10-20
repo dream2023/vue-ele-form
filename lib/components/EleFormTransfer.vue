@@ -8,16 +8,14 @@
     v-model="newValue"
     v-on="onEvents"
   >
-    <!-- 组件内部插槽 -->
-    <template
-      v-for="(render, key) of desc.slots"
-      v-slot:[key]="data"
-    >
-      <extend-slot
-        :data="data"
-        :key="key"
-        :render="render"
-      />
+    <!-- 作用域插槽 -->
+    <template v-for="(render, key) of desc.slots" v-slot:[key]="data">
+      <extend-slot :data="data" :key="key" :render="render" />
+    </template>
+
+    <!-- 非作用域插槽 -->
+    <template v-for="(render, key) of desc.slots" v-slot:[key]>
+      <extend-slot :key="key" :render="render" />
     </template>
   </el-transfer>
 </template>
