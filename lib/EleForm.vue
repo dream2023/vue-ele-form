@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="ele-form"
-    ref="wrapper"
-  >
+  <div class="ele-form" ref="wrapper">
     <!-- inline模式 -->
     <template v-if="inline">
       <el-form
@@ -11,7 +8,7 @@
         :label-width="computedLabelWidth"
         :model="formData"
         :rules="computedRules"
-        @submit.native.prevent="handleValidateForm"
+        @submit.native.prevent="handleSubmitForm"
         ref="form"
         v-bind="formAttrs"
       >
@@ -49,10 +46,9 @@
                     v-model="formData[field]"
                   />
                 </slot>
-                <div
-                  class="ele-form-tip"
-                  v-if="formItem.tip"
-                >{{ formItem.tip }}</div>
+                <div class="ele-form-tip" v-if="formItem.tip">
+                  {{ formItem.tip }}
+                </div>
               </el-form-item>
             </slot>
           </template>
@@ -64,16 +60,14 @@
           v-if="btns.length"
         >
           <!-- 按钮插槽 -->
-          <slot
-            :btns="btns"
-            name="form-btn"
-          >
+          <slot :btns="btns" name="form-btn">
             <el-button
               :key="index"
               @click="btn.click"
               v-bind="btn.attrs"
               v-for="(btn, index) of btns"
-            >{{ btn.text }}</el-button>
+              >{{ btn.text }}</el-button
+            >
           </slot>
         </el-form-item>
       </el-form>
@@ -85,10 +79,7 @@
 
     <!-- layout布局模式 -->
     <template v-else>
-      <el-row
-        justify="center"
-        type="flex"
-      >
+      <el-row justify="center" type="flex">
         <el-col :span="formSpan">
           <!-- 表单 -->
           <el-form
@@ -96,7 +87,7 @@
             :label-width="computedLabelWidth"
             :model="formData"
             :rules="computedRules"
-            @submit.native.prevent="handleValidateForm"
+            @submit.native.prevent="handleSubmitForm"
             ref="form"
             v-bind="formAttrs"
           >
@@ -141,10 +132,9 @@
                             v-model="formData[field]"
                           />
                         </slot>
-                        <div
-                          class="ele-form-tip"
-                          v-if="formItem.tip"
-                        >{{ formItem.tip }}</div>
+                        <div class="ele-form-tip" v-if="formItem.tip">
+                          {{ formItem.tip }}
+                        </div>
                       </el-form-item>
                     </el-col>
                   </slot>
@@ -152,21 +142,16 @@
               </el-row>
             </slot>
             <!-- 操作按钮区 -->
-            <el-form-item
-              class="ele-form-btns"
-              v-if="btns.length"
-            >
+            <el-form-item class="ele-form-btns" v-if="btns.length">
               <!-- 按钮插槽 -->
-              <slot
-                :btns="btns"
-                name="form-btn"
-              >
+              <slot :btns="btns" name="form-btn">
                 <el-button
                   :key="index"
                   @click="btn.click"
                   v-bind="btn.attrs"
                   v-for="(btn, index) of btns"
-                >{{ btn.text }}</el-button>
+                  >{{ btn.text }}</el-button
+                >
               </slot>
             </el-form-item>
           </el-form>
@@ -290,7 +275,7 @@ export default {
   computed: {
     // 是否显示模拟数按钮
     isShowMockBtn () {
-      return !utils.isProd() && (this.mock || Object.keys(this.formDesc).some((field) => this.formDesc[field].mock))
+      return !utils.isProd() && (this.mock || this.formDescKeys.some((field) => this.formDesc[field].mock))
     },
     // 按钮
     btns () {
@@ -401,7 +386,7 @@ export default {
     },
     // 校检规则
     computedRules () {
-      return Object.keys(this.formDesc).reduce((rules, field) => {
+      return this.formDescKeys.reduce((rules, field) => {
         let formRules = rules[field]
         let formItemRules = this.formDesc[field].rules
 
@@ -419,6 +404,10 @@ export default {
 
         return rules
       }, this.rules || {})
+    },
+    // formDesc的key
+    formDescKeys () {
+      return Object.keys(this.formDesc)
     }
   },
   watch: {
@@ -464,7 +453,7 @@ export default {
   methods: {
     // 重新模拟数据
     reMockData () {
-      Object.keys(this.formDesc).forEach((field) => {
+      this.formDescKeys.forEach((field) => {
         this.$refs[field][0].mockData()
       })
     },
@@ -600,22 +589,32 @@ export default {
       }
     },
     // 验证表单
-    handleValidateForm () {
-      if (this.computedRules) {
-        // 当传递了验证规则
-        this.$refs['form'].validate((valid, invalidFields) => {
-          if (valid) {
-            // 提交
-            this.handleSubmitForm()
-          } else {
-            // 显示错误
-            this.processError(invalidFields)
-          }
-        })
-      } else {
-        // 提交
-        this.handleSubmitForm()
-      }
+    validateForm () {
+      return new Promise((resolve, reject) => {
+        if (this.computedRules) {
+          // 当传递了验证规则
+          this.$refs['form'].validate((valid, invalidFields) => {
+            if (valid) {
+              // 验证通过
+              resolve()
+            } else {
+              // 显示错误
+              reject(invalidFields)
+            }
+          })
+        } else {
+          resolve()
+        }
+      })
+    },
+
+    // 验证所有组件的内置验证方法
+    validateComponent () {
+      const validators = this.formDescKeys
+        .map((key) => this.$refs[key] && this.$refs[key][0] ? this.$refs[key][0].validate : null)
+        .filter(Boolean)
+
+      return Promise.all(validators.map(fn => fn()))
     },
 
     // 处理错误
@@ -664,49 +663,57 @@ export default {
 
     // 提交表单
     async handleSubmitForm () {
-      // 为了不影响原值, 这里进行 clone
-      let data = cloneDeep(this.formData)
-      // valueFormatter的处理
-      for (const field in data) {
-        const formItem = this.formDesc[field]
-        if (formItem && formItem.valueFormatter) {
-          data[field] = formItem.valueFormatter(data[field], data)
-        }
-      }
+      try {
+        // 验证表单
+        await this.validateForm()
+        await this.validateComponent()
 
-      if (this.requestFn) {
-        // 在内部请求
-        if (this.innerIsLoading) return
-        this.innerIsLoading = true
-        try {
-          const response = await this.requestFn(data)
-          this.$nextTick(() => {
-            this.$emit('request-success', response)
-          })
-        } catch (error) {
-          // 处理异常情况
-          if (error instanceof Error) {
-            // 返回的是Error类型, 则进行解析
-            try {
-              const msg = JSON.parse(error.message)
-              if (msg instanceof Object) {
-                this.innerFormError = msg
-              }
-              // eslint-disable-next-line
-            } catch { }
-          } else if (error instanceof Object) {
-            // 返回的是对象类型, 则直接设置
-            this.innerFormError = error
+        // 为了不影响原值, 这里进行 clone
+        let data = cloneDeep(this.formData)
+        // valueFormatter的处理
+        for (const field in data) {
+          const formItem = this.formDesc[field]
+          if (formItem && formItem.valueFormatter) {
+            data[field] = formItem.valueFormatter(data[field], data)
           }
-          this.$emit('request-error')
-        } finally {
-          this.innerIsLoading = false
-          this.$emit('request-end')
         }
-      } else {
-        // 在外部请求
-        if (this.isLoading) return
-        this.$emit('request', data)
+
+        if (this.requestFn) {
+          // 在内部请求
+          if (this.innerIsLoading) return
+          this.innerIsLoading = true
+          try {
+            const response = await this.requestFn(data)
+            this.$nextTick(() => {
+              this.$emit('request-success', response)
+            })
+          } catch (error) {
+            // 处理异常情况
+            if (error instanceof Error) {
+              // 返回的是Error类型, 则进行解析
+              try {
+                const msg = JSON.parse(error.message)
+                if (msg instanceof Object) {
+                  this.innerFormError = msg
+                }
+                // eslint-disable-next-line
+              } catch { }
+            } else if (error instanceof Object) {
+              // 返回的是对象类型, 则直接设置
+              this.innerFormError = error
+            }
+            this.$emit('request-error')
+          } finally {
+            this.innerIsLoading = false
+            this.$emit('request-end')
+          }
+        } else {
+          // 在外部请求
+          if (this.isLoading) return
+          this.$emit('request', data)
+        }
+      } catch (error) {
+        return this.processError(error)
       }
     },
     // 返回按钮

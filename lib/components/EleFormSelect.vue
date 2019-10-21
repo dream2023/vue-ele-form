@@ -7,10 +7,7 @@
     v-model="newValue"
     v-on="onEvents"
   >
-    <template
-      v-for="(render, key) of desc.slots"
-      v-slot:[key]
-    >
+    <template v-for="(render, key) of desc.slots" v-slot:[key]>
       <extend-slot
         :data="{
           options: desc.options
@@ -25,18 +22,7 @@
       :value="option.value"
       v-bind="option.attrs"
       v-for="option in options"
-    >
-      <template
-        v-if="desc.slots && desc.slots.default"
-        v-slot:default
-      >
-        <extend-slot
-          :data="option"
-          :key="key"
-          :render="desc.slots.default"
-        />
-      </template>
-    </el-option>
+    ></el-option>
   </el-select>
 </template>
 
