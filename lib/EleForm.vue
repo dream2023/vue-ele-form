@@ -253,7 +253,7 @@ export default {
     // 标签宽度
     labelWidth: {
       type: [Number, String],
-      default: 'auto'
+      default: ''
     },
     // 标签位置(layout模式为响应式, inline模式无)
     labelPosition: String,
@@ -374,7 +374,9 @@ export default {
     },
     // 标签宽度(数字和字符串两种处理)
     computedLabelWidth () {
-      if (isNaN(Number(this.labelWidth))) {
+      if (this.labelWidth === '') {
+        return ''
+      } else if (isNaN(Number(this.labelWidth))) {
         return this.labelWidth
       } else {
         return this.labelWidth + 'px'
