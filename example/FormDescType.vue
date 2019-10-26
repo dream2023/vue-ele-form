@@ -80,12 +80,6 @@ export default {
         return h('span', {
           class: 'el-icon-edit el-input__icon'
         })
-      },
-      default (h, data) {
-        return h('div', {}, [
-          h('div', data.item.value),
-          h('span', data.item.address)
-        ])
       }
     }
   },
