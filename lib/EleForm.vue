@@ -43,6 +43,7 @@
                     :is="formItem.type"
                     :options="formItem._options"
                     :ref="field"
+                    :field="field"
                     v-model="formData[field]"
                   />
                 </slot>
@@ -129,6 +130,7 @@
                             :is="formItem.type"
                             :options="formItem._options"
                             :ref="field"
+                            :field="field"
                             v-model="formData[field]"
                           />
                         </slot>
@@ -253,7 +255,7 @@ export default {
     // 标签宽度
     labelWidth: {
       type: [Number, String],
-      default: 'auto'
+      default: ''
     },
     // 标签位置(layout模式为响应式, inline模式无)
     labelPosition: String,
@@ -374,7 +376,9 @@ export default {
     },
     // 标签宽度(数字和字符串两种处理)
     computedLabelWidth () {
-      if (isNaN(Number(this.labelWidth))) {
+      if (this.labelWidth === '') {
+        return ''
+      } else if (isNaN(Number(this.labelWidth))) {
         return this.labelWidth
       } else {
         return this.labelWidth + 'px'
@@ -420,7 +424,7 @@ export default {
             desc[field].type = this.getComponentName(desc[field].type)
 
             // 设置 options
-            this.changeOptions(desc[field].options, field)
+            this.changeOptions(desc[field].options, desc[field].prop, field)
 
             // 设置 mock 状态
             if (!utils.isProd() && this.mock && utils.isUnDef(desc[field].mock)) {
@@ -505,7 +509,7 @@ export default {
               formItem.isReloadOptions &&
               typeof formItem.options === 'function'
             ) {
-              this.changeOptions(formItem.options, field, true)
+              this.changeOptions(formItem.options, formItem.prop, field, true)
             }
           })
         })
@@ -520,6 +524,16 @@ export default {
       } else {
         // 外部组件
         return type
+      }
+    },
+    // 转对象的key
+    // 例如 option: { label: '女', val: 1 }, prop: { text: 'label', value: 'val' }
+    // 转换后 -> option: { text: '女', value: 1 }
+    changeProp (options, prop) {
+      if (prop) {
+        return options.map(option => ({ 'text': option[prop.text], 'value': option[prop.value] }))
+      } else {
+        return options
       }
     },
     // 将options转为对象数组
@@ -538,18 +552,18 @@ export default {
       })
     },
     // 将四种类型: 字符串数组, 对象数组, Promise对象和函数统一为 对象数组
-    changeOptions (options, field, resetValue = false) {
+    changeOptions (options, prop, field, resetValue = false) {
       if (options) {
         if (options instanceof Array) {
           // 当options为数组时: 直接获取
-          this.setOptions(options, field, resetValue)
+          this.setOptions(options, prop, field, resetValue)
         } else if (options instanceof Function) {
           // 当options为函数: 执行函数并递归
-          this.changeOptions(options(this.formData), field, resetValue)
+          this.changeOptions(options(this.formData), prop, field, resetValue)
         } else if (options instanceof Promise) {
           // 当options为Promise时: 等待Promise结束, 并获取值
           options.then(options => {
-            this.changeOptions(options, field, resetValue)
+            this.changeOptions(options, prop, field, resetValue)
           })
         } else {
           // 其他报错
@@ -562,13 +576,17 @@ export default {
       } else {
         if (this.formDesc[field]._options) {
           // 如果new options为null / undefined, 且 old Options 存在, 则设置
-          this.setOptions([], field, resetValue)
+          this.setOptions([], prop, field, resetValue)
         }
       }
     },
     // 设置options
-    setOptions (options, field, resetValue) {
-      const newOptions = this.getObjArrOptions(options)
+    setOptions (options, prop, field, resetValue) {
+      // 将options每一项转为对象
+      let newOptions = this.getObjArrOptions(options)
+      // 改变prop为规定的prop
+      newOptions = this.changeProp(options, prop)
+
       const oldOptions = this.formDesc[field]._options
       this.formDesc[field] = Object.assign({}, this.formDesc[field], {
         _options: newOptions
