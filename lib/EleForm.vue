@@ -260,7 +260,9 @@ export default {
     // 标签位置(layout模式为响应式, inline模式无)
     labelPosition: String,
     // 不填则响应式, 填则固定(layout模式为响应式, inline模式无)
-    span: Number
+    span: Number,
+    // options 的请求方法
+    optionsFn: Function
   },
   data () {
     return {
@@ -563,10 +565,13 @@ export default {
           options.then(options => {
             this.changeOptions(options, prop, field, resetValue)
           })
+        } else if (typeof options === 'string' && this.optionsFn) {
+          // options为url地址
+          this.changeOptions(this.optionsFn(options), prop, field, resetValue)
         } else {
           // 其他报错
           throw new TypeError(
-            'options的类型不正确, options及options请求结果类型可为: 字符串数组, 对象数组, 函数和Promise, 当前值为: ' +
+            'options的类型不正确, options及options请求结果类型可为: 字符串数组, 对象数组, 函数和Promise或者URL地址, 当前值为: ' +
             options +
             ', 不属于以上四种类型'
           )
