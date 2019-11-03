@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.8](https://github.com/dream2023/vue-ele-form/compare/v0.6.7...v0.6.8) (2019-11-03)
+
+
+### Features
+
+* options可直接指定URL ([e4c3505](https://github.com/dream2023/vue-ele-form/commit/e4c3505094b795c65b458a134d40336c71c63c3c))
+
+
+### Bug Fixes
+
+* 无法自适应 ([f70e33f](https://github.com/dream2023/vue-ele-form/commit/f70e33ff21afc68889b1479b3f8769ca1fc5037d))
+
 ### [0.6.7](https://github.com/dream2023/vue-ele-form/compare/v0.6.6...v0.6.7) (2019-10-30)
 
 
