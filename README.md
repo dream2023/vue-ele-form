@@ -1,6 +1,6 @@
 # vue-ele-form | 基于 element-ui 的数据驱动表单组件
 
-[![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg)](https://opensource.org/licenses/mit-license.php)
+[![MIT Licence](https://img.shields.io/npm/l/vue-ele-form.svg)](https://img.shields.io/apm/l/vue-ele-form.svg)
 [![npm](https://img.shields.io/npm/v/vue-ele-form.svg)](https://www.npmjs.com/package/vue-ele-form)
 [![download](https://img.shields.io/npm/dt/vue-ele-form)](https://npmcharts.com/compare/vue-ele-form?minimal=true)
 
@@ -9,7 +9,7 @@
 vue-ele-form 是基于 [element-ui form](https://element.eleme.cn/#/zh-CN/component/form) 的二次封装, 主要特点:
 
 - 内置 20 多种[表单类型](https://www.yuque.com/chaojie-vjiel/vbwzgu/kz163g), 包括选`单选`、`多选`、`标签`、`级联选择器`等;
-- 拥有`上传图片增强`, `上传视频增强`, `富文本`，`markdown`, `地图`, `代码编辑器`, `json 编辑器`等丰富的[第三方扩展](https://www.yuque.com/chaojie-vjiel/vbwzgu/inlpxy)，满足你的更多需求;
+- 拥有`上传图片增强`, `上传视频增强`, `上传文件增强`,`树形下拉选择框`, `富文本`，`表格编辑器`, `动态表单`, `markdown`, `地图`, `代码编辑器`, `json 编辑器`等丰富的[第三方扩展](https://www.yuque.com/chaojie-vjiel/vbwzgu/inlpxy)，满足你的更多需求;
 - 配备[可视化生成表单工具](https://github.com/dream2023/vue-ele-form-generator);
 - 内置[表单校检](https://www.yuque.com/chaojie-vjiel/vbwzgu/dyw8a7#GLim1);
 - [表单布局](https://www.yuque.com/chaojie-vjiel/vbwzgu/iw5dzf#uuQkg) 和 [响应式表单](https://www.yuque.com/chaojie-vjiel/vbwzgu/yadlgw);
@@ -23,7 +23,7 @@ vue-ele-form 是基于 [element-ui form](https://element.eleme.cn/#/zh-CN/compon
 
 ## 图片演示
 
-[![演示图](https://raw.githubusercontent.com/dream2023/images/master/vue-ele-form.i8p4mna581b.gif)](https://dream2023.github.io/vue-ele-form/)
+[![演示图](https://cdn.nlark.com/yuque/0/2019/gif/364322/1562480512617-33250d66-d4d4-42a4-b61a-172a746855d8.gif)](https://dream2023.github.io/vue-ele-form/)
 
 ## DEMO
 
@@ -55,7 +55,6 @@ Vue.use(EleForm)
 
 ## [开发规划](https://github.com/dream2023/vue-ele-form/projects/1)
 
-- 增加树形组件
 - 重写文档
 - 增加 CI 和 CD
 - 增加视频源码讲解
@@ -78,4 +77,4 @@ Vue.use(EleForm)
 
 如果您觉得还行, 请您一定要点一下右上角的 `star`, 如果您觉得对您帮助非常大, 就打赏一下, 不胜感谢 💰
 
-![image](https://raw.githubusercontent.com/dream2023/images/master/donation.61k4s17xdft.jpg)
+![image](https://cdn.nlark.com/yuque/0/2019/jpeg/364322/1572775994043-19a52258-9ff3-44ac-bf5f-bfcd5cd79a53.jpeg?x-oss-process=image/resize,w_746)
