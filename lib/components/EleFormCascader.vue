@@ -5,15 +5,16 @@
     :style="desc.style"
     class="ele-form-full-line"
     v-bind="attrs"
+    ref="cascader"
     v-model="newValue"
     v-on="onEvents"
   >
     <!-- 组件内部插槽 -->
-    <template v-for="(render, key) of desc.scopedSlots" v-slot:[key]="data">
-      <extend-slot :data="data" :key="key" :render="render" />
+    <template v-if="scopedSlots.default" v-slot:default="data">
+      <extend-slot :data="data" :render="scopedSlots.default" />
     </template>
-    <template v-for="(render, key) of desc.slots" v-slot:[key]>
-      <extend-slot :data="data" :key="key" :render="render" />
+    <template v-if="slots.empty">
+      <extend-slot :render="slots.empty" />
     </template>
   </el-cascader>
 </template>

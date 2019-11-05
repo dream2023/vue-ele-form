@@ -6,12 +6,9 @@
     v-model="newValue"
     v-on="onEvents"
   >
-    {{desc.title}}
-    <template
-      v-if="desc.slots && desc.slots.default"
-      v-slot:default
-    >
-      <extend-slot :render="desc.slots.default" />
+    {{ desc.title }}
+    <template v-if="slots && slots.default" v-slot:default>
+      <extend-slot :render="slots.default" />
     </template>
   </el-checkbox>
 </template>

@@ -8,8 +8,8 @@
     v-on="onEvents"
   >
     <!-- 作用域插槽 -->
-    <template v-for="(render, key) of desc.scopedSlots" v-slot:[key]="data">
-      <extend-slot :data="data" :key="key" :render="render" />
+    <template v-if="scopedSlots.default" v-slot:default="data">
+      <extend-slot :data="data" :render="scopedSlots.default" />
     </template>
 
     <!-- 非作用域插槽 -->
