@@ -1,5 +1,5 @@
 <template>
-  <el-cascader
+  <el-cascader-panel
     :class="desc.class"
     :options="options"
     :style="desc.style"
@@ -16,14 +16,14 @@
     <template v-if="slots.empty">
       <extend-slot :render="slots.empty" />
     </template>
-  </el-cascader>
+  </el-cascader-panel>
 </template>
 
 <script>
 import formMixin from '../mixins/formMixin'
 
 export default {
-  name: 'EleFormCascader',
+  name: 'EleFormCascaderPanel',
   mixins: [formMixin],
   data () {
     return {

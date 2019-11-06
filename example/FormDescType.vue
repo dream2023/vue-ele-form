@@ -1,9 +1,5 @@
 <template>
-  <el-card
-    class="demo-card"
-    header="form-desc type 列表"
-    shadow="never"
-  >
+  <el-card class="demo-card" header="form-desc type 列表" shadow="never">
     <div class="form-desc-type">
       <div style="width: 600px">
         <ele-form
@@ -15,10 +11,7 @@
         />
       </div>
       <div style="margin-left: 50px;width: 500px;">
-        <codemirror
-          @input="handleCodeChange"
-          v-model="code"
-        />
+        <codemirror @input="handleCodeChange" v-model="code" />
       </div>
     </div>
   </el-card>
@@ -117,12 +110,64 @@ export default {
       props: { expandTrigger: 'hover' }
     },
     slots: {
-      default (h, data) {
-        return h('span', data['data'].label + '123123')
-      },
       empty (h) {
         return h('div', 'test')
       }
+    },
+    options: [{
+      value: 1,
+      label: '东南',
+      disabled: true,
+      children: [{
+        value: 2,
+        label: '上海',
+        children: [
+          { value: 3, label: '普陀' },
+          { value: 4, label: '黄埔' },
+          { value: 5, label: '徐汇' }
+        ]
+      }, {
+        value: 7,
+        label: '江苏',
+        children: [
+          { value: 8, label: '南京' },
+          { value: 9, label: '苏州' },
+          { value: 10, label: '无锡' }
+        ]
+      }, {
+        value: 12,
+        label: '浙江',
+        children: [
+          { value: 13, label: '杭州' },
+          { value: 14, label: '宁波' },
+          { value: 15, label: '嘉兴' }
+        ]
+      }]
+    }, {
+      value: 17,
+      label: '西北',
+      children: [{
+        value: 18,
+        label: '陕西',
+        children: [
+          { value: 19, label: '西安' },
+          { value: 20, label: '延安' }
+        ]
+      }, {
+        value: 21,
+        label: '新疆维吾尔族自治区',
+        children: [
+          { value: 22, label: '乌鲁木齐' },
+          { value: 23, label: '克拉玛依' }
+        ]
+      }]
+    }]
+  },
+  'cascader-panel': {
+    label: '级联面板',
+    type: 'cascader-panel',
+    attrs: {
+      props: { expandTrigger: 'hover' }
     },
     options: [{
       value: 1,

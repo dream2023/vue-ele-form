@@ -1,10 +1,10 @@
 <template>
-  <div
-    :class="desc.class"
-    :style="desc.style"
-    v-bind="attrs"
-    v-on="onEvents"
-  >{{newValue}}</div>
+  <div :class="desc.class" :style="desc.style" v-bind="attrs" v-on="onEvents">
+    <template v-if="slots && slots.default">
+      <extend-slot :render="slots.default" />
+    </template>
+    {{ newValue }}
+  </div>
 </template>
 
 <script>
