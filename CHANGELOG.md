@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.9](https://github.com/dream2023/vue-ele-form/compare/v0.6.8...v0.6.9) (2019-11-06)
+
+
+### Features
+
+* 增加cascader-panel组件 ([22a7bd7](https://github.com/dream2023/vue-ele-form/commit/22a7bd7329bc441758dc8c1dbed51941583497fb))
+
+
+### Bug Fixes
+
+* inline模式label-width报错 ([cfd3378](https://github.com/dream2023/vue-ele-form/commit/cfd33783f1798dcc562fbc07c60be9c8a3880f6f))
+* 插槽问题 ([d7d84d6](https://github.com/dream2023/vue-ele-form/commit/d7d84d6cf4f139750894e340a7edbe880dda4bb4))
+
 ### [0.6.8](https://github.com/dream2023/vue-ele-form/compare/v0.6.7...v0.6.8) (2019-11-03)
 
 
