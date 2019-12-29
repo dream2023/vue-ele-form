@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.11](https://github.com/dream2023/vue-ele-form/compare/v0.6.10...v0.6.11) (2019-12-29)
+
+
+### Bug Fixes
+
+* options 字符数组时不正确 ([37ffc7b](https://github.com/dream2023/vue-ele-form/commit/37ffc7bc84b73da2c12f6e9eaf5a3b220ec59150))
+
 ### [0.6.10](https://github.com/dream2023/vue-ele-form/compare/v0.6.9...v0.6.10) (2019-11-08)
 
 
