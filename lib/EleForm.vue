@@ -590,7 +590,7 @@ export default {
       // 将options每一项转为对象
       let newOptions = this.getObjArrOptions(options)
       // 改变prop为规定的prop
-      newOptions = this.changeProp(options, prop)
+      newOptions = this.changeProp(newOptions, prop)
 
       const oldOptions = this.formDesc[field]._options
       this.formDesc[field] = Object.assign({}, this.formDesc[field], {
