@@ -463,6 +463,19 @@ export default {
         this.$refs[field][0].mockData()
       })
     },
+    // 定义联动属性的descriptor
+    defineLinkageProperty (value) {
+      const d = this.defineLinkageProperty.d || (
+        this.defineLinkageProperty.d = {
+          enumerable: false,
+          writable: true,
+          configurable: true,
+          value: value
+        }
+      )
+      d.value = value
+      return d
+    },
     // 检测联动
     checkLinkage () {
       if (this.checkVifFn) {
@@ -474,36 +487,36 @@ export default {
           Object.keys(formDesc).forEach(field => {
             const formItem = formDesc[field]
             // 1.触发 v-if 显示 / 隐藏
+            let vif = true
             if (typeof formItem.vif === 'function') {
-              const vif = Boolean(formItem.vif(formData))
-              this.formDesc[field]._vif = vif
+              vif = Boolean(formItem.vif(formData))
 
               if (!vif) {
                 // 如果隐藏, 则删除值
                 this.formData[field] = null
               }
             } else if (typeof formItem.vif === 'boolean') {
-              this.formDesc[field]._vif = formItem.vif
-            } else {
-              this.formDesc[field]._vif = true
+              vif = formItem.vif
             }
+            Object.defineProperty(this.formDesc[field], '_vif', this.defineLinkageProperty(vif))
 
             // 2.触发 v-show 显示 / 隐藏
+            let vshow = true
             if (typeof formItem.vshow === 'function') {
-              const vshow = Boolean(formItem.vshow(formData))
-              this.formDesc[field]._vshow = vshow
+              vshow = Boolean(formItem.vshow(formData))
             } else if (typeof formItem.vshow === 'boolean') {
-              this.formDesc[field]._vshow = formItem._vshow
-            } else {
-              this.formDesc[field]._vshow = true
+              vshow = formItem._vshow
             }
+            Object.defineProperty(this.formDesc[field], '_vshow', this.defineLinkageProperty(vshow))
 
             // 3.触发 disabled 禁用 / 启用
+            let disabled = false
             if (typeof formItem.disabled === 'function') {
-              this.formDesc[field]._disabled = formItem.disabled(formData)
+              disabled = formItem.disabled(formData)
             } else if (typeof formItem.disabled === 'boolean') {
-              this.formDesc[field]._disabled = formItem.disabled
+              disabled = formItem.disabled
             }
+            Object.defineProperty(this.formDesc[field], '_disabled', this.defineLinkageProperty(disabled))
 
             // 4.重新获取 options
             if (
