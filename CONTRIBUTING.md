@@ -4,7 +4,7 @@
 
 - 透明开发: vue-ele-form 的所有工作都直接在 [GitHub](https://github.com/dream2023/vue-ele-form) 上进行, 如果你有任何的问题或者建议, 都可以通过 [GitHub issues](https://github.com/dream2023/vue-ele-form/issues) 进行提出和处理, 不提供 QQ 或者微信等直接问题解答(不过可以进行使用讨论);
 - 语义版本控制: vue-ele-form 遵循 [语义版本控制](https://semver.org/lang/zh-CN/), 每个重大更改都记录在 [changelog](./CHANGELOG.md) 文件中;
-- 分支策略: 采用简化版的 Git Flow, 即 `master` 分支作为发布分支, `develop` 分支作为开发分支, 当有新功能时, 创建 `feat/xxx` 分支, 当有 `bug` 时, 创建 `bug/xxx` 分支, 当新功能或者 bug 修改完毕, 需要发起 `pull request` , 如果管理人员审核通过, 则合并到`develop`分支, 当收集到足够的 `feat/bug` , 则合并到 `master` 分支, 并发布版本更新;
+- 分支策略: 采用主分支模型, 即 `master` 分支作为主分支, 当有新功能时, 创建 `feat/xxx` 分支, 当有 `bug` 时, 创建 `bug/xxx` 分支, 当新功能或者 bug 修改完毕, 需要发起 `pull request` , 如果管理人员审核通过, 则合并到`master`分支, 当收集到足够的 `feat/bug` , 发布版本更新;
 - 包管理工具: 推荐使用 `yarn`, 而非 `npm`;
 - 注释: 不写注释的程序员不是好码农, 对函数和复杂逻辑要尽量写注释;
 - 简单原则: 我们希望在增加新功能时, 尽量避免增加新的 `props`, 现在的 `props` 已经够多了, 对外暴露的接口越简单越好;
