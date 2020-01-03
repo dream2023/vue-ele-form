@@ -390,10 +390,12 @@ export default {
     formErrorObj () {
       return Object.assign({}, this.innerFormError, this.formError)
     },
-    // 校检规则
+    // 校检规则 (支持局部定义和全局定义)
+    // 即: rules: { rules: { a: [xxx, xxx], b:{ xxx } } } 和 formDesc: { name: { rules: {xxx} }, age: { rules: [xxx] } }
+    // 此函数即将局部定义转为全局定义
     computedRules () {
       return this.formDescKeys.reduce((rules, field) => {
-        let formRules = rules[field]
+        let formRules = rules[field] || []
         let formItemRules = this.formDesc[field].rules
 
         // 转为数组
@@ -404,10 +406,15 @@ export default {
           formItemRules = [formItemRules]
         }
 
+        // 合并
         if (formRules || formItemRules) {
           rules[field] = [...(formItemRules || []), ...(formRules || [])]
         }
 
+        // 如果采用required, 则判断已有的规则有无, 如果没有, 则添加
+        if (this.formDesc[field].required && !rules[field].some(rule => rule.required)) {
+          rules[field].push({ required: true, message: this.formDesc[field].label + t('ele-form.required') })
+        }
         return rules
       }, this.rules || {})
     },

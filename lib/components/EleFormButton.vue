@@ -5,7 +5,7 @@
     v-bind="attrs"
     v-on="desc.on"
   >
-    {{desc.title}}
+    {{desc.title || newValue}}
     <template
       v-if="desc.slots && desc.slots.default"
       v-slot:default
