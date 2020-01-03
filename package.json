@@ -14,14 +14,14 @@
     "build": "npm run bootstrap && npm run lint && npm run build:entry & npm run build:lib && npm run build:docs",
     "lint": "vue-cli-service --mode production lint lib/* example/*",
     "release": "standard-version",
-    "pub": "sh build/git-release.sh && git push --follow-tags origin master && npm publish"
+    "pub": "npm publish && git push --follow-tags origin master"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/dream2023/vue-ele-form"
   },
   "main": "lib/index.js",
-  "homepage": "https://github.com/dream2023/vue-ele-form",
+  "homepage": "https://dream2023.github.io/vue-ele-form/",
   "keywords": [
     "vue-ele-form",
     "vue form",
