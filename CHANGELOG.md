@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.13](https://github.com/dream2023/vue-ele-form/compare/v0.6.11...v0.6.13) (2020-01-05)
+
+
+### Features
+
+* 优化定义联动属性descriptor ([0bae0e6](https://github.com/dream2023/vue-ele-form/commit/0bae0e606fdc2c5c920819a4a6aa001fd8535135))
+* 增加required属性和button优化 ([ddffbcf](https://github.com/dream2023/vue-ele-form/commit/ddffbcf3d5d631b7818bfecf2a1b8c7b07eef96c))
+* 将私有变量enumerable为false ([a602aef](https://github.com/dream2023/vue-ele-form/commit/a602aef99ff5518d223dff2ff7c9597f1e7a3e67))
+* 支持v-model进行formData定义 ([103bd77](https://github.com/dream2023/vue-ele-form/commit/103bd77311e9e32074769a48c46f08711bdaabc9))
+
 ### [0.6.11](https://github.com/dream2023/vue-ele-form/compare/v0.6.10...v0.6.11) (2019-12-29)
 
 
