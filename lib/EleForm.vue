@@ -472,16 +472,12 @@ export default {
     },
     // 定义联动属性的descriptor
     defineLinkageProperty (value) {
-      const d = this.defineLinkageProperty.d || (
-        this.defineLinkageProperty.d = {
-          enumerable: false,
-          writable: true,
-          configurable: true,
-          value: value
-        }
-      )
-      d.value = value
-      return d
+      return {
+        enumerable: false,
+        writable: true,
+        configurable: true,
+        value: value
+      }
     },
     // 检测联动
     checkLinkage () {
@@ -505,7 +501,6 @@ export default {
             } else if (typeof formItem.vif === 'boolean') {
               vif = formItem.vif
             }
-            Object.defineProperty(this.formDesc[field], '_vif', this.defineLinkageProperty(vif))
 
             // 2.触发 v-show 显示 / 隐藏
             let vshow = true
@@ -514,7 +509,6 @@ export default {
             } else if (typeof formItem.vshow === 'boolean') {
               vshow = formItem._vshow
             }
-            Object.defineProperty(this.formDesc[field], '_vshow', this.defineLinkageProperty(vshow))
 
             // 3.触发 disabled 禁用 / 启用
             let disabled = false
@@ -523,7 +517,11 @@ export default {
             } else if (typeof formItem.disabled === 'boolean') {
               disabled = formItem.disabled
             }
-            Object.defineProperty(this.formDesc[field], '_disabled', this.defineLinkageProperty(disabled))
+            Object.defineProperties(formItem, {
+              '_vif': this.defineLinkageProperty(vif),
+              '_vshow': this.defineLinkageProperty(vshow),
+              '_disabled': this.defineLinkageProperty(disabled)
+            })
 
             // 4.重新获取 options
             if (

@@ -1,7 +1,7 @@
 {
   "name": "vue-ele-form",
   "description": "基于 element-ui 的数据驱动表单组件",
-  "version": "0.6.11",
+  "version": "0.6.12",
   "license": "MIT",
   "private": false,
   "scripts": {
@@ -14,13 +14,13 @@
     "build": "npm run bootstrap && npm run lint && npm run build:entry & npm run build:lib && npm run build:docs",
     "lint": "vue-cli-service --mode production lint lib/* example/*",
     "release": "standard-version",
-    "pub": "npm publish && git push --follow-tags origin master"
+    "pub": "npm run build:lib && npm publish --registry http://registry.npmjs.org && git push --follow-tags origin master"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/dream2023/vue-ele-form"
   },
-  "main": "lib/index.js",
+  "main": "dist/vue-ele-form.umd.min.js",
   "homepage": "https://dream2023.github.io/vue-ele-form/",
   "keywords": [
     "vue-ele-form",
