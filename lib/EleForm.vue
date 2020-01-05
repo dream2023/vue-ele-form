@@ -178,6 +178,10 @@ export default {
   // 响应式单独抽离出来作为mixin, 具体实现请到 responsiveMixin 中查看
   mixins: [responsiveMixin, localeMixin],
   provide: provide,
+  model: {
+    prop: 'formData',
+    event: 'input'
+  },
   props: {
     // 表单描述
     formDesc: {
