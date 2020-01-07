@@ -21,6 +21,7 @@
 
 <script>
 import formMixin from '../mixins/formMixin'
+import mock from '../tools/mock'
 
 export default {
   name: 'EleFormCascaderPanel',
@@ -44,25 +45,28 @@ export default {
   },
   methods: {
     getCustomMockData () {
-      const optionsTo2D = function (tree, key, stack = [], pathList = []) {
-        if (!tree) return
-        for (let data of tree) {
-          stack.push(data[key])
-          if (data.children && data.children.length) {
-            optionsTo2D(data.children, key, stack, pathList)
-          } else {
-            pathList.push([...stack])
+      const Mock = mock()
+      if (Mock) {
+        const optionsTo2D = function (tree, key, stack = [], pathList = []) {
+          if (!tree) return
+          for (let data of tree) {
+            stack.push(data[key])
+            if (data.children && data.children.length) {
+              optionsTo2D(data.children, key, stack, pathList)
+            } else {
+              pathList.push([...stack])
+            }
+            stack.pop(data[key])
           }
-          stack.pop(data[key])
+          return pathList
         }
-        return pathList
-      }
-      const props = Object.assign({ value: 'value' }, this.attrs.props)
-      const options = optionsTo2D(this.options, props.value)
-      if (this.attrs && this.attrs.multiple) {
-        return this.randomFn.multiple(options)
-      } else {
-        return this.randomFn.pick(options)
+        const props = Object.assign({ value: 'value' }, this.attrs.props)
+        const options = optionsTo2D(this.options, props.value)
+        if (this.attrs && this.attrs.multiple) {
+          return Mock.Random.multiple(options)
+        } else {
+          return Mock.Random.pick(options)
+        }
       }
     }
   }

@@ -18,6 +18,7 @@
 <script>
 import formMixin from '../mixins/formMixin'
 import timerangeMixin from '../mixins/timerangeMixin'
+import mock from '../tools/mock'
 
 export default {
   name: 'EleFormDatetimerange',
@@ -38,12 +39,15 @@ export default {
   },
   methods: {
     getCustomMockData () {
-      const date1 = this.mockFn('@datetime')
-      const date2 = this.mockFn('@datetime')
-      if (date1 > date2) {
-        return [date2, date1]
-      } else {
-        return [date1, date2]
+      const Mock = mock()
+      if (Mock.mock) {
+        const date1 = Mock.mock('@datetime')
+        const date2 = Mock.mock('@datetime')
+        if (date1 > date2) {
+          return [date2, date1]
+        } else {
+          return [date1, date2]
+        }
       }
     }
   }

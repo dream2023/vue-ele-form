@@ -12,6 +12,7 @@
 <script>
 import formMixin from '../mixins/formMixin'
 import timerangeMixin from '../mixins/timerangeMixin'
+import mock from '../tools/mock'
 
 export default {
   name: 'EleFormDates',
@@ -31,7 +32,10 @@ export default {
   },
   methods: {
     getCustomMockData () {
-      return Array.from({ length: this.randomFn.integer(0, 5) }, () => this.randomFn.date())
+      const Mock = mock()
+      if (Mock) {
+        Array.from({ length: Mock.Random.integer(0, 5) }, () => Mock.Random.date())
+      }
     }
   }
 }

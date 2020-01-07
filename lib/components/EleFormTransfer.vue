@@ -22,6 +22,7 @@
 <script>
 import formMixin from '../mixins/formMixin'
 import utils from '../tools/utils'
+import mock from '../tools/mock'
 
 export default {
   name: 'EleFormTransfer',
@@ -49,8 +50,11 @@ export default {
       return val
     },
     getCustomMockData () {
-      const props = Object.assign({}, { key: 'key' }, this.attrs.props)
-      return this.randomFn.checkbox(this.options, props.key)
+      const Mock = mock()
+      if (Mock) {
+        const props = Object.assign({}, { key: 'key' }, this.attrs.props)
+        return Mock.Random.checkbox(this.options, props.key)
+      }
     }
   }
 }

@@ -169,15 +169,14 @@ import utils from './tools/utils'
 import { throttle } from 'throttle-debounce'
 import localeMixin from 'element-ui/src/mixins/locale'
 import { t } from './locale'
+import { loadMockJs } from './tools/mock'
 import { equal, intersection } from './tools/set'
-import provide from './tools/provide'
 const cloneDeep = require('lodash.clonedeep')
 
 export default {
   name: 'EleForm',
   // 响应式单独抽离出来作为mixin, 具体实现请到 responsiveMixin 中查看
   mixins: [responsiveMixin, localeMixin],
-  provide: provide,
   model: {
     prop: 'formData',
     event: 'input'
@@ -281,6 +280,9 @@ export default {
     }
   },
   computed: {
+    isMock () {
+      return this.mock || Object.values(this.formDesc).some(item => item.mock)
+    },
     // 是否显示模拟数按钮
     isShowMockBtn () {
       return !utils.isProd() && (this.mock || this.formDescKeys.some((field) => this.formDesc[field].mock))
@@ -783,6 +785,11 @@ export default {
       this.$refs.form.fields.forEach(field => {
         this.formData[field.prop] = field.initialValue
       })
+    }
+  },
+  mounted () {
+    if (this.isMock && !window.Mock) {
+      loadMockJs()
     }
   }
 }

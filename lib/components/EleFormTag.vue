@@ -23,6 +23,7 @@
 
 <script>
 import formMixin from '../mixins/formMixin'
+import mock from '../tools/mock'
 
 export default {
   name: 'EleFormTag',
@@ -57,7 +58,10 @@ export default {
       }
     },
     getCustomMockData () {
-      return Array.from({ length: this.randomFn.integer(0, 5) }, () => this.randomFn.cword(3, 5))
+      const Mock = mock()
+      if (Mock) {
+        return Array.from({ length: Mock.Random.integer(0, 5) }, () => Mock.Random.cword(3, 5))
+      }
     }
   },
   mounted () {
