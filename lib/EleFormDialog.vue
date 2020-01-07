@@ -47,7 +47,7 @@
           <component
             :_disabled="formItem._disabled"
             :desc="formItem"
-            :is="formItem.type"
+            :is="formItem._type"
             :options="formItem._options"
             v-model="formData[field]"
           />

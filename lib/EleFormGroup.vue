@@ -30,7 +30,7 @@
               <component
                 :_disabled="desc._disabled"
                 :desc="desc"
-                :is="desc.type"
+                :is="desc._type"
                 :key="index"
                 :options="desc._options"
                 v-model="item.form.formData[field]"

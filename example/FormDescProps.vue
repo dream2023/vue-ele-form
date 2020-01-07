@@ -148,7 +148,7 @@ export default {
       try {
         /* eslint-disable */
         const codeData = eval('(' + code + ')')
-        if (this.checkType(codeData)) {
+        if (this.checkType(codeData, this.formData)) {
           this.formDesc = codeData
         }
       } catch (error) {

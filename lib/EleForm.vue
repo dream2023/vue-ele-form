@@ -21,7 +21,7 @@
           name="form-content"
         >
           <template v-for="(formItem, field) of formDesc">
-            <slot :name="field + '-wrapper'">
+            <slot :name="field + '-wrapper'" :field="field" :formData="formData" :desc="desc">
               <el-form-item
                 :error="formErrorObj ? formErrorObj[field] : null"
                 :key="field"
@@ -36,11 +36,12 @@
                   :field="field"
                   :formData="formData"
                   :name="field"
+                  :type="formItem._type"
                 >
                   <component
                     :_disabled="formItem._disabled"
                     :desc="formItem"
-                    :is="formItem.type"
+                    :is="formItem._type"
                     :options="formItem._options"
                     :ref="field"
                     :field="field"
@@ -103,7 +104,7 @@
             >
               <el-row :gutter="20">
                 <template v-for="(formItem, field) of formDesc">
-                  <slot :name="field + '-wrapper'">
+                  <slot :name="field + '-wrapper'" :desc="formItem" :field="field" :formData="formData">
                     <el-col
                       :key="field"
                       :md="formItem.layout || 24"
@@ -123,11 +124,12 @@
                           :field="field"
                           :formData="formData"
                           :name="field"
+                          :type="formItem._type"
                         >
                           <component
                             :_disabled="formItem._disabled"
                             :desc="formItem"
-                            :is="formItem.type"
+                            :is="formItem._type"
                             :options="formItem._options"
                             :ref="field"
                             :field="field"
@@ -435,9 +437,6 @@ export default {
       handler (desc) {
         if (desc) {
           Object.keys(desc).forEach(field => {
-            // 设置 type
-            desc[field].type = this.getComponentName(desc[field].type)
-
             // 设置 options
             this.changeOptions(desc[field].options, desc[field].prop, field)
 
@@ -495,6 +494,18 @@ export default {
           const formData = this.formData
           Object.keys(formDesc).forEach(field => {
             const formItem = formDesc[field]
+            // 设置 type
+            let type = formItem.type
+            if (typeof formItem.type === 'function') {
+              type = this.getComponentName(formItem.type(formData))
+              if (formItem._type && (formItem._type !== type)) {
+                // 类型改变, 则删除原数据
+                this.formData[field] = null
+              }
+            } else {
+              type = this.getComponentName(formItem.type)
+            }
+
             // 1.触发 v-if 显示 / 隐藏
             let vif = true
             if (typeof formItem.vif === 'function') {
@@ -524,6 +535,7 @@ export default {
               disabled = formItem.disabled
             }
             Object.defineProperties(formItem, {
+              '_type': this.defineLinkageProperty(type),
               '_vif': this.defineLinkageProperty(vif),
               '_vshow': this.defineLinkageProperty(vshow),
               '_disabled': this.defineLinkageProperty(disabled)
