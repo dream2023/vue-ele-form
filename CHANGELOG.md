@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.14](https://github.com/dream2023/vue-ele-form/compare/v0.6.13...v0.6.14) (2020-01-07)
+
+
+### Bug Fixes
+
+* mock 功能重构 ([baa22d6](https://github.com/dream2023/vue-ele-form/commit/baa22d67abce4d4bca44c1714ad15fbcce16879e))
+
 ### [0.6.13](https://github.com/dream2023/vue-ele-form/compare/v0.6.11...v0.6.13) (2020-01-05)
 
 
