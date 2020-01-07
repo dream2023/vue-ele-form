@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.15](https://github.com/dream2023/vue-ele-form/compare/v0.6.14...v0.6.15) (2020-01-07)
+
+
+### Features
+
+* 增加动态type功能 ([c8054cc](https://github.com/dream2023/vue-ele-form/commit/c8054cc886c0387623be054e39ec018d1673b619))
+
 ### [0.6.14](https://github.com/dream2023/vue-ele-form/compare/v0.6.13...v0.6.14) (2020-01-07)
 
 
