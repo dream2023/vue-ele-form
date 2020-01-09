@@ -285,16 +285,12 @@ export default {
     isMock () {
       return this.mock || Object.values(this.formDesc).some(item => item.mock)
     },
-    // 是否显示模拟数按钮
-    isShowMockBtn () {
-      return !utils.isProd() && (this.mock || this.formDescKeys.some((field) => this.formDesc[field].mock))
-    },
     // 按钮
     btns () {
       const formBtnSize = this.formBtnSize
       let btns = []
       // 模拟数据
-      if (this.isShowMockBtn) {
+      if (this.isMock) {
         btns.push({
           attrs: {
             type: 'primary',
@@ -528,7 +524,7 @@ export default {
             }
 
             // 3.触发 disabled 禁用 / 启用
-            let disabled = false
+            let disabled = null
             if (typeof formItem.disabled === 'function') {
               disabled = formItem.disabled(formData)
             } else if (typeof formItem.disabled === 'boolean') {
