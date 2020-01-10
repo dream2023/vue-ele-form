@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.18](https://github.com/dream2023/vue-ele-form/compare/v0.6.17...v0.6.18) (2020-01-10)
+
+
+### Features
+
+* 增加timerange类型 ([89cb212](https://github.com/dream2023/vue-ele-form/commit/89cb21274e4d1fde984d664d7b7b94f4bb353c9c))
+
 ### [0.6.17](https://github.com/dream2023/vue-ele-form/compare/v0.6.16...v0.6.17) (2020-01-10)
 
 
