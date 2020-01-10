@@ -23,22 +23,22 @@ import mock from '../tools/mock'
 export default {
   name: 'EleFormDaterange',
   mixins: [formMixin, timerangeMixin],
-  data () {
+  data() {
     return {
       mockRule: 'custom'
     }
   },
   computed: {
-    defaultAttrs () {
+    defaultAttrs() {
       return {
         type: 'daterange',
-        'start-placeholder': this.t('ele-form.startDate'),
-        'end-placeholder': this.t('ele-form.endDate')
+        startPlaceholder: this.t('ele-form.startDate'),
+        endPlaceholder: this.t('ele-form.endDate')
       }
     }
   },
   methods: {
-    getCustomMockData () {
+    getCustomMockData() {
       const Mock = mock()
       if (Mock.mock) {
         const date1 = Mock.mock('@date')

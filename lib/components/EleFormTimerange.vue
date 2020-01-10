@@ -27,8 +27,8 @@ export default {
   computed: {
     defaultAttrs() {
       return {
-        'start-placeholder': this.t('ele-form.startTime'),
-        'end-placeholder': this.t('ele-form.endTime')
+        startPlaceholder: this.t('ele-form.startTime'),
+        endPlaceholder: this.t('ele-form.endTime')
       }
     }
   },
