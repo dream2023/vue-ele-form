@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.17](https://github.com/dream2023/vue-ele-form/compare/v0.6.16...v0.6.17) (2020-01-10)
+
+
+### Features
+
+* 增加radio-button组件 ([6894708](https://github.com/dream2023/vue-ele-form/commit/68947086e7038676b3251477b4ff1fe0e2bb81a7))
+
 ### [0.6.16](https://github.com/dream2023/vue-ele-form/compare/v0.6.15...v0.6.16) (2020-01-09)
 
 
