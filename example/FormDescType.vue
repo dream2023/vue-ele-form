@@ -20,14 +20,14 @@
 <script>
 export default {
   inject: ['checkType'],
-  data () {
+  data() {
     return {
       formDesc: {},
-      code:
-        `{
+      code: `{
   text: {
     label: '文本类型',
     type: 'text',
+    default: 1,
     options: [
       { text: '正常', value: 1 },
       { text: '异常', value: 0 }
@@ -226,6 +226,14 @@ export default {
       { text: '女', value: 1 }
     ]
   },
+  'radio-button': {
+    label: '单选按钮',
+    type: 'radio-button',
+    options: [
+      { text: '男', value: 0 },
+      { text: '女', value: 1}
+    ]
+  },
   checkbox: {
     label: '多选框',
     type: 'checkbox',
@@ -350,25 +358,25 @@ export default {
     }
   },
   methods: {
-    handleSubmit (data) {
+    handleSubmit(data) {
       /* eslint-disable */
       console.log(data)
       return Promise.resolve()
     },
-    handleSuccess () {
+    handleSuccess() {
       this.$message.success('创建成功')
     },
-    handleCodeChange (code) {
+    handleCodeChange(code) {
       try {
         /* eslint-disable */
         const codeData = eval('(' + code + ')')
         if (this.checkType(codeData, this.formData)) {
           this.formDesc = codeData
         }
-      } catch { }
+      } catch {}
     }
   },
-  created () {
+  created() {
     this.handleCodeChange(this.code)
   }
 }
