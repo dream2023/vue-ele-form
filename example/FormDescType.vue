@@ -254,6 +254,13 @@ export default {
     label: '时间',
     type: 'time'
   },
+  'timerange': {
+    label: '时间范围',
+    type: 'timerange',
+    attrs: {
+      'arrow-control': true
+    }
+  },
   date: {
     label: '日期',
     type: 'date'
