@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.19](https://github.com/dream2023/vue-ele-form/compare/v0.6.18...v0.6.19) (2020-01-11)
+
+
+### Features
+
+* 增加monthrange ([a295911](https://github.com/dream2023/vue-ele-form/commit/a295911215b90d2b693b6ecaa09cdd0c5351c32f))
+
+
+### Bug Fixes
+
+* 默认属性无法替换 ([521e78b](https://github.com/dream2023/vue-ele-form/commit/521e78bad2b704a5a3f75e64eed9b2d1a4991a6a))
+
 ### [0.6.18](https://github.com/dream2023/vue-ele-form/compare/v0.6.17...v0.6.18) (2020-01-10)
 
 
