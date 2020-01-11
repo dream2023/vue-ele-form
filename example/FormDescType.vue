@@ -277,6 +277,10 @@ export default {
     label: '月',
     type: 'month'
   },
+  monthrange: {
+    label: '月范围',
+    type: 'monthrange'
+  },
   year: {
     label: '年',
     type: 'year'
