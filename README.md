@@ -35,7 +35,7 @@ vue-ele-form 是基于 [element-ui form](https://element.eleme.cn/#/zh-CN/compon
 
 ## 可视化生成表单
 
-![可视化生成表单演示图](https://raw.githubusercontent.com/dream2023/images/master/vue-ele-form-generator.4j3mllhqkds.gif)
+[![可视化生成表单演示图](https://s2.ax1x.com/2020/01/14/lb1PL6.gif)](https://github.com/dream2023/vue-ele-form-generator)
 
 项目地址: [https://github.com/dream2023/vue-ele-form-generator](https://github.com/dream2023/vue-ele-form-generator)
 
