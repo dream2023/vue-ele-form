@@ -625,7 +625,7 @@ export default {
       newOptions = this.changeProp(newOptions, prop)
 
       const oldOptions = this.formDesc[field]._options
-      this.formDesc[field] = Object.assign({}, this.formDesc[field], {
+      Object.assign(this.formDesc[field], {
         _options: newOptions
       })
 
