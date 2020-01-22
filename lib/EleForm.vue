@@ -3,8 +3,8 @@
     <!-- inline模式 -->
     <template v-if="inline">
       <el-form
-        :inline="true"
-        :label-position="labelPosition || 'right'"
+        :inline="inline"
+        :label-position="computedLabelPosition"
         :label-width="computedLabelWidth"
         :model="formData"
         :rules="computedRules"
@@ -87,10 +87,11 @@
     <!-- layout布局模式 -->
     <template v-else>
       <el-row justify="center" type="flex">
-        <el-col :span="formSpan">
+        <el-col :span="computedSpan">
           <!-- 表单 -->
           <el-form
-            :label-position="formLabelPosition"
+            :inline="inline"
+            :label-position="computedLabelPosition"
             :label-width="computedLabelWidth"
             :model="formData"
             :rules="computedRules"
@@ -274,19 +275,11 @@ export default {
       type: [Number, String],
       default: 'auto'
     },
-    // 标签位置(layout模式为响应式, inline模式无)
-    labelPosition: String,
-    // 不填则响应式, 填则固定(layout模式为响应式, inline模式无)
-    span: Number,
     // options 的请求方法
     optionsFn: Function
   },
   data() {
     return {
-      // 表单标签位置
-      formLabelPosition: 'right',
-      // 表单宽度
-      formSpan: 22,
       // 是否正在请求中
       innerIsLoading: false,
       // 内部请求出错
