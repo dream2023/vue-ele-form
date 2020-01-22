@@ -16,18 +16,14 @@
         class="ele-form-section-content"
         v-for="(section, index) of sections"
       >
-        <slot
-          :icon="section.icon"
-          :title="section.title"
-          name="section-header"
-        >
+        <slot :icon="section.icon" :title="section.title" name="section-header">
           <div class="ele-form-section-header">
             <i
               :class="section.icon"
               style="padding-right: 10px;"
               v-if="section.icon"
             ></i>
-            <span>{{section.title}}</span>
+            <span>{{ section.title }}</span>
           </div>
         </slot>
         <div class="ele-form-section-body">
@@ -39,7 +35,6 @@
                   :md="formItem.layout || 24"
                   :xs="24"
                   v-if="formItem.type !== 'hide' && formItem._vif"
-                  v-show="formItem._vshow"
                 >
                   <el-form-item
                     :error="formErrorObj ? formErrorObj[field] : null"
@@ -62,10 +57,9 @@
                         v-model="formData[field]"
                       />
                     </slot>
-                    <div
-                      class="ele-form-tip"
-                      v-if="formItem.tip"
-                    >{{ formItem.tip }}</div>
+                    <div class="ele-form-tip" v-if="formItem.tip">
+                      {{ formItem.tip }}
+                    </div>
                   </el-form-item>
                 </el-col>
               </slot>
@@ -77,16 +71,14 @@
 
     <!-- 按钮区插槽 -->
     <template v-slot:form-btn="{ btns }">
-      <slot
-        :btns="getBtns(btns)"
-        name="form-btn"
-      >
+      <slot :btns="getBtns(btns)" name="form-btn">
         <el-button
           :key="index"
           @click="btn.click"
           v-bind="btn.attrs"
           v-for="(btn, index) of btns"
-        >{{ btn.text }}</el-button>
+          >{{ btn.text }}</el-button
+        >
       </slot>
     </template>
   </ele-form>
@@ -103,25 +95,24 @@ export default {
     }
   },
   computed: {
-    formDesc () {
+    formDesc() {
       return this.sections.reduce((acc, cur) => {
         return Object.assign(acc, cur.formDesc)
       }, {})
     }
   },
-  data () {
+  data() {
     return {}
   },
   methods: {
-    getBtns (btns) {
-      return btns.map((item) => {
+    getBtns(btns) {
+      return btns.map(item => {
         item.click = item.click.bind(this.$refs.section)
         return item
       })
     }
   },
-  mounted () {
-  }
+  mounted() {}
 }
 </script>
 

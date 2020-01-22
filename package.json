@@ -32,6 +32,7 @@
   ],
   "dependencies": {
     "dayjs": "^1.8.15",
+    "is-number": "^7.0.0",
     "lodash.clonedeep": "^4.5.0",
     "mockjs": "^1.0.1-beta3",
     "throttle-debounce": "^2.1.0"

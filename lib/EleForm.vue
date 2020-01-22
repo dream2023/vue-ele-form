@@ -21,7 +21,12 @@
           name="form-content"
         >
           <template v-for="(formItem, field) of formDesc">
-            <slot :name="field + '-wrapper'" :field="field" :formData="formData" :desc="desc">
+            <slot
+              :name="field + '-wrapper'"
+              :field="field"
+              :formData="formData"
+              :desc="formDesc"
+            >
               <el-form-item
                 :error="formErrorObj ? formErrorObj[field] : null"
                 :key="field"
@@ -86,7 +91,7 @@
           <!-- 表单 -->
           <el-form
             :label-position="formLabelPosition"
-            :label-width="computedLabelWidth ? computedLabelWidth : 'auto'"
+            :label-width="computedLabelWidth"
             :model="formData"
             :rules="computedRules"
             @submit.native.prevent="handleSubmitForm"
@@ -104,13 +109,17 @@
             >
               <el-row :gutter="20">
                 <template v-for="(formItem, field) of formDesc">
-                  <slot :name="field + '-wrapper'" :desc="formItem" :field="field" :formData="formData">
+                  <slot
+                    :name="field + '-wrapper'"
+                    :desc="formItem"
+                    :field="field"
+                    :formData="formData"
+                  >
                     <el-col
                       :key="field"
                       :md="formItem.layout || 24"
                       :xs="24"
                       v-if="formItem.type !== 'hide' && formItem._vif"
-                      v-show="formItem._vshow"
                     >
                       <el-form-item
                         :error="formErrorObj ? formErrorObj[field] : null"
@@ -173,6 +182,7 @@ import localeMixin from 'element-ui/src/mixins/locale'
 import { t } from './locale'
 import { loadMockJs } from './tools/mock'
 import { equal, intersection } from './tools/set'
+const isNumber = require('is-number')
 const cloneDeep = require('lodash.clonedeep')
 
 export default {
@@ -204,7 +214,9 @@ export default {
     // 校检规则
     rules: {
       type: Object,
-      default () { return {} }
+      default() {
+        return {}
+      }
     },
     // 模拟数据
     mock: {
@@ -260,7 +272,7 @@ export default {
     // 标签宽度
     labelWidth: {
       type: [Number, String],
-      default: null
+      default: 'auto'
     },
     // 标签位置(layout模式为响应式, inline模式无)
     labelPosition: String,
@@ -269,7 +281,7 @@ export default {
     // options 的请求方法
     optionsFn: Function
   },
-  data () {
+  data() {
     return {
       // 表单标签位置
       formLabelPosition: 'right',
@@ -282,11 +294,11 @@ export default {
     }
   },
   computed: {
-    isMock () {
+    isMock() {
       return this.mock || Object.values(this.formDesc).some(item => item.mock)
     },
     // 按钮
-    btns () {
+    btns() {
       const formBtnSize = this.formBtnSize
       let btns = []
       // 模拟数据
@@ -311,7 +323,7 @@ export default {
             'native-type': 'submit'
           },
           text: this.computedSubmitBtnText,
-          click () { }
+          click() {}
         })
       }
 
@@ -363,7 +375,7 @@ export default {
       return btns
     },
     // 是否显示返回按钮(inline和layout模式下不同)
-    computedIsShowBackBtn () {
+    computedIsShowBackBtn() {
       if (utils.is(this.isShowBackBtn, 'Boolean')) {
         return this.isShowBackBtn
       } else {
@@ -371,7 +383,7 @@ export default {
       }
     },
     // 提交按钮默认值(inline和layout模式下不同)
-    computedSubmitBtnText () {
+    computedSubmitBtnText() {
       if (utils.is(this.submitBtnText, 'String')) {
         return this.submitBtnText
       } else {
@@ -381,23 +393,21 @@ export default {
       }
     },
     // 标签宽度(数字和字符串两种处理)
-    computedLabelWidth () {
-      if (this.labelWidth === null) {
-        return null
-      } else if (isNaN(Number(this.labelWidth))) {
-        return this.labelWidth
-      } else {
+    computedLabelWidth() {
+      if (isNumber(this.labelWidth)) {
         return this.labelWidth + 'px'
+      } else {
+        return this.labelWidth
       }
     },
     // 表单错误信息
-    formErrorObj () {
+    formErrorObj() {
       return Object.assign({}, this.innerFormError, this.formError)
     },
     // 校检规则 (支持局部定义和全局定义)
     // 即: rules: { rules: { a: [xxx, xxx], b:{ xxx } } } 和 formDesc: { name: { rules: {xxx} }, age: { rules: [xxx] } }
     // 此函数即将局部定义转为全局定义
-    computedRules () {
+    computedRules() {
       return this.formDescKeys.reduce((rules, field) => {
         let formRules = rules[field] || []
         let formItemRules = this.formDesc[field].rules
@@ -416,28 +426,38 @@ export default {
         }
 
         // 如果采用required, 则判断已有的规则有无, 如果没有, 则添加
-        if (this.formDesc[field].required && !rules[field].some(rule => rule.required)) {
-          rules[field].push({ required: true, message: this.formDesc[field].label + t('ele-form.required') })
+        if (
+          this.formDesc[field].required &&
+          !rules[field].some(rule => rule.required)
+        ) {
+          rules[field].push({
+            required: true,
+            message: this.formDesc[field].label + t('ele-form.required')
+          })
         }
         return rules
       }, this.rules || {})
     },
     // formDesc的key
-    formDescKeys () {
+    formDescKeys() {
       return Object.keys(this.formDesc)
     }
   },
   watch: {
     // 处理options参数
     formDesc: {
-      handler (desc) {
+      handler(desc) {
         if (desc) {
           Object.keys(desc).forEach(field => {
             // 设置 options
             this.changeOptions(desc[field].options, desc[field].prop, field)
 
             // 设置 mock 状态
-            if (!utils.isProd() && this.mock && utils.isUnDef(desc[field].mock)) {
+            if (
+              !utils.isProd() &&
+              this.mock &&
+              utils.isUnDef(desc[field].mock)
+            ) {
               desc[field].mock = true
             }
           })
@@ -448,14 +468,14 @@ export default {
       },
       immediate: true
     },
-    formErrorObj (obj) {
+    formErrorObj(obj) {
       // 后端异常的弹窗警告
       if (obj) {
         this.processError(obj)
       }
     },
     formData: {
-      handler (formData) {
+      handler(formData) {
         if (formData) {
           // 联动属性检测
           this.checkLinkage()
@@ -466,13 +486,13 @@ export default {
   },
   methods: {
     // 重新模拟数据
-    reMockData () {
-      this.formDescKeys.forEach((field) => {
+    reMockData() {
+      this.formDescKeys.forEach(field => {
         this.$refs[field][0].mockData()
       })
     },
     // 定义联动属性的descriptor
-    defineLinkageProperty (value) {
+    defineLinkageProperty(value) {
       return {
         enumerable: false,
         writable: true,
@@ -481,7 +501,7 @@ export default {
       }
     },
     // 检测联动
-    checkLinkage () {
+    checkLinkage() {
       if (this.checkVifFn) {
         this.checkLinkageFn()
       } else {
@@ -494,7 +514,7 @@ export default {
             let type = formItem.type
             if (typeof formItem.type === 'function') {
               type = this.getComponentName(formItem.type(formData))
-              if (formItem._type && (formItem._type !== type)) {
+              if (formItem._type && formItem._type !== type) {
                 // 类型改变, 则删除原数据
                 this.formData[field] = null
               }
@@ -515,14 +535,6 @@ export default {
               vif = formItem.vif
             }
 
-            // 2.触发 v-show 显示 / 隐藏
-            let vshow = true
-            if (typeof formItem.vshow === 'function') {
-              vshow = Boolean(formItem.vshow(formData))
-            } else if (typeof formItem.vshow === 'boolean') {
-              vshow = formItem._vshow
-            }
-
             // 3.触发 disabled 禁用 / 启用
             let disabled = null
             if (typeof formItem.disabled === 'function') {
@@ -531,10 +543,9 @@ export default {
               disabled = formItem.disabled
             }
             Object.defineProperties(formItem, {
-              '_type': this.defineLinkageProperty(type),
-              '_vif': this.defineLinkageProperty(vif),
-              '_vshow': this.defineLinkageProperty(vshow),
-              '_disabled': this.defineLinkageProperty(disabled)
+              _type: this.defineLinkageProperty(type),
+              _vif: this.defineLinkageProperty(vif),
+              _disabled: this.defineLinkageProperty(disabled)
             })
 
             // 4.重新获取 options
@@ -551,7 +562,7 @@ export default {
       }
     },
     // 组件名称
-    getComponentName (type) {
+    getComponentName(type) {
       if (this.$EleFormBuiltInNames.includes(type)) {
         // 内置组件
         return 'ele-form-' + type
@@ -563,15 +574,18 @@ export default {
     // 转对象的key
     // 例如 option: { label: '女', val: 1 }, prop: { text: 'label', value: 'val' }
     // 转换后 -> option: { text: '女', value: 1 }
-    changeProp (options, prop) {
+    changeProp(options, prop) {
       if (prop) {
-        return options.map(option => ({ 'text': option[prop.text], 'value': option[prop.value] }))
+        return options.map(option => ({
+          text: option[prop.text],
+          value: option[prop.value]
+        }))
       } else {
         return options
       }
     },
     // 将options转为对象数组
-    getObjArrOptions (options) {
+    getObjArrOptions(options) {
       return options.map(option => {
         if (utils.is(option, ['Number', 'String', 'Boolean'])) {
           // 例如 ['男', '女'] => [ { text: '男', value: '男' }, { text: '女', value: '女' } ]
@@ -586,7 +600,7 @@ export default {
       })
     },
     // 将四种类型: 字符串数组, 对象数组, Promise对象和函数统一为 对象数组
-    changeOptions (options, prop, field, resetValue = false) {
+    changeOptions(options, prop, field, resetValue = false) {
       if (options) {
         if (options instanceof Array) {
           // 当options为数组时: 直接获取
@@ -606,8 +620,8 @@ export default {
           // 其他报错
           throw new TypeError(
             'options的类型不正确, options及options请求结果类型可为: 字符串数组, 对象数组, 函数和Promise或者URL地址, 当前值为: ' +
-            options +
-            ', 不属于以上四种类型'
+              options +
+              ', 不属于以上四种类型'
           )
         }
       } else {
@@ -618,7 +632,7 @@ export default {
       }
     },
     // 设置options
-    setOptions (options, prop, field, resetValue) {
+    setOptions(options, prop, field, resetValue) {
       // 将options每一项转为对象
       let newOptions = this.getObjArrOptions(options)
       // 改变prop为规定的prop
@@ -631,11 +645,16 @@ export default {
 
       // 是否需要重置值
       if (resetValue && oldOptions !== undefined) {
-        const newOptionValues = new Set(Array.isArray(newOptions) ? newOptions.map((item) => item.value) : [])
-        const oldOptionValues = new Set(Array.isArray(oldOptions) ? oldOptions.map((item) => item.value) : [])
+        const newOptionValues = new Set(
+          Array.isArray(newOptions) ? newOptions.map(item => item.value) : []
+        )
+        const oldOptionValues = new Set(
+          Array.isArray(oldOptions) ? oldOptions.map(item => item.value) : []
+        )
 
         // 1.没并集 & 2.原 oldOptions 且和 newOptions 不相等, 则重置 value 值
-        const isIntersection = intersection(newOptionValues, oldOptionValues).size
+        const isIntersection = intersection(newOptionValues, oldOptionValues)
+          .size
         const isEqual = equal(newOptionValues, oldOptionValues)
 
         if (!isIntersection && !isEqual) {
@@ -644,7 +663,7 @@ export default {
       }
     },
     // 验证表单
-    validateForm () {
+    validateForm() {
       return new Promise((resolve, reject) => {
         if (this.computedRules) {
           // 当传递了验证规则
@@ -664,16 +683,20 @@ export default {
     },
 
     // 验证所有组件的内置验证方法
-    validateComponent () {
+    validateComponent() {
       const validators = this.formDescKeys
-        .map((key) => this.$refs[key] && this.$refs[key][0] ? this.$refs[key][0].validate : null)
+        .map(key =>
+          this.$refs[key] && this.$refs[key][0]
+            ? this.$refs[key][0].validate
+            : null
+        )
         .filter(Boolean)
 
       return Promise.all(validators.map(fn => fn()))
     },
 
     // 处理错误
-    processError (errObj) {
+    processError(errObj) {
       try {
         const messageArr = Object.keys(errObj).reduce((acc, key) => {
           const formItem = this.formDesc[key]
@@ -695,11 +718,11 @@ export default {
         }, [])
         this.showError(messageArr)
         // eslint-disable-next-line
-      } catch { }
+      } catch {}
     },
 
     // 显示错误
-    showError (messageArr) {
+    showError(messageArr) {
       if (messageArr.length) {
         const h = this.$createElement
         messageArr = messageArr.map(msg => {
@@ -717,7 +740,7 @@ export default {
     },
 
     // 提交表单
-    async handleSubmitForm () {
+    async handleSubmitForm() {
       try {
         // 验证表单
         await this.validateForm()
@@ -752,7 +775,7 @@ export default {
                   this.innerFormError = msg
                 }
                 // eslint-disable-next-line
-              } catch { }
+              } catch {}
             } else if (error instanceof Object) {
               // 返回的是对象类型, 则直接设置
               this.innerFormError = error
@@ -772,7 +795,7 @@ export default {
       }
     },
     // 返回按钮
-    goBack () {
+    goBack() {
       if (this.$router) {
         // vue-router
         this.$router.back()
@@ -782,11 +805,11 @@ export default {
       }
     },
     // 点击取消按钮
-    handleCancelClick () {
+    handleCancelClick() {
       this.$emit('close')
     },
     // 重置表单
-    resetForm () {
+    resetForm() {
       this.$refs.form.resetFields()
 
       // 调用内部方法进行值的重置
@@ -795,7 +818,7 @@ export default {
       })
     }
   },
-  mounted () {
+  mounted() {
     if (this.isMock && !window.Mock) {
       loadMockJs()
     }
@@ -813,7 +836,8 @@ export default {
 .ele-form-full-line.el-date-editor.el-input,
 .el-date-editor.el-input__inner,
 .ele-form-full-line.el-date-editor--daterange.el-input__inner,
-.ele-form-full-line.el-date-editor--datetimerange.el-input__inner,.ele-form-full-line.el-date-editor--timerange.el-input__inner,
+.ele-form-full-line.el-date-editor--datetimerange.el-input__inner,
+.ele-form-full-line.el-date-editor--timerange.el-input__inner,
 .ele-form-full-line.el-date-editor--monthrange.el-input__inner,
 .ele-form-full-line.el-cascader,
 .ele-form-full-line.el-select,
