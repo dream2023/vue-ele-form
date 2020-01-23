@@ -1,21 +1,19 @@
 <template>
-  <div class="ele-form" ref="wrapper">
-    <!-- inline模式 -->
-    <template v-if="inline">
-      <el-row justify="center" type="flex">
-        <el-col :span="computedSpan">
-          <el-form
-            :inline="inline"
-            :label-position="computedLabelPosition"
-            :label-width="computedLabelWidth"
-            :model="formData"
-            :rules="computedRules"
-            @submit.native.prevent="handleSubmitForm"
-            ref="form"
-            v-bind="formAttrs"
-          >
-            <!-- 默认插槽作为表单项 -->
-            <slot />
+  <div class="ele-form" :class="{ 'ele-form--inline': inline }" ref="wrapper">
+    <el-row justify="center" type="flex">
+      <el-col :span="computedSpan">
+        <el-form
+          :label-position="computedLabelPosition"
+          :label-width="computedLabelWidth"
+          :model="formData"
+          :rules="computedRules"
+          @submit.native.prevent="handleSubmitForm"
+          ref="form"
+          v-bind="formAttrs"
+        >
+          <!-- 默认插槽作为表单项 -->
+          <slot />
+          <el-row :gutter="20">
             <slot
               :formData="formData"
               :formDesc="formDesc"
@@ -27,155 +25,64 @@
                   :name="field + '-wrapper'"
                   :field="field"
                   :formData="formData"
-                  :desc="formDesc"
+                  :desc="formItem"
                 >
-                  <el-form-item
-                    :error="formErrorObj ? formErrorObj[field] : null"
+                  <el-col
                     :key="field"
-                    :label="formItem.label"
-                    :prop="field"
+                    v-bind="getColAttrs(formItem.layout)"
                     v-if="formItem.type !== 'hide' && formItem._vif"
                   >
-                    <!-- 具名 作用域插槽(用于用户自定义显示) -->
-                    <slot
-                      :data="formData[field]"
-                      :desc="formItem"
-                      :field="field"
-                      :formData="formData"
-                      :name="field"
-                      :type="formItem._type"
+                    <el-form-item
+                      :error="formErrorObj ? formErrorObj[field] : null"
+                      :label="formItem.label"
+                      :prop="field"
                     >
-                      <component
-                        :_disabled="formItem._disabled"
+                      <!-- 具名 作用域插槽(用于用户自定义显示) -->
+                      <slot
+                        :data="formData[field]"
                         :desc="formItem"
-                        :is="formItem._type"
-                        :options="formItem._options"
-                        :ref="field"
                         :field="field"
-                        v-model="formData[field]"
-                      />
-                    </slot>
-                    <div class="ele-form-tip" v-if="formItem.tip">
-                      {{ formItem.tip }}
-                    </div>
-                  </el-form-item>
+                        :formData="formData"
+                        :name="field"
+                        :type="formItem._type"
+                      >
+                        <component
+                          :_disabled="formItem._disabled"
+                          :desc="formItem"
+                          :is="formItem._type"
+                          :options="formItem._options"
+                          :ref="field"
+                          :field="field"
+                          v-model="formData[field]"
+                        />
+                      </slot>
+                      <div class="ele-form-tip" v-if="formItem.tip">
+                        {{ formItem.tip }}
+                      </div>
+                    </el-form-item>
+                  </el-col>
                 </slot>
               </template>
             </slot>
             <!-- 操作按钮区 -->
-            <el-form-item
-              class="ele-form-btns"
-              style="margin-left: 5px;"
-              v-if="btns.length"
-            >
-              <!-- 按钮插槽 -->
-              <slot :btns="btns" name="form-btn">
-                <el-button
-                  :key="index"
-                  @click="btn.click"
-                  v-bind="btn.attrs"
-                  v-for="(btn, index) of btns"
-                  >{{ btn.text }}</el-button
-                >
-              </slot>
-            </el-form-item>
-          </el-form>
-        </el-col>
-      </el-row>
-    </template>
-
-    <!-- inline模式和layout模式区别: -->
-    <!-- 1.layout模式 labelPosition 和 span 响应式, inline模式 无响应式 -->
-    <!-- 2.layout模式 form-item 宽度占满整行, inline模式 只占自身的宽度, 且form-item的layout属性无效 -->
-
-    <!-- layout布局模式 -->
-    <template v-else>
-      <el-row justify="center" type="flex">
-        <el-col :span="computedSpan">
-          <!-- 表单 -->
-          <el-form
-            :inline="inline"
-            :label-position="computedLabelPosition"
-            :label-width="computedLabelWidth"
-            :model="formData"
-            :rules="computedRules"
-            @submit.native.prevent="handleSubmitForm"
-            ref="form"
-            v-bind="formAttrs"
-          >
-            <!-- 默认插槽作为表单项 -->
-            <slot />
-            <!-- 表单项 -->
-            <slot
-              :formData="formData"
-              :formDesc="formDesc"
-              :formErrorObj="formErrorObj"
-              name="form-content"
-            >
-              <el-row :gutter="20">
-                <template v-for="(formItem, field) of formDesc">
-                  <slot
-                    :name="field + '-wrapper'"
-                    :desc="formItem"
-                    :field="field"
-                    :formData="formData"
+            <el-col class="ele-form-btns" v-if="btns.length">
+              <el-form-item :label-width="inline ? '10px' : null">
+                <!-- 按钮插槽 -->
+                <slot :btns="btns" name="form-btn">
+                  <el-button
+                    :key="index"
+                    @click="btn.click"
+                    v-bind="btn.attrs"
+                    v-for="(btn, index) of btns"
+                    >{{ btn.text }}</el-button
                   >
-                    <el-col
-                      :key="field"
-                      :md="formItem.layout || 24"
-                      :xs="24"
-                      v-if="formItem.type !== 'hide' && formItem._vif"
-                    >
-                      <el-form-item
-                        :error="formErrorObj ? formErrorObj[field] : null"
-                        :label="formItem.label"
-                        :prop="field"
-                      >
-                        <!-- 具名 作用域插槽(用于用户自定义显示) -->
-                        <slot
-                          :data="formData[field]"
-                          :desc="formItem"
-                          :field="field"
-                          :formData="formData"
-                          :name="field"
-                          :type="formItem._type"
-                        >
-                          <component
-                            :_disabled="formItem._disabled"
-                            :desc="formItem"
-                            :is="formItem._type"
-                            :options="formItem._options"
-                            :ref="field"
-                            :field="field"
-                            v-model="formData[field]"
-                          />
-                        </slot>
-                        <div class="ele-form-tip" v-if="formItem.tip">
-                          {{ formItem.tip }}
-                        </div>
-                      </el-form-item>
-                    </el-col>
-                  </slot>
-                </template>
-              </el-row>
-            </slot>
-            <!-- 操作按钮区 -->
-            <el-form-item class="ele-form-btns" v-if="btns.length">
-              <!-- 按钮插槽 -->
-              <slot :btns="btns" name="form-btn">
-                <el-button
-                  :key="index"
-                  @click="btn.click"
-                  v-bind="btn.attrs"
-                  v-for="(btn, index) of btns"
-                  >{{ btn.text }}</el-button
-                >
-              </slot>
-            </el-form-item>
-          </el-form>
-        </el-col>
-      </el-row>
-    </template>
+                </slot>
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-form>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -482,6 +389,10 @@ export default {
     }
   },
   methods: {
+    // 获取col的属性(是否为inline模式)
+    getColAttrs(layout) {
+      return this.inline ? { span: layout || 6 } : { md: layout || 24, xs: 24 }
+    },
     // 重新模拟数据
     reMockData() {
       this.formDescKeys.forEach(field => {
@@ -824,6 +735,10 @@ export default {
 </script>
 
 <style>
+.ele-form--inline .ele-form-btns {
+  width: auto;
+}
+
 .ele-form-tip {
   color: #909399;
   line-height: 1.5em;
