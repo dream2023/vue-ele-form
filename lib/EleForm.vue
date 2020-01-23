@@ -30,7 +30,7 @@
                   <el-col
                     :key="field"
                     v-bind="getColAttrs(formItem.layout)"
-                    v-if="formItem.type !== 'hide' && formItem._vif"
+                    v-if="formItem._vif"
                   >
                     <el-form-item
                       :error="formErrorObj ? formErrorObj[field] : null"
