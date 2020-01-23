@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.7.0](https://github.com/dream2023/vue-ele-form/compare/v0.6.20...v0.7.0) (2020-01-23)
+
+
+### Features
+
+* 去除vshow特性, 增加is-number检测 ([edb0009](https://github.com/dream2023/vue-ele-form/commit/edb00098c344518f057d5e42051f71363a556559))
+
 ### [0.6.20](https://github.com/dream2023/vue-ele-form/compare/v0.6.19...v0.6.20) (2020-01-20)
 
 
