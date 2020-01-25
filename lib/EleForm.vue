@@ -47,7 +47,7 @@
                         :type="formItem._type"
                       >
                         <component
-                          :_disabled="formItem._disabled"
+                          :_disabled="disabled || formItem._disabled"
                           :desc="formItem"
                           :is="formItem._type"
                           :options="formItem._options"
@@ -186,6 +186,11 @@ export default {
     labelWidth: {
       type: [Number, String],
       default: 'auto'
+    },
+    // 全局禁用表单
+    disabled: {
+      type: Boolean,
+      default: false
     },
     // options 的请求方法
     optionsFn: Function
