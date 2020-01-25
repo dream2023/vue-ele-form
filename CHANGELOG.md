@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.8.0](https://github.com/dream2023/vue-ele-form/compare/v0.7.0...v0.8.0) (2020-01-25)
+
+
+### Features
+
+* 增加deep深度对象功能 ([00e8572](https://github.com/dream2023/vue-ele-form/commit/00e8572009cb0257382c2de55eff04303d2c6fd7))
+* 增加全局的disabled ([ef17d59](https://github.com/dream2023/vue-ele-form/commit/ef17d5943bce36225eb746e87d0b85479db35d10))
+
+
+### Bug Fixes
+
+* 增加作用域插槽数据 ([6eb93f7](https://github.com/dream2023/vue-ele-form/commit/6eb93f786e16d5bb980e96d03450aa43819286e5))
+
 ## [0.7.0](https://github.com/dream2023/vue-ele-form/compare/v0.6.20...v0.7.0) (2020-01-23)
 
 
