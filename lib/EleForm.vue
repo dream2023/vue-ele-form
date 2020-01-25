@@ -23,9 +23,13 @@
               <template v-for="(formItem, field) of computedFormDesc">
                 <slot
                   :name="field + '-wrapper'"
+                  :data="formData[field]"
+                  :desc="formItem"
                   :field="field"
                   :formData="formData"
-                  :desc="formItem"
+                  :disabled="disabled || formItem._disabled"
+                  :type="formItem._type"
+                  :options="formItem._options"
                 >
                   <el-col
                     :key="field"
@@ -44,10 +48,12 @@
                         :field="field"
                         :formData="formData"
                         :name="field"
+                        :disabled="disabled || formItem._disabled"
                         :type="formItem._type"
+                        :options="formItem._options"
                       >
                         <component
-                          :_disabled="disabled || formItem._disabled"
+                          :disabled="disabled || formItem._disabled"
                           :desc="formItem"
                           :is="formItem._type"
                           :options="formItem._options"
