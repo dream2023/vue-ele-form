@@ -1,9 +1,5 @@
 <template>
-  <el-card
-    class="demo-card"
-    header="form-desc 简单示例"
-    shadow="never"
-  >
+  <el-card class="demo-card" header="form-desc 简单示例" shadow="never">
     <div class="form-desc-demo">
       <div style="width: 600px">
         <ele-form
@@ -15,10 +11,7 @@
         />
       </div>
       <div style="margin-left: 50px;width: 500px;">
-        <codemirror
-          @input="handleCodeChange"
-          v-model="code"
-        />
+        <codemirror @input="handleCodeChange" v-model="code" />
       </div>
     </div>
   </el-card>
@@ -26,13 +19,9 @@
 
 <script>
 export default {
-  inject: ['checkType'],
-  data () {
+  data() {
     return {
       rules: {
-        author: [
-          { required: true, message: '请输入作者', trigger: 'blur' }
-        ],
         title: [
           { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
         ]
@@ -40,10 +29,21 @@ export default {
       formDesc: {},
       code: `{
   author: {
-    type: 'input',
-    label: '作者',
-    default: 'dream2023',
-    attrs: { disabled: true }
+    children: {
+      first: {
+        type: 'input',
+        label: '姓',
+        layout: 6,
+        required: true
+      },
+      second: {
+        type: 'input',
+        label: '名',
+        layout: 18,
+        required: true,
+        disabled: data => !data.author.first
+      }
+    }
   },
   title: {
     type: 'input',
@@ -55,6 +55,7 @@ export default {
   content: {
     type: 'textarea',
     label: '内容',
+    required: true,
     attrs: {
       autosize: { minRows: 4, maxRows: 10 }
     }
@@ -94,25 +95,23 @@ export default {
     }
   },
   methods: {
-    handleSubmit (data) {
+    handleSubmit(data) {
       /* eslint-disable */
       console.log(data)
       return Promise.resolve()
     },
-    handleSuccess () {
+    handleSuccess() {
       this.$message.success('创建成功')
     },
-    handleCodeChange (code) {
+    handleCodeChange(code) {
       try {
         /* eslint-disable */
         const codeData = eval('(' + code + ')')
-        if (this.checkType(codeData, this.formData)) {
-          this.formDesc = codeData
-        }
-      } catch { }
+        this.formDesc = codeData
+      } catch {}
     }
   },
-  created () {
+  created() {
     this.handleCodeChange(this.code)
   }
 }

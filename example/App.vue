@@ -26,14 +26,6 @@ import FormDescType from './FormDescType'
 
 export default {
   name: 'App',
-  provide: {
-    // 检查类型是否合法
-    checkType (formDesc, formData) {
-      return Object.keys(formDesc).every(key =>
-        this.$EleFormBuiltInNames.includes(typeof formDesc[key].type === 'function' ? formDesc[key].type(formData) : formDesc[key].type)
-      )
-    }
-  },
   components: {
     AppHeader,
     FormDescDemo,

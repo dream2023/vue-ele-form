@@ -16,11 +16,11 @@
           <el-row :gutter="20">
             <slot
               :formData="formData"
-              :formDesc="formDesc"
+              :formDesc="computedFormDesc"
               :formErrorObj="formErrorObj"
               name="form-content"
             >
-              <template v-for="(formItem, field) of formDesc">
+              <template v-for="(formItem, field) of computedFormDesc">
                 <slot
                   :name="field + '-wrapper'"
                   :field="field"
@@ -53,7 +53,8 @@
                           :options="formItem._options"
                           :ref="field"
                           :field="field"
-                          v-model="formData[field]"
+                          :value="getValue(field)"
+                          @input="setValue(field, $event)"
                         />
                       </slot>
                       <div class="ele-form-tip" v-if="formItem.tip">
@@ -199,7 +200,10 @@ export default {
   },
   computed: {
     isMock() {
-      return this.mock || Object.values(this.formDesc).some(item => item.mock)
+      return (
+        this.mock ||
+        Object.values(this.computedFormDesc).some(item => item.mock)
+      )
     },
     // 按钮
     btns() {
@@ -314,7 +318,7 @@ export default {
     computedRules() {
       return this.formDescKeys.reduce((rules, field) => {
         let formRules = rules[field] || []
-        let formItemRules = this.formDesc[field].rules
+        let formItemRules = this.computedFormDesc[field].rules
 
         // 转为数组
         if (formRules && !Array.isArray(formRules)) {
@@ -331,12 +335,12 @@ export default {
 
         // 如果采用required, 则判断已有的规则有无, 如果没有, 则添加
         if (
-          this.formDesc[field].required &&
+          this.computedFormDesc[field].required &&
           !rules[field].some(rule => rule.required)
         ) {
           rules[field].push({
             required: true,
-            message: this.formDesc[field].label + t('ele-form.required')
+            message: this.computedFormDesc[field].label + t('ele-form.required')
           })
         }
         return rules
@@ -344,26 +348,28 @@ export default {
     },
     // formDesc的key
     formDescKeys() {
-      return Object.keys(this.formDesc)
+      return Object.keys(this.computedFormDesc)
+    },
+    computedFormDesc() {
+      return this.getDeepFormDesc(this.formDesc)
     }
   },
   watch: {
     // 处理options参数
-    formDesc: {
+    computedFormDesc: {
       handler(desc) {
         if (desc) {
-          Object.keys(desc).forEach(field => {
-            // 设置 options
-            this.changeOptions(desc[field].options, desc[field].prop, field)
+          this.formDescKeys.forEach(field => {
+            // 设置深度边遍历的默认值
+            this.setDeepFormDataVal(field)
 
-            // 设置 mock 状态
-            if (
-              !utils.isProd() &&
-              this.mock &&
-              utils.isUnDef(desc[field].mock)
-            ) {
+            // 当全局设置mock为true时, 所有子项都标记为true
+            if (this.mock && utils.isUnDef(desc[field].mock)) {
               desc[field].mock = true
             }
+
+            // 设置 options
+            this.changeOptions(desc[field].options, desc[field].prop, field)
           })
 
           // 检查联动
@@ -389,6 +395,72 @@ export default {
     }
   },
   methods: {
+    // 获取值, 可容错, 中间无值
+    // 'a.b.c' => this.formData.a.b.c
+    getValue(field) {
+      return field
+        .split('.')
+        .reduce((acc, key) => (acc ? acc[key] : acc), this.formData)
+    },
+    // 设置值
+    // 例如 ('a.b.c', 'val') => this.formData.a.b.c = 'val'
+    setValue(field, value) {
+      const fields = field.split('.')
+      const dateItem = fields
+        .slice(0, -1)
+        .reduce((acc, key) => acc[key], this.formData)
+      this.$set(dateItem, fields.slice(-1), value)
+    },
+    // 给需要深度遍历的对象赋值空对象, 以便 v-model 时不出错
+    // 例如 formDesc: { info: { children: { name:{ type: 'input', xxx }, nickname: {type: 'input', xxx } } } } => formData => { info: {} }
+    setDeepFormDataVal(field) {
+      const fields = field.split('.')
+      fields.slice(0, -1).reduce((acc, key) => {
+        if (acc[key] === undefined) this.$set(acc, key, {})
+        return acc[key]
+      }, this.formData)
+    },
+    // 深度遍历 formDesc
+    getDeepFormDesc(formDesc, parentField, parent) {
+      return Object.keys(formDesc).reduce((acc, field) => {
+        // 改为 => a.b.c
+        const formField = parentField ? `${parentField}.${field}` : field
+        // 合并 vif 和 disabled, children 要合并父的 vif 和 disabled
+        let vifs = []
+        let disableds = []
+        if (formDesc[field].vif !== undefined) {
+          vifs.push(formDesc[field].vif)
+        }
+        if (formDesc[field].disabled !== undefined) {
+          disableds.push(formDesc[field].disabled)
+        }
+        if (parentField) {
+          vifs = [...parent._vifs, ...vifs]
+          disableds = [...parent._disableds, ...disableds]
+        }
+        // 隐藏 _vifs 和 _disableds
+        Object.defineProperties(formDesc[field], {
+          _vifs: this.defineLinkageProperty(vifs),
+          _disableds: this.defineLinkageProperty(disableds)
+        })
+
+        // 递归
+        if (formDesc[field].children) {
+          Object.assign(
+            acc,
+            this.getDeepFormDesc(
+              formDesc[field].children,
+              formField,
+              formDesc[field]
+            )
+          )
+        } else {
+          acc[formField] = formDesc[field]
+        }
+
+        return acc
+      }, {})
+    },
     // 获取col的属性(是否为inline模式)
     getColAttrs(layout) {
       return this.inline ? { span: layout || 6 } : { md: layout || 24, xs: 24 }
@@ -414,42 +486,37 @@ export default {
         this.checkLinkageFn()
       } else {
         this.checkLinkageFn = throttle(300, () => {
-          const formDesc = this.formDesc
+          const formDesc = this.computedFormDesc
           const formData = this.formData
           Object.keys(formDesc).forEach(field => {
             const formItem = formDesc[field]
-            // 设置 type
+            // 1.设置 type
             let type = formItem.type
             if (typeof formItem.type === 'function') {
               type = this.getComponentName(formItem.type(formData))
               if (formItem._type && formItem._type !== type) {
                 // 类型改变, 则删除原数据
-                this.formData[field] = null
+                this.setValue(field, null)
               }
             } else {
               type = this.getComponentName(formItem.type)
             }
 
-            // 1.触发 v-if 显示 / 隐藏
-            let vif = true
-            if (typeof formItem.vif === 'function') {
-              vif = Boolean(formItem.vif(formData))
+            // 2.触发 v-if 显示 / 隐藏
+            const vif = formItem._vifs.every(vif =>
+              typeof vif === 'function' ? vif(this.formData) : vif
+            )
 
-              if (!vif) {
-                // 如果隐藏, 则删除值
-                this.formData[field] = null
-              }
-            } else if (typeof formItem.vif === 'boolean') {
-              vif = formItem.vif
+            // 如果隐藏, 则删除值
+            if (!vif) {
+              this.setValue(field, null)
             }
 
             // 3.触发 disabled 禁用 / 启用
-            let disabled = null
-            if (typeof formItem.disabled === 'function') {
-              disabled = formItem.disabled(formData)
-            } else if (typeof formItem.disabled === 'boolean') {
-              disabled = formItem.disabled
-            }
+            const disabled = formItem._disableds.some(disabled =>
+              typeof disabled === 'function' ? disabled(formData) : disabled
+            )
+
             Object.defineProperties(formItem, {
               _type: this.defineLinkageProperty(type),
               _vif: this.defineLinkageProperty(vif),
@@ -533,7 +600,7 @@ export default {
           )
         }
       } else {
-        if (this.formDesc[field]._options) {
+        if (this.computedFormDesc[field]._options) {
           // 如果new options为null / undefined, 且 old Options 存在, 则设置
           this.setOptions([], prop, field, resetValue)
         }
@@ -546,8 +613,8 @@ export default {
       // 改变prop为规定的prop
       newOptions = this.changeProp(newOptions, prop)
 
-      const oldOptions = this.formDesc[field]._options
-      Object.assign(this.formDesc[field], {
+      const oldOptions = this.computedFormDesc[field]._options
+      Object.assign(this.computedFormDesc[field], {
         _options: newOptions
       })
 
@@ -566,7 +633,7 @@ export default {
         const isEqual = equal(newOptionValues, oldOptionValues)
 
         if (!isIntersection && !isEqual) {
-          this.formData[field] = null
+          this.setValue(field, null)
         }
       }
     },
@@ -607,7 +674,7 @@ export default {
     processError(errObj) {
       try {
         const messageArr = Object.keys(errObj).reduce((acc, key) => {
-          const formItem = this.formDesc[key]
+          const formItem = this.computedFormDesc[key]
           const label =
             formItem && formItem.label ? formItem.label + ': ' : key + ': '
           if (errObj[key] instanceof Array) {
@@ -658,7 +725,7 @@ export default {
         let data = cloneDeep(this.formData)
         // valueFormatter的处理
         for (const field in data) {
-          const formItem = this.formDesc[field]
+          const formItem = this.computedFormDesc[field]
           if (formItem && formItem.valueFormatter) {
             data[field] = formItem.valueFormatter(data[field], data)
           }

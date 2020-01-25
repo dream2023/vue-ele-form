@@ -1,9 +1,5 @@
 <template>
-  <el-card
-    class="demo-card"
-    header="ele-form-group 简单示例"
-    shadow="never"
-  >
+  <el-card class="demo-card" header="ele-form-group 简单示例" shadow="never">
     <div class="form-desc-group">
       <div style="width: 600px">
         <ele-form-group
@@ -14,10 +10,7 @@
         />
       </div>
       <div style="margin-left: 50px;width: 500px;">
-        <codemirror
-          @input="handleCodeChange"
-          v-model="code"
-        />
+        <codemirror @input="handleCodeChange" v-model="code" />
       </div>
     </div>
   </el-card>
@@ -25,12 +18,10 @@
 
 <script>
 export default {
-  inject: ['checkType'],
-  data () {
+  data() {
     return {
       groups: [],
-      code:
-        `[
+      code: `[
   {
     // groupId 为分组的 id
     groupId: 'base',
@@ -93,23 +84,23 @@ export default {
     }
   },
   methods: {
-    handleSubmit (data) {
+    handleSubmit(data) {
       /* eslint-disable */
       console.log(data)
       return Promise.resolve()
     },
-    handleSuccess () {
+    handleSuccess() {
       this.$message.success('创建成功')
     },
-    handleCodeChange (code) {
+    handleCodeChange(code) {
       try {
         /* eslint-disable */
         const codeData = eval('(' + code + ')')
         this.groups = codeData
-      } catch { }
+      } catch {}
     }
   },
-  created () {
+  created() {
     this.handleCodeChange(this.code)
   }
 }

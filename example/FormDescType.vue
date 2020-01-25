@@ -19,7 +19,6 @@
 
 <script>
 export default {
-  inject: ['checkType'],
   data() {
     return {
       formDesc: {},
@@ -381,9 +380,7 @@ export default {
       try {
         /* eslint-disable */
         const codeData = eval('(' + code + ')')
-        if (this.checkType(codeData, this.formData)) {
-          this.formDesc = codeData
-        }
+        this.formDesc = codeData
       } catch {}
     }
   },

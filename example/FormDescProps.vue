@@ -1,9 +1,5 @@
 <template>
-  <el-card
-    class="demo-card"
-    header="form-desc props详细说明"
-    shadow="never"
-  >
+  <el-card class="demo-card" header="form-desc props详细说明" shadow="never">
     <div class="form-desc-props">
       <ele-form
         :formData="formData"
@@ -12,18 +8,14 @@
         :request-fn="handleSubmit"
         @request-success="handleSuccess"
       />
-      <codemirror
-        @input="handleCodeChange"
-        v-model="code"
-      />
+      <codemirror @input="handleCodeChange" v-model="code" />
     </div>
   </el-card>
 </template>
 
 <script>
 export default {
-  inject: ['checkType'],
-  data () {
+  data() {
     return {
       formDesc: {},
       code: `{
@@ -105,7 +97,7 @@ export default {
   girlFriendName: {
     type: 'input',
     label: '女朋友姓名',
-    vshow (data) { return data.girlFriend }
+    vif (data) { return data.girlFriend }
   },
   motto: {
     type: 'text',
@@ -136,32 +128,29 @@ export default {
     }
   },
   methods: {
-    handleSubmit (data) {
+    handleSubmit(data) {
       /* eslint-disable */
       console.log(data)
       return Promise.resolve()
     },
-    handleSuccess () {
+    handleSuccess() {
       this.$message.success('创建成功')
     },
-    handleCodeChange (code) {
+    handleCodeChange(code) {
       try {
         /* eslint-disable */
         const codeData = eval('(' + code + ')')
-        if (this.checkType(codeData, this.formData)) {
-          this.formDesc = codeData
-        }
+        this.formDesc = codeData
       } catch (error) {
         console.log(code, error)
       }
     }
   },
-  created () {
+  created() {
     this.handleCodeChange(this.code)
   }
 }
 </script>
-
 
 <style>
 .form-desc-props .CodeMirror {
