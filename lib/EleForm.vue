@@ -63,9 +63,11 @@
                           @input="setValue(field, $event)"
                         />
                       </slot>
-                      <div class="ele-form-tip" v-if="formItem.tip">
-                        {{ formItem.tip }}
-                      </div>
+                      <div
+                        class="ele-form-tip"
+                        v-if="formItem.tip"
+                        v-html="formItem.tip"
+                      ></div>
                     </el-form-item>
                   </el-col>
                 </slot>
@@ -362,7 +364,22 @@ export default {
       return Object.keys(this.computedFormDesc)
     },
     computedFormDesc() {
-      return this.getDeepFormDesc(this.formDesc)
+      const desc = this.getDeepFormDesc(this.formDesc)
+      Object.keys(desc).forEach(field => {
+        // 当全局设置mock为true时, 所有子项都标记为true
+        if (this.mock && utils.isUnDef(desc[field].mock)) {
+          desc[field].mock = true
+        }
+
+        // 转换 tip
+        if (desc[field].tip) {
+          desc[field].tip = String(desc[field].tip).replace(
+            /`(.+)?`/g,
+            '<code>$1</code>'
+          )
+        }
+      })
+      return desc
     }
   },
   watch: {
@@ -373,11 +390,6 @@ export default {
           this.formDescKeys.forEach(field => {
             // 设置深度边遍历的默认值
             this.setDeepFormDataVal(field)
-
-            // 当全局设置mock为true时, 所有子项都标记为true
-            if (this.mock && utils.isUnDef(desc[field].mock)) {
-              desc[field].mock = true
-            }
 
             // 设置 options
             this.changeOptions(desc[field].options, desc[field].prop, field)
@@ -821,6 +833,13 @@ export default {
   color: #909399;
   line-height: 1.5em;
   margin-top: 3px;
+}
+.ele-form-tip code {
+  padding: 2px 4px;
+  font-size: 90%;
+  color: #c7254e;
+  background-color: #f9f2f4;
+  border-radius: 4px;
 }
 
 .ele-form-full-line.el-date-editor.el-input,
