@@ -163,12 +163,13 @@ export default {
       default: true
     },
     // 是否显示 cancel 取消按钮
+    // 默认值: isDialog = true 时, 默认值为 true, 具体查看: computedIsShowCancelBtn
     isShowCancelBtn: {
       type: Boolean,
-      default: false
+      default: null
     },
     // 是否显示back按钮
-    // 默认值: 当 inline 为true时, 不显示; inline 为 false时, 显示. 具体请看计算属性: computedIsShowBackBtn
+    // 默认值: 当 inline = true OR isDialog = true, 默认值为 false; 其它情况true. 具体请看计算属性: computedIsShowBackBtn
     isShowBackBtn: {
       type: Boolean,
       default: null
@@ -197,6 +198,15 @@ export default {
     },
     // 全局禁用表单
     disabled: {
+      type: Boolean,
+      default: false
+    },
+    // 是否为弹窗
+    isDialog: {
+      type: Boolean,
+      default: false
+    },
+    visible: {
       type: Boolean,
       default: false
     },
@@ -273,7 +283,7 @@ export default {
       }
 
       // 取消按钮
-      if (this.isShowCancelBtn) {
+      if (this.computedIsShowCancelBtn) {
         btns.push({
           attrs: {
             size: formBtnSize
@@ -295,12 +305,21 @@ export default {
       }
       return btns
     },
+    computedIsShowCancelBtn() {
+      if (utils.is(this.isShowCancelBtn, 'Boolean')) {
+        // 如果指定了, 则使用指定的值
+        return this.isShowCancelBtn
+      } else {
+        // 如果未指定, 根据 isDialog
+        return this.isDialog
+      }
+    },
     // 是否显示返回按钮(inline和layout模式下不同)
     computedIsShowBackBtn() {
       if (utils.is(this.isShowBackBtn, 'Boolean')) {
         return this.isShowBackBtn
       } else {
-        return !this.inline
+        return !(this.inline || this.isDialog)
       }
     },
     // 提交按钮默认值(inline和layout模式下不同)
@@ -805,6 +824,7 @@ export default {
     // 点击取消按钮
     handleCancelClick() {
       this.$emit('close')
+      this.$emit('update:visible', false)
     },
     // 重置表单
     resetForm() {
