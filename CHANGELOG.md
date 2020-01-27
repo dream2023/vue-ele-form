@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.1](https://github.com/dream2023/vue-ele-form/compare/v0.8.0...v0.8.1) (2020-01-27)
+
+
+### Features
+
+* tip改为html并对code做特殊处理 ([af52129](https://github.com/dream2023/vue-ele-form/commit/af521292389743d749d1106f6b43bab0ec0d5b12))
+* 增加isDialog属性,用于弹窗 ([9f088e8](https://github.com/dream2023/vue-ele-form/commit/9f088e80ad928d3f8d748e9d5702257ddbedb0f5))
+
 ## [0.8.0](https://github.com/dream2023/vue-ele-form/compare/v0.7.0...v0.8.0) (2020-01-25)
 
 
