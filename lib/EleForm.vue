@@ -206,6 +206,7 @@ export default {
       type: Boolean,
       default: false
     },
+    // 弹窗变量控制
     visible: {
       type: Boolean,
       default: false
@@ -393,7 +394,7 @@ export default {
         // 转换 tip
         if (desc[field].tip) {
           desc[field].tip = String(desc[field].tip).replace(
-            /`(.+)?`/g,
+            /`(.+?)`/g,
             '<code>$1</code>'
           )
         }
