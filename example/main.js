@@ -1,32 +1,15 @@
 import Vue from 'vue'
 import App from './App.vue'
-import EleForm from 'vue-ele-form/lib/index.js'
-import 'element-ui/lib/theme-chalk/index.css'
-import ElementUI from 'element-ui'
-import axios from 'axios'
-import codemirror from './codemirror'
+import VueRunSfc from 'vue-run-sfc'
+import { Link } from 'element-ui'
 
-// options直接传递URL
-Vue.prototype.$axios = axios
-axios.interceptors.response.use(response => {
-  return response.data
-})
-
-Vue.config.productionTip = false
-Vue.use(ElementUI)
-Vue.use(EleForm, {
-  upload: {
-    action: 'https://jsonplaceholder.typicode.com/posts', // 请求地址,
-    data: { token: 'xxx' }, // 附带的参数,
-    responseFn (response, file) {
-      // 处理响应结果
-      return file.url
-    }
-  },
-  codemirror: codemirror,
-  image: {
-    limit: 2
-  }
+Vue.use(Link)
+Vue.use(VueRunSfc, {
+  jsLabs: [
+    'https://unpkg.com/element-ui@2.13.0/lib/index.js',
+    'https://unpkg.com/vue-ele-form@0.8.1/dist/vue-ele-form.umd.min.js'
+  ],
+  cssLabs: ['https://unpkg.com/element-ui/lib/theme-chalk/index.css']
 })
 
 new Vue({
