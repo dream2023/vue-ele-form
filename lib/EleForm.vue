@@ -38,7 +38,7 @@
                   >
                     <el-form-item
                       :error="formErrorObj ? formErrorObj[field] : null"
-                      :label="formItem.label"
+                      :label="isShowLabel ? formItem.label : null"
                       :prop="field"
                     >
                       <!-- 具名 作用域插槽(用于用户自定义显示) -->
@@ -191,6 +191,11 @@ export default {
     resetBtnText: String,
     // 取消按钮
     cancelBtnText: String,
+    // 是否显示标签
+    isShowLabel: {
+      type: Boolean,
+      default: true
+    },
     // 标签宽度
     labelWidth: {
       type: [Number, String],
