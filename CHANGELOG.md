@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.3](https://github.com/dream2023/vue-ele-form/compare/v0.8.2...v0.8.3) (2020-01-29)
+
+
+### Features
+
+* **#39:** 增加isShowLabel是否展示 ([32c362a](https://github.com/dream2023/vue-ele-form/commit/32c362a31ba9e2e8ca98b895ee1b0210441dc8a7)), closes [#39](https://github.com/dream2023/vue-ele-form/issues/39)
+
 ### [0.8.2](https://github.com/dream2023/vue-ele-form/compare/v0.8.1...v0.8.2) (2020-01-28)
 
 
