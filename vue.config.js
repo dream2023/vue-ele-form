@@ -13,7 +13,7 @@ module.exports = {
     resolve: {
       // 设置别名
       alias: {
-        'vue-ele-form': path.resolve(__dirname, './')
+        'vue-ele-form': path.resolve(__dirname, './lib')
       }
     }
   }

@@ -59,7 +59,8 @@ const installTemplate = getInstallTemplate(ComponentNames)
 // 内置组件名称
 const builtInNamesTemplate = getBuiltInNameTemplate(ComponentNames)
 
-const MAIN_TEMPLATE = `import locale from './locale'
+const MAIN_TEMPLATE = `import Vue from 'vue'
+import locale from './locale'
 import EleForm from './EleForm'
 import EleFormGroup from './EleFormGroup'
 import EleFormDialog from './EleFormDialog'
@@ -73,33 +74,26 @@ const components = [
   EleFormSection,
 {{install}}
 ]
+components.forEach(component => {
+  Vue.component(component.name, component)
+})
 
 const EleFormBuiltInNames = [
 {{builtInNames}}
 ]
+Vue.prototype.$EleFormBuiltInNames = EleFormBuiltInNames
 
 const install = function (Vue, opts = {}, lang) {
-  components.forEach(component => {
-    Vue.component(component.name, component)
-  })
-
   locale.use(lang)
   Vue.prototype.$EleFormParams = opts
-  Vue.prototype.$EleFormBuiltInNames = EleFormBuiltInNames
 }
 
 if (typeof window !== 'undefined' && window.Vue) {
   install(window.Vue)
 }
 
-export default {
-  install,
-  EleForm,
-  EleFormGroup,
-  EleFormDialog,
-  EleFormSection,
-{{install}}
-}
+EleForm.install = install
+export default EleForm
 `
 const template = render(MAIN_TEMPLATE, {
   include: includeComponentTemplate.join(endOfLine),
