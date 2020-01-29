@@ -55,8 +55,8 @@ Vue.use(EleForm)
 
 ## [开发规划](https://github.com/dream2023/vue-ele-form/projects/1)
 
+- 更多的扩展组件
 - 重写文档
-- 增加 CI 和 CD
 - 增加视频源码讲解
 - 增加单元测试 和 E2E 测试
 - 增加 iview 和 ant-design for vue 支持

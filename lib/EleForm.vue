@@ -33,7 +33,7 @@
                 >
                   <el-col
                     :key="field"
-                    v-bind="getColAttrs(formItem.layout)"
+                    v-bind="formItem._colAttrs"
                     v-if="formItem._vif"
                   >
                     <el-form-item
@@ -65,8 +65,8 @@
                       </slot>
                       <div
                         class="ele-form-tip"
-                        v-if="formItem.tip"
-                        v-html="formItem.tip"
+                        v-if="formItem._tip"
+                        v-html="formItem._tip"
                       ></div>
                     </el-form-item>
                   </el-col>
@@ -396,13 +396,16 @@ export default {
           desc[field].mock = true
         }
 
-        // 转换 tip
+        // 转换 tip, 内部属性不显示
         if (desc[field].tip) {
-          desc[field].tip = String(desc[field].tip).replace(
+          Object.defineProperty(desc[field], '_tip', this.defineUnEnumerableProperty(String(desc[field].tip).replace(
             /`(.+?)`/g,
             '<code>$1</code>'
-          )
+          )))
         }
+
+        // layout值, 内部属性不显示
+        Object.defineProperty(desc[field], '_colAttrs', this.defineUnEnumerableProperty(this.getColAttrs(desc[field].layout)))
       })
       return desc
     }
@@ -488,8 +491,8 @@ export default {
         }
         // 隐藏 _vifs 和 _disableds
         Object.defineProperties(formDesc[field], {
-          _vifs: this.defineLinkageProperty(vifs),
-          _disableds: this.defineLinkageProperty(disableds)
+          _vifs: this.defineUnEnumerableProperty(vifs),
+          _disableds: this.defineUnEnumerableProperty(disableds)
         })
 
         // 递归
@@ -520,7 +523,7 @@ export default {
       })
     },
     // 定义联动属性的descriptor
-    defineLinkageProperty(value) {
+    defineUnEnumerableProperty(value) {
       return {
         enumerable: false,
         writable: true,
@@ -566,9 +569,9 @@ export default {
             )
 
             Object.defineProperties(formItem, {
-              _type: this.defineLinkageProperty(type),
-              _vif: this.defineLinkageProperty(vif),
-              _disabled: this.defineLinkageProperty(disabled)
+              _type: this.defineUnEnumerableProperty(type),
+              _vif: this.defineUnEnumerableProperty(vif),
+              _disabled: this.defineUnEnumerableProperty(disabled)
             })
 
             // 4.重新获取 options
