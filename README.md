@@ -23,7 +23,7 @@ vue-ele-form 是基于 [element-ui form](https://element.eleme.cn/#/zh-CN/compon
 
 ## 图片演示
 
-[![vue-ele-form演示图](https://cdn.nlark.com/yuque/0/2019/gif/364322/1562480512617-33250d66-d4d4-42a4-b61a-172a746855d8.gif)](https://dream2023.github.io/vue-ele-form/)
+[![vue-ele-form演示图](https://s2.ax1x.com/2020/01/31/13x2If.gif)](https://dream2023.github.io/vue-ele-form/)
 
 ## DEMO
 
@@ -71,10 +71,10 @@ Vue.use(EleForm)
 
 ## 交流群
 
-[![交流群](https://s2.ax1x.com/2020/01/31/13TD74.md.png)]
+![交流群](https://s2.ax1x.com/2020/01/31/13xzQJ.png)
 
 ## 赞助
 
 如果您觉得还行, 请您一定要点一下右上角的 `star`, 如果您觉得对您帮助非常大, 就打赏一下, 不胜感谢 💰
 
-![赞助一下呗](https://cdn.nlark.com/yuque/0/2019/jpeg/364322/1572775994043-19a52258-9ff3-44ac-bf5f-bfcd5cd79a53.jpeg?x-oss-process=image/resize,w_746)
+![赞助一下呗](https://s2.ax1x.com/2020/01/31/13xoss.md.jpg)
