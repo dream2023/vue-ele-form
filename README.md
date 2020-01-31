@@ -39,6 +39,8 @@ vue-ele-form 是基于 [element-ui form](https://element.eleme.cn/#/zh-CN/compon
 
 项目地址: [https://github.com/dream2023/vue-ele-form-generator](https://github.com/dream2023/vue-ele-form-generator)
 
+可视化工具 vscode 插件:[https://github.com/dream2023/fgen-for-vscode](https://github.com/dream2023/fgen-for-vscode)
+
 ## 安装
 
 ```bash
@@ -67,11 +69,9 @@ Vue.use(EleForm)
 - 如果有新功能 或者 建议, 也需要先在 [issues](https://github.com/dream2023/vue-ele-form/issues) 中提出来, 如果能用代码实现, 就更好了, 请参考 [贡献指北](./CONTRIBUTING.md)文档;
 - 如果想贡献代码, 可以在[开发规划](https://github.com/dream2023/vue-ele-form/projects)中找一个未完成的功能, 进行完善, 请参考 [贡献指北](./CONTRIBUTING.md) 文档。
 
-## 脑图
+## 交流群
 
-![脑图](https://cdn.nlark.com/yuque/0/2019/svg/364322/1566722156127-631087a1-626e-40de-b94a-bb1943e150e7.svg)
-
-地址: [http://naotu.baidu.com/file/34476f28500bd20d0ab9fbef03a1cf0b?token=b6e652d3bf040481](http://naotu.baidu.com/file/34476f28500bd20d0ab9fbef03a1cf0b?token=b6e652d3bf040481)
+[![交流群](https://s2.ax1x.com/2020/01/31/13TD74.md.png)]
 
 ## 赞助
 
