@@ -398,14 +398,21 @@ export default {
 
         // 转换 tip, 内部属性不显示
         if (desc[field].tip) {
-          Object.defineProperty(desc[field], '_tip', this.defineUnEnumerableProperty(String(desc[field].tip).replace(
-            /`(.+?)`/g,
-            '<code>$1</code>'
-          )))
+          Object.defineProperty(
+            desc[field],
+            '_tip',
+            this.defineUnEnumerableProperty(
+              String(desc[field].tip).replace(/`(.+?)`/g, '<code>$1</code>')
+            )
+          )
         }
 
         // layout值, 内部属性不显示
-        Object.defineProperty(desc[field], '_colAttrs', this.defineUnEnumerableProperty(this.getColAttrs(desc[field].layout)))
+        Object.defineProperty(
+          desc[field],
+          '_colAttrs',
+          this.defineUnEnumerableProperty(this.getColAttrs(desc[field].layout))
+        )
       })
       return desc
     }
@@ -663,13 +670,10 @@ export default {
       let newOptions = this.getObjArrOptions(options)
       // 改变prop为规定的prop
       newOptions = this.changeProp(newOptions, prop)
-
-      const oldOptions = this.computedFormDesc[field]._options
-      Object.assign(this.computedFormDesc[field], {
-        _options: newOptions
-      })
+      this.$set(this.computedFormDesc[field], '_options', newOptions)
 
       // 是否需要重置值
+      const oldOptions = this.computedFormDesc[field]._options
       if (resetValue && oldOptions !== undefined) {
         const newOptionValues = new Set(
           Array.isArray(newOptions) ? newOptions.map(item => item.value) : []
