@@ -14,7 +14,7 @@
     "build": "npm run bootstrap && npm run lint && npm run build:entry & npm run build:lib && npm run build:docs",
     "lint": "vue-cli-service --mode production lint lib/* example/*",
     "release": "standard-version",
-    "pubs": "npm run build:lib && npm run release &&  npm publish --registry http://registry.npmjs.org && git push --follow-tags origin master"
+    "pubs": "npm run build:lib && npm run release &&  npm publish --registry http://registry.npmjs.org && git push --follow-tags origin master && gren release --override"
   },
   "repository": {
     "type": "git",
@@ -51,6 +51,7 @@
     "element-ui": "^2.11.1",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
+    "github-release-notes": "^0.17.1",
     "husky": "^3.0.8",
     "json-templater": "^1.2.0",
     "lint-staged": "^8.1.5",
