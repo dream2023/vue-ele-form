@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.6](https://github.com/dream2023/vue-ele-form/compare/v0.8.5...v0.8.6) (2020-02-03)
+
+
+### Features
+
+* type和options动态切换后保存旧值 ([4ce1917](https://github.com/dream2023/vue-ele-form/commit/4ce1917af7721cdf8dd27042f168c1983d08c8f9))
+
+
+### Bug Fixes
+
+* options重复请求 & 错误提示更新 ([42e2510](https://github.com/dream2023/vue-ele-form/commit/42e2510bbb3e0be8f9955aee8a4cb5bd5bbc6165))
+
 ### [0.8.5](https://github.com/dream2023/vue-ele-form/compare/v0.8.4...v0.8.5) (2020-02-03)
 
 
