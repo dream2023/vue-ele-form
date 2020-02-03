@@ -401,11 +401,20 @@ export default {
 
         // 转换 tip, 内部属性不显示
         if (desc[field].tip) {
-          desc[field]._tip = String(desc[field].tip).replace(/`(.+?)`/g, '<code>$1</code>')
+          desc[field]._tip = String(desc[field].tip).replace(
+            /`(.+?)`/g,
+            '<code>$1</code>'
+          )
         }
 
         // layout值, 内部属性不显示
         desc[field]._colAttrs = this.getColAttrs(desc[field].layout)
+
+        // 老数据, 用于options切换不同类型和type切换不懂类型时, 保留旧数据
+        // 例如 原type为 switch, 后改为 input, 出现类型和值不兼容情况, 就需要保留原数据
+        if (!desc[field]._oldValue) {
+          desc[field]._oldValue = {}
+        }
 
         // 隐藏属性
         Object.keys(desc[field]).forEach(key => {
@@ -545,8 +554,13 @@ export default {
             if (typeof formItem.type === 'function') {
               type = this.getComponentName(formItem.type(formData))
               if (formItem._type && formItem._type !== type) {
-                // 类型改变, 则删除原数据
-                this.setValue(field, null)
+                // 保存老数据
+                this.computedFormDesc[field]['_oldValue']['type-' + type] =
+                  formData[field]
+                // 并获取新类型的数据
+                const newVal =
+                  formItem['_oldValue']['type-' + formItem._type] || null
+                this.setValue(field, newVal)
               }
             } else {
               type = this.getComponentName(formItem.type)
@@ -575,11 +589,7 @@ export default {
             this.$set(this.computedFormDesc, field, formItem)
 
             // 4.重新获取 options
-            if (
-              formItem._vif &&
-              formItem.isReloadOptions &&
-              typeof formItem.options === 'function'
-            ) {
+            if (formItem._vif && formItem.isReloadOptions) {
               this.changeOptions(formItem.options, formItem.prop, field, true)
             }
           })
@@ -677,16 +687,18 @@ export default {
       }
     },
     // 设置options
-    setOptions(options, prop, field, resetValue) {
+    setOptions(options, prop, field, reloadOptions) {
+      // 原 options值
+      const oldOptions = cloneDeep(this.computedFormDesc[field]._options)
+
       // 将options每一项转为对象
       let newOptions = this.getObjArrOptions(options)
       // 改变prop为规定的prop
       newOptions = this.changeProp(newOptions, prop)
       this.$set(this.computedFormDesc[field], '_options', newOptions)
 
-      // 是否需要重置值
-      const oldOptions = this.computedFormDesc[field]._options
-      if (resetValue && oldOptions !== undefined) {
+      // 判断是否需要重置值
+      if (reloadOptions && oldOptions !== undefined) {
         const newOptionValues = new Set(
           Array.isArray(newOptions) ? newOptions.map(item => item.value) : []
         )
@@ -700,7 +712,12 @@ export default {
         const isEqual = equal(newOptionValues, oldOptionValues)
 
         if (!isIntersection && !isEqual) {
-          this.setValue(field, null)
+          // 保留旧值
+          const oldKey = `options-${[...oldOptionValues].join('_')}`
+          const newKey = `options-${[...newOptionValues].join('_')}`
+          this.computedFormDesc[field]['_oldValue'][oldKey] = this.formData[field]
+          const newVal = this.computedFormDesc[field]['_oldValue'][newKey] || null
+          this.setValue(field, newVal)
         }
       }
     },
