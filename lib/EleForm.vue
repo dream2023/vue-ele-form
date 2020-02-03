@@ -636,34 +636,53 @@ export default {
       })
     },
     // 将四种类型: 字符串数组, 对象数组, Promise对象和函数统一为 对象数组
-    changeOptions(options, prop, field, resetValue = false) {
+    changeOptions(options, prop, field, reloadOptions = false) {
+      // 当 _options 存在 且 非重新请求
+      if (
+        this.computedFormDesc[field]._options !== undefined &&
+        reloadOptions === false
+      ) {
+        return
+      }
+
       if (options) {
         if (options instanceof Array) {
           // 当options为数组时: 直接获取
-          this.setOptions(options, prop, field, resetValue)
+          this.setOptions(options, prop, field, reloadOptions)
         } else if (options instanceof Function) {
           // 当options为函数: 执行函数并递归
-          this.changeOptions(options(this.formData), prop, field, resetValue)
+          this.changeOptions(options(this.formData), prop, field, reloadOptions)
         } else if (options instanceof Promise) {
           // 当options为Promise时: 等待Promise结束, 并获取值
           options.then(options => {
-            this.changeOptions(options, prop, field, resetValue)
+            this.changeOptions(options, prop, field, reloadOptions)
           })
         } else if (typeof options === 'string' && this.optionsFn) {
           // options为url地址
-          this.changeOptions(this.optionsFn(options), prop, field, resetValue)
-        } else {
-          // 其他报错
-          throw new TypeError(
-            'options的类型不正确, options及options请求结果类型可为: 字符串数组, 对象数组, 函数和Promise或者URL地址, 当前值为: ' +
-              options +
-              ', 不属于以上四种类型'
+          this.changeOptions(
+            this.optionsFn(options),
+            prop,
+            field,
+            reloadOptions
           )
+        } else {
+          if (typeof options === 'string') {
+            throw new TypeError(
+              `options值为: ${options}, 为字符串, 但是未配置options-fn参数, 具体请参考: https://www.yuque.com/chaojie-vjiel/vbwzgu/rgenav#ZVYtf`
+            )
+          } else {
+            // 其他报错
+            throw new TypeError(
+              'options的类型不正确, options及options请求结果类型可为: 字符串数组, 对象数组, 函数和Promise或者URL地址, 当前值为: ' +
+                options +
+                ', 不属于以上四种类型, 具体请参考: https://www.yuque.com/chaojie-vjiel/vbwzgu/rgenav'
+            )
+          }
         }
       } else {
         if (this.computedFormDesc[field]._options) {
           // 如果new options为null / undefined, 且 old Options 存在, 则设置
-          this.setOptions([], prop, field, resetValue)
+          this.setOptions([], prop, field, reloadOptions)
         }
       }
     },
