@@ -1,9 +1,5 @@
 <template>
-  <el-tabs
-    v-bind="attrs"
-    v-model="currentGroupId"
-    v-on="tabOn"
-  >
+  <el-tabs v-bind="attrs" v-model="currentGroupId" v-on="tabOn">
     <template v-for="item of computedGroups">
       <el-tab-pane
         :key="item.groupId"
@@ -13,37 +9,43 @@
       >
         <ele-form
           v-bind="item.form"
+          ref="ele-form"
           v-if="item.groupId === currentGroupId"
           v-on="item.on"
         >
           <template
             v-for="(formItem, key, index) of item.form.formDesc"
-            v-slot:[key]="{desc, field}"
+            v-slot:[key]="{ desc, props, field, formData }"
           >
             <slot
-              :data="item.form.formData[field]"
+              :data="formData[field]"
               :desc="desc"
+              :props="props"
               :field="field"
-              :formData="item.form.formData"
-              :name="item.groupId + '-' + key"
+              :formData="formData"
+              :name="item.groupId + '-' + field"
+              :disabled="props.disabled || desc._disabled"
+              :type="desc._type"
+              :options="desc._options"
             >
               <component
-                :_disabled="desc._disabled"
+                :disabled="props.disabled || desc._disabled"
                 :desc="desc"
                 :is="desc._type"
-                :key="index"
                 :options="desc._options"
-                v-model="item.form.formData[field]"
+                :ref="field"
+                :field="field"
+                :value="getValue(field)"
+                @input="setValue(field, $event)"
+                :_disabled="desc._disabled"
+                :key="index"
               />
             </slot>
           </template>
 
           <!-- 按钮插槽 -->
           <template v-slot:form-btn="{ btns }">
-            <slot
-              :btns="btns"
-              :name="item.groupId + '-form-btn'"
-            ></slot>
+            <slot :btns="btns" :name="item.groupId + '-form-btn'"></slot>
           </template>
         </ele-form>
       </el-tab-pane>
@@ -72,29 +74,44 @@ export default {
   },
   computed: {
     // 所有组的表单值
-    allFormData () {
-      return this.computedGroups.reduce((acc, group) => Object.assign(acc, group.form.formData), {})
+    allFormData() {
+      return this.computedGroups.reduce(
+        (acc, group) => Object.assign(acc, group.form.formData),
+        {}
+      )
     },
     // tabs的属性
-    attrs () {
+    attrs() {
       return Object.assign({}, { type: 'border-card' }, this.tabAttrs)
     },
     // 修改form属性
-    computedGroups () {
-      return this.groups.map((item) => {
+    computedGroups() {
+      return this.groups.map(item => {
+        if (this.getDeepFormDesc) {
+          item.form.formDesc = this.getDeepFormDesc(item.form.formDesc)
+        }
         item.form = Object.assign({}, this.$attrs, item.form)
         item.on = Object.assign({}, this.$listeners, item.on)
         return item
       })
     }
   },
-  data () {
+  data() {
     return {
+      getDeepFormDesc: null,
       currentGroupId: ''
     }
   },
   methods: {
-    getVif (group) {
+    getValue(val, index) {
+      if (this.$refs['ele-form']) {
+        return this.$refs['ele-form'][0].getValue(val)
+      }
+    },
+    setValue(field, $event) {
+      this.$refs['ele-form'][0].setValue(field, $event)
+    },
+    getVif(group) {
       if (typeof group.vif === 'function') {
         return group.vif(this.allFormData)
       } else if (typeof group.vif === 'boolean') {
@@ -102,18 +119,12 @@ export default {
       } else {
         return true
       }
-    },
-    getComponentName (type) {
-      if (this.$EleFormBuiltInNames.includes(type)) {
-        // 内置组件
-        return 'ele-form-' + type
-      } else {
-        // 外部组件
-        return type
-      }
     }
   },
-  created () {
+  mounted() {
+    this.$nextTick(() => {
+      this.getDeepFormDesc = this.$refs['ele-form'].getDeepFormDesc
+    })
     // 获取默认激活的分组
     if (utils.isDef(this.activeGroupId)) {
       this.currentGroupId = this.activeGroupId

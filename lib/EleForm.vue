@@ -18,6 +18,7 @@
               :formData="formData"
               :formDesc="computedFormDesc"
               :formErrorObj="formErrorObj"
+              :props="$props"
               name="form-content"
             >
               <template v-for="(formItem, field) of computedFormDesc">
@@ -26,6 +27,7 @@
                   :data="formData[field]"
                   :desc="formItem"
                   :field="field"
+                  :props="$props"
                   :formData="formData"
                   :disabled="disabled || formItem._disabled"
                   :type="formItem._type"
@@ -45,6 +47,7 @@
                       <slot
                         :data="formData[field]"
                         :desc="formItem"
+                        :props="$props"
                         :field="field"
                         :formData="formData"
                         :name="field"
@@ -826,6 +829,7 @@ export default {
     },
     // 返回按钮
     goBack() {
+      this.$emit('back')
       if (this.$router) {
         // vue-router
         this.$router.back()
@@ -837,10 +841,12 @@ export default {
     // 点击取消按钮
     handleCancelClick() {
       this.$emit('close')
+      this.$emit('cancel')
       this.$emit('update:visible', false)
     },
     // 重置表单
     resetForm() {
+      this.$emit('reset')
       this.$refs.form.resetFields()
 
       // 调用内部方法进行值的重置

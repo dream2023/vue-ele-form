@@ -1,30 +1,29 @@
 <template>
   <el-dialog
     :title="title"
-    :visible="isShow"
+    :visible="visible"
+    @update:visible="$emit('update:visible', $event)"
     :width="width"
     @closed="$emit('closed')"
     @open="$emit('open')"
     @opened="$emit('opened')"
-    @update:visible="handleClose"
     class="ele-form-dialog"
     v-bind="dialogAttrs"
   >
     <!-- title 插槽 -->
     <template v-slot:title>
-      <slot
-        :title="title"
-        name="title"
-      ></slot>
+      <slot :title="title" name="title"></slot>
     </template>
     <ele-form
       :formDesc="formDesc"
+      :formData="formData"
+      @input="$emit('input', $event)"
       :isShowBackBtn="isShowBackBtn"
       :isShowCancelBtn="isShowCancelBtn"
-      @close="handleClose"
-      ref="form"
+      @update:visible="$emit('update:visible', $event)"
+      ref="ele-form"
+      :visible="visible"
       v-bind="$attrs"
-      v-if="isShow"
       v-on="$listeners"
     >
       <!-- 默认插槽 -->
@@ -34,7 +33,7 @@
 
       <!-- 作用域插槽 -->
       <template
-        v-for="(formItem, field) of formDesc"
+        v-for="(formItem, field, props) of formDesc"
         v-slot:[field]="{ formData }"
       >
         <slot
@@ -43,29 +42,33 @@
           :field="field"
           :formData="formData"
           :name="field"
+          :disabled="props.disabled || formItem._disabled"
+          :type="formItem._type"
+          :options="formItem._options"
         >
           <component
-            :_disabled="formItem._disabled"
+            :disabled="props.disabled || formItem._disabled"
             :desc="formItem"
             :is="formItem._type"
             :options="formItem._options"
-            v-model="formData[field]"
+            :ref="field"
+            :field="field"
+            :value="getValue(field)"
+            @input="setValue(field, $event)"
           />
         </slot>
       </template>
 
       <!-- 按钮插槽 -->
       <template v-slot:form-btn="{ btns }">
-        <slot
-          :btns="btns"
-          name="form-btn"
-        >
+        <slot :btns="btns" name="form-btn">
           <el-button
             :key="index"
             @click="btn.click"
             v-bind="btn.attrs"
             v-for="(btn, index) of getBtns(btns)"
-          >{{ btn.text }}</el-button>
+            >{{ btn.text }}</el-button
+          >
         </slot>
       </template>
     </ele-form>
@@ -81,11 +84,19 @@
 export default {
   inheritAttrs: false,
   name: 'EleFormDialog',
+  model: {
+    prop: 'formData',
+    event: 'input'
+  },
   props: {
+    // 表单数据
+    formData: {
+      type: Object,
+      required: true
+    },
     // 弹窗是否显示
     visible: {
       type: Boolean,
-      required: true,
       default: false
     },
     // 弹框标题
@@ -114,26 +125,22 @@ export default {
     }
     // ... 其它属性同 vue-ele-form 组件
   },
-  data () {
-    return {
-      isShow: false
-    }
-  },
-  watch: {
-    visible (visible) {
-      this.isShow = visible
-    }
-  },
   methods: {
-    getBtns (btns) {
-      return btns.map((item) => {
-        item.click.bind(this.$refs.form)
-        return item
-      }).reverse()
+    getValue(val) {
+      if (this.$refs['ele-form']) {
+        return this.$refs['ele-form'].getValue(val)
+      }
     },
-    handleClose () {
-      this.$emit('close')
-      this.$emit('update:visible', false)
+    setValue(field, $event) {
+      this.$refs['ele-form'].setValue(field, $event)
+    },
+    getBtns(btns) {
+      return btns
+        .map(item => {
+          item.click.bind(this.$refs.form)
+          return item
+        })
+        .reverse()
     }
   }
 }
