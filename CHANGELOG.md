@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.5](https://github.com/dream2023/vue-ele-form/compare/v0.8.4...v0.8.5) (2020-02-03)
+
+
+### Features
+
+* 完善dialog & section & group 扩展组件 ([080e7c0](https://github.com/dream2023/vue-ele-form/commit/080e7c06977f91c61b58a6a64beb19cb24cdd9e1))
+
 ### [0.8.4](https://github.com/dream2023/vue-ele-form/compare/v0.8.3...v0.8.4) (2020-02-01)
 
 
