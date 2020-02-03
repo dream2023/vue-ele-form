@@ -401,21 +401,23 @@ export default {
 
         // 转换 tip, 内部属性不显示
         if (desc[field].tip) {
-          Object.defineProperty(
-            desc[field],
-            '_tip',
-            this.defineUnEnumerableProperty(
-              String(desc[field].tip).replace(/`(.+?)`/g, '<code>$1</code>')
-            )
-          )
+          desc[field]._tip = String(desc[field].tip).replace(/`(.+?)`/g, '<code>$1</code>')
         }
 
         // layout值, 内部属性不显示
-        Object.defineProperty(
-          desc[field],
-          '_colAttrs',
-          this.defineUnEnumerableProperty(this.getColAttrs(desc[field].layout))
-        )
+        desc[field]._colAttrs = this.getColAttrs(desc[field].layout)
+
+        // 隐藏属性
+        Object.keys(desc[field]).forEach(key => {
+          if (key.startsWith('_')) {
+            Object.defineProperty(desc[field], key, {
+              enumerable: false,
+              writable: true,
+              configurable: true,
+              value: desc[field][key]
+            })
+          }
+        })
       })
       return desc
     }
@@ -499,11 +501,8 @@ export default {
           vifs = [...parent._vifs, ...vifs]
           disableds = [...parent._disableds, ...disableds]
         }
-        // 隐藏 _vifs 和 _disableds
-        Object.defineProperties(formDesc[field], {
-          _vifs: this.defineUnEnumerableProperty(vifs),
-          _disableds: this.defineUnEnumerableProperty(disableds)
-        })
+        formDesc[field]._vifs = vifs
+        formDesc[field]._disableds = disableds
 
         // 递归
         if (formDesc[field].children) {
@@ -532,25 +531,15 @@ export default {
         this.$refs[field][0].mockData()
       })
     },
-    // 定义联动属性的descriptor
-    defineUnEnumerableProperty(value) {
-      return {
-        enumerable: false,
-        writable: true,
-        configurable: true,
-        value: value
-      }
-    },
     // 检测联动
     checkLinkage() {
       if (this.checkVifFn) {
         this.checkLinkageFn()
       } else {
         this.checkLinkageFn = throttle(300, () => {
-          const formDesc = this.computedFormDesc
           const formData = this.formData
-          Object.keys(formDesc).forEach(field => {
-            const formItem = formDesc[field]
+          Object.keys(this.computedFormDesc).forEach(field => {
+            const formItem = this.computedFormDesc[field]
             // 1.设置 type
             let type = formItem.type
             if (typeof formItem.type === 'function') {
@@ -578,11 +567,12 @@ export default {
               typeof disabled === 'function' ? disabled(formData) : disabled
             )
 
-            Object.defineProperties(formItem, {
-              _type: this.defineUnEnumerableProperty(type),
-              _vif: this.defineUnEnumerableProperty(vif),
-              _disabled: this.defineUnEnumerableProperty(disabled)
+            Object.assign(formItem, {
+              _type: type,
+              _vif: vif,
+              _disabled: disabled
             })
+            this.$set(this.computedFormDesc, field, formItem)
 
             // 4.重新获取 options
             if (
