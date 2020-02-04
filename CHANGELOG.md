@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.9](https://github.com/dream2023/vue-ele-form/compare/v0.8.8...v0.8.9) (2020-02-04)
+
+
+### Features
+
+* dialog增加当关闭时, 重置数据 ([4e68ae4](https://github.com/dream2023/vue-ele-form/commit/4e68ae456ce4fad2967876830c0afb62b8c9bd97))
+
+
+### Bug Fixes
+
+* 隐藏属性 ([c66e32b](https://github.com/dream2023/vue-ele-form/commit/c66e32b0fb5b55c0601a4ae668e643459968d038))
+
 ### [0.8.8](https://github.com/dream2023/vue-ele-form/compare/v0.8.7...v0.8.8) (2020-02-04)
 
 
