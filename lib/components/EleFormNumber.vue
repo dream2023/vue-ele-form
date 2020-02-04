@@ -16,10 +16,10 @@ export default {
   props: {
     value: {
       type: [Number, String],
-      default: 0
+      default: null
     }
   },
-  data () {
+  data() {
     return {
       mockRule: '@integer(-100, 100)'
     }
