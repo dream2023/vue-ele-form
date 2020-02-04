@@ -135,6 +135,9 @@ export default {
       } else {
         this.$nextTick(() => {
           this.$refs['ele-form'].$refs.form.clearValidate()
+          this.$nextTick(() => {
+            this.initVal = cloneDeep(this.formData)
+          })
         })
       }
     }
@@ -163,9 +166,6 @@ export default {
         })
         .reverse()
     }
-  },
-  mounted() {
-    this.initVal = cloneDeep(this.formData)
   }
 }
 </script>
