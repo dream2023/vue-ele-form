@@ -81,6 +81,8 @@
 </template>
 
 <script>
+const cloneDeep = require('lodash.clonedeep')
+
 export default {
   inheritAttrs: false,
   name: 'EleFormDialog',
@@ -125,6 +127,23 @@ export default {
     }
     // ... 其它属性同 vue-ele-form 组件
   },
+  watch: {
+    // 当关闭时, 清空数据
+    visible(val) {
+      if (!val) {
+        this.$emit('input', cloneDeep(this.initVal))
+      } else {
+        this.$nextTick(() => {
+          this.$refs['ele-form'].$refs.form.clearValidate()
+        })
+      }
+    }
+  },
+  data() {
+    return {
+      initVal: {}
+    }
+  },
   methods: {
     getValue(val) {
       if (this.$refs['ele-form']) {
@@ -144,6 +163,9 @@ export default {
         })
         .reverse()
     }
+  },
+  mounted() {
+    this.initVal = cloneDeep(this.formData)
   }
 }
 </script>
