@@ -417,16 +417,16 @@ export default {
         }
 
         // 隐藏属性
-        Object.keys(desc[field]).forEach(key => {
-          if (key.startsWith('_')) {
-            Object.defineProperty(desc[field], key, {
-              enumerable: false,
-              writable: true,
-              configurable: true,
-              value: desc[field][key]
-            })
-          }
-        })
+        // Object.keys(desc[field]).forEach(key => {
+        //   if (key.startsWith('_')) {
+        //     Object.defineProperty(desc[field], key, {
+        //       enumerable: false,
+        //       writable: true,
+        //       configurable: true,
+        //       value: desc[field][key]
+        //     })
+        //   }
+        // })
       })
       return desc
     }
@@ -553,13 +553,15 @@ export default {
             let type = formItem.type
             if (typeof formItem.type === 'function') {
               type = this.getComponentName(formItem.type(formData))
-              if (formItem._type && formItem._type !== type) {
+
+              // 是否需要载入旧数据
+              if (formItem.isTypeChangeReloadValue !== false && formItem._type && formItem._type !== type) {
                 // 保存老数据
-                this.computedFormDesc[field]['_oldValue']['type-' + type] =
+                this.computedFormDesc[field]['_oldValue']['type-' + formItem._type] =
                   formData[field]
                 // 并获取新类型的数据
                 const newVal =
-                  formItem['_oldValue']['type-' + formItem._type] || null
+                  formItem['_oldValue']['type-' + type] || null
                 this.setValue(field, newVal)
               }
             } else {
@@ -698,7 +700,7 @@ export default {
       this.$set(this.computedFormDesc[field], '_options', newOptions)
 
       // 判断是否需要重置值
-      if (reloadOptions && oldOptions !== undefined) {
+      if (this.computedFormDesc[field].isOptionsChangeReloadValue !== false && reloadOptions && oldOptions !== undefined) {
         const newOptionValues = new Set(
           Array.isArray(newOptions) ? newOptions.map(item => item.value) : []
         )
