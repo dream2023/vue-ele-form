@@ -66,6 +66,8 @@ import EleFormGroup from './EleFormGroup'
 import EleFormDialog from './EleFormDialog'
 import EleFormSection from './EleFormSection'
 {{include}}
+export { default as formMixin } from './mixins/formMixin'
+export { default as uploadMixin } from './mixins/uploadMixin'
 
 const components = [
   EleForm,
