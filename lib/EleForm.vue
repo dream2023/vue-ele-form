@@ -715,8 +715,12 @@ export default {
           // 保留旧值
           const oldKey = `options-${[...oldOptionValues].join('_')}`
           const newKey = `options-${[...newOptionValues].join('_')}`
-          this.computedFormDesc[field]['_oldValue'][oldKey] = this.formData[field]
-          const newVal = this.computedFormDesc[field]['_oldValue'][newKey] || null
+          // eslint-disable-next-line standard/computed-property-even-spacing
+          this.computedFormDesc[field]['_oldValue'][oldKey] = this.formData[
+            field
+          ]
+          const newVal =
+            this.computedFormDesc[field]['_oldValue'][newKey] || null
           this.setValue(field, newVal)
         }
       }

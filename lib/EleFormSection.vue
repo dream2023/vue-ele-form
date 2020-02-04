@@ -175,7 +175,7 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
-      this.getDeepFormDesc = this.$refs.section.getDeepFormDesc
+      this.getDeepFormDesc = this.$refs['ele-form'].getDeepFormDesc
     })
   }
 }

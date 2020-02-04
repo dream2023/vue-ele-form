@@ -132,7 +132,9 @@ export default {
       }
     },
     setValue(field, $event) {
-      this.$refs['ele-form'].setValue(field, $event)
+      this.$nextTick(() => {
+        this.$refs['ele-form'].setValue(field, $event)
+      })
     },
     getBtns(btns) {
       return btns
