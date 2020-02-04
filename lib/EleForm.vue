@@ -417,16 +417,16 @@ export default {
         }
 
         // 隐藏属性
-        // Object.keys(desc[field]).forEach(key => {
-        //   if (key.startsWith('_')) {
-        //     Object.defineProperty(desc[field], key, {
-        //       enumerable: false,
-        //       writable: true,
-        //       configurable: true,
-        //       value: desc[field][key]
-        //     })
-        //   }
-        // })
+        Object.keys(desc[field]).forEach(key => {
+          if (key.startsWith('_')) {
+            Object.defineProperty(desc[field], key, {
+              enumerable: false,
+              writable: true,
+              configurable: true,
+              value: desc[field][key]
+            })
+          }
+        })
       })
       return desc
     }
