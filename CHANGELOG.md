@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.7](https://github.com/dream2023/vue-ele-form/compare/v0.8.6...v0.8.7) (2020-02-04)
+
+
+### Bug Fixes
+
+* dialog & section 低级错误 ([b73fe51](https://github.com/dream2023/vue-ele-form/commit/b73fe5178bdf3d1cde0c3ee80d19e700e0970705))
+* number组件无法设置默认值 ([8067d74](https://github.com/dream2023/vue-ele-form/commit/8067d749771130b5416a7f4984356375810406c6))
+
 ### [0.8.6](https://github.com/dream2023/vue-ele-form/compare/v0.8.5...v0.8.6) (2020-02-03)
 
 
