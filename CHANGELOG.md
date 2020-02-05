@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.10](https://github.com/dream2023/vue-ele-form/compare/v0.8.9...v0.8.10) (2020-02-05)
+
+
+### Bug Fixes
+
+* **dialog:** 当dialog Form有默认值时, 关闭会被清空 ([c6e8a4a](https://github.com/dream2023/vue-ele-form/commit/c6e8a4a6266eb8f955b6e8d334c5fe7428b28e53))
+
 ### [0.8.9](https://github.com/dream2023/vue-ele-form/compare/v0.8.8...v0.8.9) (2020-02-04)
 
 
