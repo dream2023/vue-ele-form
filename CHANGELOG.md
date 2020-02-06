@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.11](https://github.com/dream2023/vue-ele-form/compare/v0.8.10...v0.8.11) (2020-02-06)
+
+
+### Bug Fixes
+
+* mixin导出不正确 ([ba78f70](https://github.com/dream2023/vue-ele-form/commit/ba78f70cd15dcc29f22eddb3e52d34a8a5692dbe))
+* 升级serialize-javascript ([9c1b463](https://github.com/dream2023/vue-ele-form/commit/9c1b463a2818485e16039ddd43ca4379d08d3b0f))
+
 ### [0.8.10](https://github.com/dream2023/vue-ele-form/compare/v0.8.9...v0.8.10) (2020-02-05)
 
 
