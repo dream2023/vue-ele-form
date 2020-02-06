@@ -62,12 +62,12 @@ const builtInNamesTemplate = getBuiltInNameTemplate(ComponentNames)
 const MAIN_TEMPLATE = `import Vue from 'vue'
 import locale from './locale'
 import EleForm from './EleForm'
+import formMixin from './mixins/formMixin'
+import uploadMixin from './mixins/uploadMixin'
 import EleFormGroup from './EleFormGroup'
 import EleFormDialog from './EleFormDialog'
 import EleFormSection from './EleFormSection'
 {{include}}
-export { default as formMixin } from './mixins/formMixin'
-export { default as uploadMixin } from './mixins/uploadMixin'
 
 const components = [
   EleForm,
@@ -93,8 +93,9 @@ const install = function (Vue, opts = {}, lang) {
 if (typeof window !== 'undefined' && window.Vue) {
   install(window.Vue)
 }
-
 EleForm.install = install
+EleForm.formMixin = formMixin
+EleForm.uploadMixin = uploadMixin
 export default EleForm
 `
 const template = render(MAIN_TEMPLATE, {
