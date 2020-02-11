@@ -30,6 +30,7 @@
     "element-ui form",
     "el-form"
   ],
+  "types": "./types/index.d.ts",
   "dependencies": {
     "dayjs": "^1.8.15",
     "is-number": "^7.0.0",
