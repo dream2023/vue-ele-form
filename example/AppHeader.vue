@@ -12,7 +12,7 @@
       </div>
       <div>
         <el-link
-          href="https://dream2023.gitee.io/form/"
+          href="https://github.com/dream2023/vue-ele-form-generator/"
           target="_blank"
           type="primary"
         >代码生成器</el-link>&nbsp;&nbsp;
