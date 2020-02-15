@@ -108,6 +108,8 @@ import { loadMockJs } from './tools/mock'
 import { equal, intersection } from './tools/set'
 const isNumber = require('is-number')
 const cloneDeep = require('lodash.clonedeep')
+const lodashSet = require('lodash.set')
+const lodashGet = require('lodash.get')
 
 export default {
   name: 'EleForm',
@@ -439,9 +441,6 @@ export default {
           this.formDescKeys.forEach(field => {
             // 设置深度边遍历的默认值
             this.setDeepFormDataVal(field)
-
-            // 设置 options
-            this.changeOptions(desc[field].options, desc[field].prop, field)
           })
 
           // 检查联动
@@ -467,7 +466,7 @@ export default {
     }
   },
   methods: {
-    // 获取值, 可容错, 中间无值
+    // 获取值
     // 'a.b.c' => this.formData.a.b.c
     getValue(field) {
       return field
@@ -486,13 +485,16 @@ export default {
     // 给需要深度遍历的对象赋值空对象, 以便 v-model 时不出错
     // 例如 formDesc: { info: { children: { name:{ type: 'input', xxx }, nickname: {type: 'input', xxx } } } } => formData => { info: {} }
     setDeepFormDataVal(field) {
-      const fields = field.split('.')
-      fields.slice(0, -1).reduce((acc, key) => {
-        if (acc[key] === undefined) this.$set(acc, key, {})
-        return acc[key]
-      }, this.formData)
+      const deepPath = field
+        .split('.')
+        .slice(0, -1)
+        .join('.')
+      if (deepPath) {
+        lodashSet(this.formData, deepPath, {})
+      }
     },
     // 深度遍历 formDesc
+    // 并且子项目继承 联动属性
     getDeepFormDesc(formDesc, parentField, parent) {
       return Object.keys(formDesc).reduce((acc, field) => {
         // 改为 => a.b.c
@@ -524,6 +526,9 @@ export default {
             )
           )
         } else {
+          // 改变 options
+          this.changeOptions(formDesc[field], formDesc[field].options, field)
+
           acc[formField] = formDesc[field]
         }
 
@@ -555,13 +560,16 @@ export default {
               type = this.getComponentName(formItem.type(formData))
 
               // 是否需要载入旧数据
-              if (formItem.isTypeChangeReloadValue !== false && formItem._type && formItem._type !== type) {
-                // 保存老数据
-                this.computedFormDesc[field]['_oldValue']['type-' + formItem._type] =
-                  formData[field]
-                // 并获取新类型的数据
-                const newVal =
-                  formItem['_oldValue']['type-' + type] || null
+              if (
+                formItem.isTypeChangeReloadValue !== false &&
+                formItem._type &&
+                formItem._type !== type
+              ) {
+                // 保存老数据并获取新类型的数据
+                const oldKey = `${field}._oldValue.type-${formItem._type}`
+                const newKey = `${field}._oldValue.type-${type}`
+                lodashSet(this.formDesc, oldKey, formData[field])
+                const newVal = lodashGet(formItem, newKey, null)
                 this.setValue(field, newVal)
               }
             } else {
@@ -583,16 +591,19 @@ export default {
               typeof disabled === 'function' ? disabled(formData) : disabled
             )
 
-            Object.assign(formItem, {
-              _type: type,
-              _vif: vif,
-              _disabled: disabled
-            })
-            this.$set(this.computedFormDesc, field, formItem)
+            const fullPath = field.split('.').join('.chidlren.')
+            lodashSet(this.formDesc, fullPath + '._type', type)
+            lodashSet(this.formDesc, fullPath + '._vif', vif)
+            lodashSet(this.formDesc, fullPath + '._disabled', disabled)
 
             // 4.重新获取 options
-            if (formItem._vif && formItem.isReloadOptions) {
-              this.changeOptions(formItem.options, formItem.prop, field, true)
+            if (formItem.isReloadOptions) {
+              this.changeOptions(
+                lodashGet(this.formDesc, fullPath),
+                formItem.options,
+                field,
+                true
+              )
             }
           })
         })
@@ -638,32 +649,34 @@ export default {
       })
     },
     // 将四种类型: 字符串数组, 对象数组, Promise对象和函数统一为 对象数组
-    changeOptions(options, prop, field, reloadOptions = false) {
+    changeOptions(formItem, options, field, reloadOptions = false) {
       // 当 _options 存在 且 非重新请求
-      if (
-        this.computedFormDesc[field]._options !== undefined &&
-        reloadOptions === false
-      ) {
+      if (formItem._options !== undefined && reloadOptions === false) {
         return
       }
 
       if (options) {
         if (options instanceof Array) {
           // 当options为数组时: 直接获取
-          this.setOptions(options, prop, field, reloadOptions)
+          this.setOptions(formItem, options, field, reloadOptions)
         } else if (options instanceof Function) {
           // 当options为函数: 执行函数并递归
-          this.changeOptions(options(this.formData), prop, field, reloadOptions)
+          this.changeOptions(
+            formItem,
+            options(this.formData),
+            field,
+            reloadOptions
+          )
         } else if (options instanceof Promise) {
           // 当options为Promise时: 等待Promise结束, 并获取值
-          options.then(options => {
-            this.changeOptions(options, prop, field, reloadOptions)
+          options.then(newOptions => {
+            this.changeOptions(formItem, newOptions, field, reloadOptions)
           })
         } else if (typeof options === 'string' && this.optionsFn) {
           // options为url地址
           this.changeOptions(
+            formItem,
             this.optionsFn(options),
-            prop,
             field,
             reloadOptions
           )
@@ -682,25 +695,32 @@ export default {
           }
         }
       } else {
-        if (this.computedFormDesc[field]._options) {
+        if (formItem._options) {
           // 如果new options为null / undefined, 且 old Options 存在, 则设置
-          this.setOptions([], prop, field, reloadOptions)
+          this.setOptions(formItem, [], field, reloadOptions)
         }
       }
     },
     // 设置options
-    setOptions(options, prop, field, reloadOptions) {
+    setOptions(formItem, options, field, reloadOptions) {
       // 原 options值
-      const oldOptions = cloneDeep(this.computedFormDesc[field]._options)
+      const oldOptions = cloneDeep(formItem._options)
 
       // 将options每一项转为对象
       let newOptions = this.getObjArrOptions(options)
       // 改变prop为规定的prop
-      newOptions = this.changeProp(newOptions, prop)
-      this.$set(this.computedFormDesc[field], '_options', newOptions)
+      newOptions = this.changeProp(newOptions, formItem.prop)
+      this.$set(formItem, '_options', newOptions)
 
       // 判断是否需要重置值
-      if (this.computedFormDesc[field].isOptionsChangeReloadValue !== false && reloadOptions && oldOptions !== undefined) {
+      // isOptionsChangeReloadValue 默认为 true
+      // 当值变化时 reloadOptions 为 true
+      // 当第一次时, oldOptions 是为 undefined, 不需要
+      if (
+        formItem.isOptionsChangeReloadValue !== false &&
+        reloadOptions &&
+        oldOptions !== undefined
+      ) {
         const newOptionValues = new Set(
           Array.isArray(newOptions) ? newOptions.map(item => item.value) : []
         )
@@ -717,12 +737,8 @@ export default {
           // 保留旧值
           const oldKey = `options-${[...oldOptionValues].join('_')}`
           const newKey = `options-${[...newOptionValues].join('_')}`
-          // eslint-disable-next-line standard/computed-property-even-spacing
-          this.computedFormDesc[field]['_oldValue'][oldKey] = this.formData[
-            field
-          ]
-          const newVal =
-            this.computedFormDesc[field]['_oldValue'][newKey] || null
+          formItem['_oldValue'][newKey] = this.formData[field]
+          const newVal = formItem['_oldValue'][oldKey] || null
           this.setValue(field, newVal)
         }
       }
