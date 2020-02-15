@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.14](https://github.com/dream2023/vue-ele-form/compare/v0.8.13...v0.8.14) (2020-02-15)
+
+
+### Bug Fixes
+
+* 默认值导致变化无法检测问题 ([0f80623](https://github.com/dream2023/vue-ele-form/commit/0f806234e17e8ccc3ba7b2d057a7303ad35ff529))
+
 ### [0.8.13](https://github.com/dream2023/vue-ele-form/compare/v0.8.12...v0.8.13) (2020-02-15)
 
 
