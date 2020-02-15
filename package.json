@@ -5,13 +5,11 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "commit": "git-cz",
-    "bootstrap": "yarn || npm i",
     "build:entry": "node build/build-entry.js",
-    "serve": "npm run bootstrap && npm run build:entry && vue-cli-service serve",
-    "build:lib": "npm run bootstrap && npm run build:entry && vue-cli-service build --target lib --name vue-ele-form --dest ./dist/ ./lib/index.js",
-    "build:docs": "npm run bootstrap && vue-cli-service build",
-    "build": "npm run bootstrap && npm run lint && npm run build:entry & npm run build:lib && npm run build:docs",
+    "serve": "npm run build:entry && vue-cli-service serve",
+    "build:lib": "npm run build:entry && vue-cli-service build --target lib --name vue-ele-form --dest ./dist/ ./lib/index.js",
+    "build:docs": "vue-cli-service build",
+    "build": "npm run lint && npm run build:entry & npm run build:lib && npm run build:docs",
     "lint": "vue-cli-service --mode production lint lib/*",
     "release": "standard-version",
     "pub": "npm run build:lib && npm run release &&  npm publish --registry http://registry.npmjs.org && git push --follow-tags origin master && gren release --override"
@@ -32,14 +30,14 @@
   ],
   "types": "./types/index.d.ts",
   "dependencies": {
-    "dayjs": "^1.8.15",
+    "dayjs": "^1.8.20",
     "is-number": "^7.0.0",
     "lodash.clonedeep": "^4.5.0",
     "throttle-debounce": "^2.1.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "^8.2.0",
-    "@commitlint/config-conventional": "^8.2.0",
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-conventional": "^8.3.4",
     "@vue/cli-plugin-babel": "^3.8.0",
     "@vue/cli-plugin-eslint": "^3.8.0",
     "@vue/cli-service": "^3.8.0",
@@ -48,18 +46,18 @@
     "babel-plugin-component": "^1.1.1",
     "commitizen": "^4.0.3",
     "core-js": "^2.6.5",
-    "cz-conventional-changelog": "^3.0.2",
-    "element-ui": "^2.11.1",
+    "cz-conventional-changelog": "^3.1.0",
+    "element-ui": "^2.13.0",
     "eslint": "^5.16.0",
-    "eslint-plugin-vue": "^5.0.0",
+    "eslint-plugin-vue": "^5.2.3",
     "github-release-notes": "^0.17.1",
-    "husky": "^3.0.8",
+    "husky": "^3.1.0",
     "json-templater": "^1.2.0",
     "lint-staged": "^8.1.5",
     "standard-version": "^7.0.0",
-    "vue": "^2.6.10",
+    "vue": "^2.6.11",
     "vue-run-sfc": "^1.1.7",
-    "vue-template-compiler": "^2.6.10"
+    "vue-template-compiler": "^2.6.11"
   },
   "config": {
     "commitizen": {
