@@ -551,7 +551,7 @@ export default {
                 const newKey = `${field}._oldValue.type-${type}`
                 setDeepVal(this.formDesc, oldKey, formData[field])
                 const newVal = getDeepVal(formItem, newKey, null)
-                this.setValue(field, newVal)
+                setDeepVal(this.formData, field, newVal)
               }
             } else {
               type = this.getComponentName(formItem.type)
@@ -564,7 +564,7 @@ export default {
 
             // 如果隐藏, 则删除值
             if (!vif) {
-              this.setValue(field, null)
+              setDeepVal(this.formData, field, null)
             }
 
             // 3.触发 disabled 禁用 / 启用
