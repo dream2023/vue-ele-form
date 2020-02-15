@@ -581,7 +581,7 @@ export default {
               if (this.computedFormDesc[field].displayFormatter) {
                 defaultValue = this.desc.displayFormatter(defaultValue, this.formData)
               }
-              setDeepVal(this.formData, field, defaultValue)
+              this.setValue(field, defaultValue)
             }
 
             const fullPath = field.split('.').join('.chidlren.')
