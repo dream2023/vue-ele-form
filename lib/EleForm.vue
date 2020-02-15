@@ -101,7 +101,7 @@
 
 <script>
 import responsiveMixin from './mixins/responsiveMixin'
-import { isUnDef, is, castArray, getDeepVal, setDeepVal } from './tools/utils'
+import { isUnDef, is, castArray, getDeepVal, setDeepVal, isEmpty } from './tools/utils'
 import { throttle } from 'throttle-debounce'
 import localeMixin from 'element-ui/src/mixins/locale'
 import { t } from './locale'
@@ -573,12 +573,24 @@ export default {
               typeof disabled === 'function' ? disabled(formData) : disabled
             )
 
+            // 4.默认值
+            let defaultValue = typeof formItem.default === 'function' ? formItem.default(formData) : formItem.default
+            // 默认值不为空  & (值为空 || 老值和当前值)
+            if (!isEmpty(defaultValue) && (isEmpty(this.formData[field]) || formItem._defaultValue === this.formData[field])) {
+              // 判断是否有格式化函数
+              if (this.computedFormDesc[field].displayFormatter) {
+                defaultValue = this.desc.displayFormatter(defaultValue, this.formData)
+              }
+              setDeepVal(this.formData, field, defaultValue)
+            }
+
             const fullPath = field.split('.').join('.chidlren.')
             setDeepVal(this.formDesc, fullPath + '._type', type)
             setDeepVal(this.formDesc, fullPath + '._vif', vif)
             setDeepVal(this.formDesc, fullPath + '._disabled', disabled)
+            setDeepVal(this.formDesc, fullPath + '._defaultValue', defaultValue)
 
-            // 4.重新获取 options
+            // 5.重新获取 options
             if (formItem.isReloadOptions) {
               this.changeOptions(
                 getDeepVal(this.formDesc, fullPath),
