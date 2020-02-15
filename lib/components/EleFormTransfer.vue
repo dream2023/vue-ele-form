@@ -21,7 +21,7 @@
 
 <script>
 import formMixin from '../mixins/formMixin'
-import utils from '../tools/utils'
+import { isUnDef } from '../tools/utils'
 import mock from '../tools/mock'
 
 export default {
@@ -44,7 +44,7 @@ export default {
   },
   methods: {
     customInit (val) {
-      if (utils.isUnDef(val)) {
+      if (isUnDef(val)) {
         val = []
       }
       return val

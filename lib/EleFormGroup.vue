@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import utils from './tools/utils'
+import { isDef } from './tools/utils'
 
 export default {
   name: 'EleFormGroup',
@@ -126,7 +126,7 @@ export default {
       this.getDeepFormDesc = this.$refs['ele-form'].getDeepFormDesc
     })
     // 获取默认激活的分组
-    if (utils.isDef(this.activeGroupId)) {
+    if (isDef(this.activeGroupId)) {
       this.currentGroupId = this.activeGroupId
     } else {
       // 使用groups中的第一个

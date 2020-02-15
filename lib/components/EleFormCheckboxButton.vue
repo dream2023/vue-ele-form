@@ -17,7 +17,7 @@
 
 <script>
 import formMixin from '../mixins/formMixin'
-import utils from '../tools/utils'
+import { isUnDef } from '../tools/utils'
 
 export default {
   name: 'EleFormCheckboxButton',
@@ -39,7 +39,7 @@ export default {
   },
   methods: {
     customInit (val) {
-      if (utils.isUnDef(val)) {
+      if (isUnDef(val)) {
         val = []
       }
       return val

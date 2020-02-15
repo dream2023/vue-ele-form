@@ -15,7 +15,7 @@
 
 <script>
 import formMixin from '../mixins/formMixin'
-import utils from '../tools/utils'
+import { is } from '../tools/utils'
 
 export default {
   name: 'EleFormYesno',
@@ -30,7 +30,7 @@ export default {
       return Boolean(val)
     },
     handleChange (value) {
-      if (utils.is(this.value, 'Number')) {
+      if (is(this.value, 'Number')) {
         value = Number(value)
       }
       this.$emit('input', value)

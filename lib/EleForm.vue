@@ -100,7 +100,7 @@
 
 <script>
 import responsiveMixin from './mixins/responsiveMixin'
-import utils from './tools/utils'
+import { isUnDef, is, castArray, getDeepVal, setDeepVal } from './tools/utils'
 import { throttle } from 'throttle-debounce'
 import localeMixin from 'element-ui/src/mixins/locale'
 import { t } from './locale'
@@ -108,8 +108,6 @@ import { loadMockJs } from './tools/mock'
 import { equal, intersection } from './tools/set'
 const isNumber = require('is-number')
 const cloneDeep = require('lodash.clonedeep')
-const lodashSet = require('lodash.set')
-const lodashGet = require('lodash.get')
 
 export default {
   name: 'EleForm',
@@ -317,7 +315,7 @@ export default {
       return btns
     },
     computedIsShowCancelBtn() {
-      if (utils.is(this.isShowCancelBtn, 'Boolean')) {
+      if (is(this.isShowCancelBtn, 'Boolean')) {
         // 如果指定了, 则使用指定的值
         return this.isShowCancelBtn
       } else {
@@ -327,7 +325,7 @@ export default {
     },
     // 是否显示返回按钮(inline和layout模式下不同)
     computedIsShowBackBtn() {
-      if (utils.is(this.isShowBackBtn, 'Boolean')) {
+      if (is(this.isShowBackBtn, 'Boolean')) {
         return this.isShowBackBtn
       } else {
         return !(this.inline || this.isDialog)
@@ -335,7 +333,7 @@ export default {
     },
     // 提交按钮默认值(inline和layout模式下不同)
     computedSubmitBtnText() {
-      if (utils.is(this.submitBtnText, 'String')) {
+      if (is(this.submitBtnText, 'String')) {
         return this.submitBtnText
       } else {
         return this.inline
@@ -360,21 +358,10 @@ export default {
     // 此函数即将局部定义转为全局定义
     computedRules() {
       return this.formDescKeys.reduce((rules, field) => {
-        let formRules = rules[field] || []
-        let formItemRules = this.computedFormDesc[field].rules
-
-        // 转为数组
-        if (formRules && !Array.isArray(formRules)) {
-          formRules = [formRules]
-        }
-        if (formItemRules && !Array.isArray(formItemRules)) {
-          formItemRules = [formItemRules]
-        }
-
-        // 合并
-        if (formRules || formItemRules) {
-          rules[field] = [...(formItemRules || []), ...(formRules || [])]
-        }
+        // 合并 (全局 和 局部) 的rules
+        let formRules = castArray(this.rules[field])
+        let formItemRules = castArray(this.computedFormDesc[field].rules)
+        rules[field] = [...formRules, ...formItemRules]
 
         // 如果采用required, 则判断已有的规则有无, 如果没有, 则添加
         if (
@@ -387,7 +374,7 @@ export default {
           })
         }
         return rules
-      }, this.rules || {})
+      }, {})
     },
     // formDesc的key
     formDescKeys() {
@@ -397,7 +384,7 @@ export default {
       const desc = this.getDeepFormDesc(this.formDesc)
       Object.keys(desc).forEach(field => {
         // 当全局设置mock为true时, 所有子项都标记为true
-        if (this.mock && utils.isUnDef(desc[field].mock)) {
+        if (this.mock && isUnDef(desc[field].mock)) {
           desc[field].mock = true
         }
 
@@ -438,7 +425,7 @@ export default {
     computedFormDesc: {
       handler(desc) {
         if (desc) {
-          this.formDescKeys.forEach(field => {
+          Object.keys(desc).forEach(field => {
             // 设置深度边遍历的默认值
             this.setDeepFormDataVal(field)
           })
@@ -469,18 +456,12 @@ export default {
     // 获取值
     // 'a.b.c' => this.formData.a.b.c
     getValue(field) {
-      return field
-        .split('.')
-        .reduce((acc, key) => (acc ? acc[key] : acc), this.formData)
+      return getDeepVal(this.formData, field)
     },
     // 设置值
     // 例如 ('a.b.c', 'val') => this.formData.a.b.c = 'val'
     setValue(field, value) {
-      const fields = field.split('.')
-      const dateItem = fields
-        .slice(0, -1)
-        .reduce((acc, key) => acc[key], this.formData)
-      this.$set(dateItem, fields.slice(-1), value)
+      setDeepVal(this.formData, field, value, true)
     },
     // 给需要深度遍历的对象赋值空对象, 以便 v-model 时不出错
     // 例如 formDesc: { info: { children: { name:{ type: 'input', xxx }, nickname: {type: 'input', xxx } } } } => formData => { info: {} }
@@ -490,7 +471,7 @@ export default {
         .slice(0, -1)
         .join('.')
       if (deepPath) {
-        lodashSet(this.formData, deepPath, {})
+        setDeepVal(this.formData, deepPath, {})
       }
     },
     // 深度遍历 formDesc
@@ -568,8 +549,8 @@ export default {
                 // 保存老数据并获取新类型的数据
                 const oldKey = `${field}._oldValue.type-${formItem._type}`
                 const newKey = `${field}._oldValue.type-${type}`
-                lodashSet(this.formDesc, oldKey, formData[field])
-                const newVal = lodashGet(formItem, newKey, null)
+                setDeepVal(this.formDesc, oldKey, formData[field])
+                const newVal = getDeepVal(formItem, newKey, null)
                 this.setValue(field, newVal)
               }
             } else {
@@ -592,14 +573,14 @@ export default {
             )
 
             const fullPath = field.split('.').join('.chidlren.')
-            lodashSet(this.formDesc, fullPath + '._type', type)
-            lodashSet(this.formDesc, fullPath + '._vif', vif)
-            lodashSet(this.formDesc, fullPath + '._disabled', disabled)
+            setDeepVal(this.formDesc, fullPath + '._type', type)
+            setDeepVal(this.formDesc, fullPath + '._vif', vif)
+            setDeepVal(this.formDesc, fullPath + '._disabled', disabled)
 
             // 4.重新获取 options
             if (formItem.isReloadOptions) {
               this.changeOptions(
-                lodashGet(this.formDesc, fullPath),
+                getDeepVal(this.formDesc, fullPath),
                 formItem.options,
                 field,
                 true
@@ -636,7 +617,7 @@ export default {
     // 将options转为对象数组
     getObjArrOptions(options) {
       return options.map(option => {
-        if (utils.is(option, ['Number', 'String', 'Boolean'])) {
+        if (is(option, ['Number', 'String', 'Boolean'])) {
           // 例如 ['男', '女'] => [ { text: '男', value: '男' }, { text: '女', value: '女' } ]
           return {
             text: option,
