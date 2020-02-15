@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.13](https://github.com/dream2023/vue-ele-form/compare/v0.8.12...v0.8.13) (2020-02-15)
+
+
+### Features
+
+* formDesc可以指定labelWidth ([0898285](https://github.com/dream2023/vue-ele-form/commit/0898285b92b3ba03095398f3eb7d446dc8792a70))
+* 动态默认值 ([33ab270](https://github.com/dream2023/vue-ele-form/commit/33ab270f7dad9f46ed04641c63e23b7ab9a09640))
+
+
+### Bug Fixes
+
+* options重复请求 ([4528424](https://github.com/dream2023/vue-ele-form/commit/4528424881109881b488d4ef8343c3ca39ab9521))
+* 更新代码生成器地址 ([70aeb5f](https://github.com/dream2023/vue-ele-form/commit/70aeb5f3d503d5aefbda57426298a76b3948e866))
+* 解决vif导致重复请求问题 ([d748e74](https://github.com/dream2023/vue-ele-form/commit/d748e74ae990c1e4ec3e6f30e04cc8c267573db8))
+
 ### [0.8.12](https://github.com/dream2023/vue-ele-form/compare/v0.8.11...v0.8.12) (2020-02-11)
 
 ### [0.8.11](https://github.com/dream2023/vue-ele-form/compare/v0.8.10...v0.8.11) (2020-02-06)
