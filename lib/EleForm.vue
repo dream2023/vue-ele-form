@@ -463,6 +463,7 @@ export default {
     // 例如 ('a.b.c', 'val') => this.formData.a.b.c = 'val'
     setValue(field, value) {
       setDeepVal(this.formData, field, value, true)
+      this.$emit('input', this.formData)
     },
     // 给需要深度遍历的对象赋值空对象, 以便 v-model 时不出错
     // 例如 formDesc: { info: { children: { name:{ type: 'input', xxx }, nickname: {type: 'input', xxx } } } } => formData => { info: {} }
