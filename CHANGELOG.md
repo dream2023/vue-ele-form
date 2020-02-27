@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.15](https://github.com/dream2023/vue-ele-form/compare/v0.8.14...v0.8.15) (2020-02-27)
+
+
+### Bug Fixes
+
+* 数据变化时抛出 input 事件, 而不单单修改属性值 ([0110dd3](https://github.com/dream2023/vue-ele-form/commit/0110dd3dd0659a1f99b6a1b57965d2cccd5e360d))
+
 ### [0.8.14](https://github.com/dream2023/vue-ele-form/compare/v0.8.13...v0.8.14) (2020-02-15)
 
 
