@@ -8,6 +8,8 @@
   // 单引号
   "javascript.preferences.quoteStyle": "single",
   "typescript.preferences.quoteStyle": "single",
+  "javascript.format.semicolons": "remove",
+  "typescript.format.semicolons": "remove",
   // 换行
   "vetur.format.defaultFormatterOptions": {
     "js-beautify-html": {

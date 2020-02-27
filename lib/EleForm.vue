@@ -621,8 +621,8 @@ export default {
     changeProp(options, prop) {
       if (prop) {
         return options.map(option => ({
-          text: option[prop.text],
-          value: option[prop.value]
+          text: option[prop.text || 'text'],
+          value: option[prop.value || 'value']
         }))
       } else {
         return options
