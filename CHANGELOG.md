@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.16](https://github.com/dream2023/vue-ele-form/compare/v0.8.15...v0.8.16) (2020-02-27)
+
+
+### Features
+
+* prop给默认值 ([18c1347](https://github.com/dream2023/vue-ele-form/commit/18c134708493cb790abb4bf4ff1dff5ed11d08bc))
+
 ### [0.8.15](https://github.com/dream2023/vue-ele-form/compare/v0.8.14...v0.8.15) (2020-02-27)
 
 
