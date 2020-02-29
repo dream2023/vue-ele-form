@@ -585,7 +585,7 @@ export default {
               this.setValue(field, defaultValue)
             }
 
-            const fullPath = field.split('.').join('.chidlren.')
+            const fullPath = field.split('.').join('.children.')
             setDeepVal(this.formDesc, fullPath + '._type', type)
             setDeepVal(this.formDesc, fullPath + '._vif', vif)
             setDeepVal(this.formDesc, fullPath + '._disabled', disabled)

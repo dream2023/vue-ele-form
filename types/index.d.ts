@@ -30,7 +30,7 @@ declare module 'vue-ele-form' {
   ) => ArrayOptions | Promise<any> | ArrayOptions;
 
   export interface FormDescData {
-    type: string | LinkageFunction;
+    type?: string | LinkageFunction;
     label?: string;
     default?: any;
     attrs?: AnyObj;
