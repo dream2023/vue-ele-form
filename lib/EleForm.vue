@@ -40,7 +40,11 @@
                   >
                     <el-form-item
                       :error="formErrorObj ? formErrorObj[field] : null"
-                      :label="isShowLabel && formItem.isShowLabel !== false ? formItem.label : null"
+                      :label="
+                        isShowLabel && formItem.isShowLabel !== false
+                          ? formItem.label
+                          : null
+                      "
                       :label-width="formItem.labelWidth || null"
                       :prop="field"
                     >
@@ -264,7 +268,7 @@ export default {
             'native-type': 'submit'
           },
           text: this.computedSubmitBtnText,
-          click() {}
+          click() { }
         })
       }
 
@@ -564,11 +568,6 @@ export default {
               typeof vif === 'function' ? vif(this.formData) : vif
             )
 
-            // 如果隐藏, 则删除值
-            if (!vif) {
-              setDeepVal(this.formData, field, null)
-            }
-
             // 3.触发 disabled 禁用 / 启用
             const disabled = formItem._disableds.some(disabled =>
               typeof disabled === 'function' ? disabled(formData) : disabled
@@ -582,7 +581,13 @@ export default {
               if (this.computedFormDesc[field].displayFormatter) {
                 defaultValue = this.desc.displayFormatter(defaultValue, this.formData)
               }
+
               this.setValue(field, defaultValue)
+            }
+
+            // 如果隐藏, 则删除值
+            if (!vif) {
+              this.setValue(field, defaultValue || null)
             }
 
             const fullPath = field.split('.').join('.children.')
@@ -684,8 +689,8 @@ export default {
             // 其他报错
             throw new TypeError(
               'options的类型不正确, options及options请求结果类型可为: 字符串数组, 对象数组, 函数和Promise或者URL地址, 当前值为: ' +
-                options +
-                ', 不属于以上四种类型, 具体请参考: https://www.yuque.com/chaojie-vjiel/vbwzgu/rgenav'
+              options +
+              ', 不属于以上四种类型, 具体请参考: https://www.yuque.com/chaojie-vjiel/vbwzgu/rgenav'
             )
           }
         }
@@ -794,7 +799,7 @@ export default {
         }, [])
         this.showError(messageArr)
         // eslint-disable-next-line
-      } catch {}
+      } catch { }
     },
 
     // 显示错误
@@ -851,7 +856,7 @@ export default {
                   this.innerFormError = msg
                 }
                 // eslint-disable-next-line
-              } catch {}
+              } catch { }
             } else if (error instanceof Object) {
               // 返回的是对象类型, 则直接设置
               this.innerFormError = error
