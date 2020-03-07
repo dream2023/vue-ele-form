@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.18](https://github.com/dream2023/vue-ele-form/compare/v0.8.17...v0.8.18) (2020-03-07)
+
+
+### Features
+
+* attrs支持动态 ([29f83cb](https://github.com/dream2023/vue-ele-form/commit/29f83cb82bda57370530b36753b984c0d199867d))
+
+
+### Bug Fixes
+
+* vif为false时取默认值而非null ([1f61e1a](https://github.com/dream2023/vue-ele-form/commit/1f61e1ad3d916bd5af9bb2d2c0e6014b14909247))
+
 ### [0.8.17](https://github.com/dream2023/vue-ele-form/compare/v0.8.16...v0.8.17) (2020-02-29)
 
 
