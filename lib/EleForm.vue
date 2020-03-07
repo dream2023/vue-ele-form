@@ -105,7 +105,15 @@
 
 <script>
 import responsiveMixin from './mixins/responsiveMixin'
-import { isUnDef, is, castArray, getDeepVal, setDeepVal, isEmpty } from './tools/utils'
+import {
+  isUnDef,
+  isFunction,
+  is,
+  castArray,
+  getDeepVal,
+  setDeepVal,
+  isEmpty
+} from './tools/utils'
 import { throttle } from 'throttle-debounce'
 import localeMixin from 'element-ui/src/mixins/locale'
 import { t } from './locale'
@@ -543,7 +551,7 @@ export default {
             const formItem = this.computedFormDesc[field]
             // 1.设置 type
             let type = formItem.type
-            if (typeof formItem.type === 'function') {
+            if (isFunction(formItem.type)) {
               type = this.getComponentName(formItem.type(formData))
 
               // 是否需要载入旧数据
@@ -565,21 +573,30 @@ export default {
 
             // 2.触发 v-if 显示 / 隐藏
             const vif = formItem._vifs.every(vif =>
-              typeof vif === 'function' ? vif(this.formData) : vif
+              isFunction(vif) ? vif(this.formData) : vif
             )
 
             // 3.触发 disabled 禁用 / 启用
             const disabled = formItem._disableds.some(disabled =>
-              typeof disabled === 'function' ? disabled(formData) : disabled
+              isFunction(disabled) ? disabled(formData) : disabled
             )
 
             // 4.默认值
-            let defaultValue = typeof formItem.default === 'function' ? formItem.default(formData) : formItem.default
+            let defaultValue = isFunction(formItem.default)
+              ? formItem.default(formData)
+              : formItem.default
             // 默认值不为空  & (值为空 || 老值和当前值)
-            if (!isEmpty(defaultValue) && (isEmpty(this.formData[field]) || formItem._defaultValue === this.formData[field])) {
+            if (
+              !isEmpty(defaultValue) &&
+              (isEmpty(this.formData[field]) ||
+                formItem._defaultValue === this.formData[field])
+            ) {
               // 判断是否有格式化函数
               if (this.computedFormDesc[field].displayFormatter) {
-                defaultValue = this.desc.displayFormatter(defaultValue, this.formData)
+                defaultValue = this.desc.displayFormatter(
+                  defaultValue,
+                  this.formData
+                )
               }
 
               this.setValue(field, defaultValue)
@@ -590,11 +607,15 @@ export default {
               this.setValue(field, defaultValue || null)
             }
 
+            // 5.动态属性 attrs
+            let attrs = isFunction(formItem.attrs) ? formItem.attrs(this.formData) : formItem.attrs
+
             const fullPath = field.split('.').join('.children.')
             setDeepVal(this.formDesc, fullPath + '._type', type)
             setDeepVal(this.formDesc, fullPath + '._vif', vif)
             setDeepVal(this.formDesc, fullPath + '._disabled', disabled)
             setDeepVal(this.formDesc, fullPath + '._defaultValue', defaultValue)
+            setDeepVal(this.formDesc, fullPath + '._attrs', attrs)
 
             // 5.重新获取 options
             if (formItem.isReloadOptions) {
