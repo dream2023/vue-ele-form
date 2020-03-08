@@ -33,7 +33,7 @@ declare module 'vue-ele-form' {
     type?: string | LinkageFunction;
     label?: string;
     default?: any;
-    attrs?: AnyObj;
+    attrs?: AnyObj | LinkageFunction;
     title?: string;
     isShowLabel?: boolean;
     labelWidth?: string;

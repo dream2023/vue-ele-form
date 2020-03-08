@@ -599,12 +599,12 @@ export default {
                 )
               }
 
-              this.setValue(field, defaultValue)
+              setDeepVal(this.formData, field, defaultValue)
             }
 
             // 如果隐藏, 则删除值
             if (!vif) {
-              this.setValue(field, defaultValue || null)
+              setDeepVal(this.formData, field, defaultValue || null)
             }
 
             // 5.动态属性 attrs
