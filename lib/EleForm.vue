@@ -9,6 +9,7 @@
           :rules="computedRules"
           @submit.native.prevent="handleSubmitForm"
           ref="form"
+          :disabled="disabled"
           v-bind="formAttrs"
         >
           <!-- 默认插槽作为表单项 -->
@@ -29,7 +30,7 @@
                   :field="field"
                   :props="$props"
                   :formData="formData"
-                  :disabled="disabled || formItem._disabled"
+                  :disabled="formItem._disabled"
                   :type="formItem._type"
                   :options="formItem._options"
                 >
@@ -56,12 +57,13 @@
                         :field="field"
                         :formData="formData"
                         :name="field"
-                        :disabled="disabled || formItem._disabled"
+                        :disabled="formItem._disabled"
                         :type="formItem._type"
                         :options="formItem._options"
                       >
                         <component
-                          :disabled="disabled || formItem._disabled"
+                          :disabled="formItem._disabled"
+                          :readonly="readonly"
                           :desc="formItem"
                           :is="formItem._type"
                           :options="formItem._options"
@@ -219,6 +221,11 @@ export default {
     },
     // 全局禁用表单
     disabled: {
+      type: Boolean,
+      default: false
+    },
+    // 全局的readonly
+    readonly: {
       type: Boolean,
       default: false
     },
@@ -393,6 +400,7 @@ export default {
     formDescKeys() {
       return Object.keys(this.computedFormDesc)
     },
+    // 对formDesc做处理
     computedFormDesc() {
       const desc = this.getDeepFormDesc(this.formDesc)
       Object.keys(desc).forEach(field => {
