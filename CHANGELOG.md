@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.20](https://github.com/dream2023/vue-ele-form/compare/v0.8.19...v0.8.20) (2020-03-10)
+
+
+### Features
+
+* 增加全局readonly属性 ([e1fae38](https://github.com/dream2023/vue-ele-form/commit/e1fae381f451ea8818f5e499eac802c9629d6863))
+
 ### [0.8.19](https://github.com/dream2023/vue-ele-form/compare/v0.8.18...v0.8.19) (2020-03-08)
 
 
