@@ -33,8 +33,8 @@
 
       <!-- 作用域插槽 -->
       <template
-        v-for="(formItem, field, props) of formDesc"
-        v-slot:[field]="{ formData }"
+        v-for="(formItem, field) of formDesc"
+        v-slot:[field]="{ formData, props }"
       >
         <slot
           :data="formData[field]"
@@ -42,16 +42,18 @@
           :field="field"
           :formData="formData"
           :name="field"
-          :disabled="props.disabled || formItem._disabled"
+          :props="props"
+          :disabled="formItem._disabled"
           :type="formItem._type"
           :options="formItem._options"
         >
           <component
-            :disabled="props.disabled || formItem._disabled"
+            :disabled="formItem._disabled"
             :desc="formItem"
             :is="formItem._type"
             :options="formItem._options"
             :ref="field"
+            :readonly="props.readonly"
             :field="field"
             :value="getValue(field)"
             @input="setValue(field, $event)"
