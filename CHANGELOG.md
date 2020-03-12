@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.21](https://github.com/dream2023/vue-ele-form/compare/v0.8.20...v0.8.21) (2020-03-12)
+
+
+### Bug Fixes
+
+* readonly & disabled在扩展form中的调整 ([af97d40](https://github.com/dream2023/vue-ele-form/commit/af97d4040faa785c71f22521d8822999c67c1e6b))
+
 ### [0.8.20](https://github.com/dream2023/vue-ele-form/compare/v0.8.19...v0.8.20) (2020-03-10)
 
 
