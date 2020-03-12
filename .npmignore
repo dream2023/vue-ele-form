@@ -1,6 +1,9 @@
 node_modules
 tests
 docs
+.idea
+.vscode
+.github
 documentation
 public
 vue.config.js

@@ -283,7 +283,7 @@ export default {
             'native-type': 'submit'
           },
           text: this.computedSubmitBtnText,
-          click() { }
+          click() {}
         })
       }
 
@@ -482,8 +482,9 @@ export default {
     // 设置值
     // 例如 ('a.b.c', 'val') => this.formData.a.b.c = 'val'
     setValue(field, value) {
-      setDeepVal(this.formData, field, value, true)
-      this.$emit('input', this.formData)
+      const formData = cloneDeep(this.formData)
+      setDeepVal(formData, field, value, true)
+      this.$emit('input', formData)
     },
     // 给需要深度遍历的对象赋值空对象, 以便 v-model 时不出错
     // 例如 formDesc: { info: { children: { name:{ type: 'input', xxx }, nickname: {type: 'input', xxx } } } } => formData => { info: {} }
@@ -616,7 +617,9 @@ export default {
             }
 
             // 5.动态属性 attrs
-            let attrs = isFunction(formItem.attrs) ? formItem.attrs(this.formData) : formItem.attrs
+            let attrs = isFunction(formItem.attrs)
+              ? formItem.attrs(this.formData)
+              : formItem.attrs
 
             const fullPath = field.split('.').join('.children.')
             setDeepVal(this.formDesc, fullPath + '._type', type)
@@ -718,8 +721,8 @@ export default {
             // 其他报错
             throw new TypeError(
               'options的类型不正确, options及options请求结果类型可为: 字符串数组, 对象数组, 函数和Promise或者URL地址, 当前值为: ' +
-              options +
-              ', 不属于以上四种类型, 具体请参考: https://www.yuque.com/chaojie-vjiel/vbwzgu/rgenav'
+                options +
+                ', 不属于以上四种类型, 具体请参考: https://www.yuque.com/chaojie-vjiel/vbwzgu/rgenav'
             )
           }
         }
@@ -828,7 +831,7 @@ export default {
         }, [])
         this.showError(messageArr)
         // eslint-disable-next-line
-      } catch { }
+      } catch {}
     },
 
     // 显示错误
@@ -885,7 +888,7 @@ export default {
                   this.innerFormError = msg
                 }
                 // eslint-disable-next-line
-              } catch { }
+              } catch {}
             } else if (error instanceof Object) {
               // 返回的是对象类型, 则直接设置
               this.innerFormError = error
