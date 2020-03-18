@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.23](https://github.com/dream2023/vue-ele-form/compare/v0.8.22...v0.8.23) (2020-03-18)
+
+
+### Bug Fixes
+
+* ele-form-section remote 无法设置 ([60d79ca](https://github.com/dream2023/vue-ele-form/commit/60d79ca7cb5ce8b021aca0223eb0627bbc7c3001))
+
 ### [0.8.22](https://github.com/dream2023/vue-ele-form/compare/v0.8.21...v0.8.22) (2020-03-12)
 
 
