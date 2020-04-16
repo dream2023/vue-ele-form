@@ -1,7 +1,7 @@
 export default `<template>
   <!-- 左右拖动, 可体验响应式表单 -->
   <ele-form
-    :formData="formData"
+    v-model="formData"
     :formDesc="formDesc"
     :request-fn="handleSubmit"
     :rules="rules"

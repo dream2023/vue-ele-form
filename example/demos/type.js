@@ -1,6 +1,6 @@
 export default `<template>
   <ele-form
-    :formData="formData"
+    v-model="formData"
     :formDesc="formDesc"
     :mock="true"
     :request-fn="handleSubmit"
