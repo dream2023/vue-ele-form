@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.25](https://github.com/dream2023/vue-ele-form/compare/v0.8.24...v0.8.25) (2020-05-08)
+
+
+### Bug Fixes
+
+* 修复若干小BUG ([12aee12](https://github.com/dream2023/vue-ele-form/commit/12aee12ef9497248725c7f7f2f8e2f9d01bab158))
+* change formData to v-model to enable the demos work ([f66ac4c](https://github.com/dream2023/vue-ele-form/commit/f66ac4cd945644b2a000e69de3e57a36a336f8d6))
+
 ### [0.8.24](https://github.com/dream2023/vue-ele-form/compare/v0.8.23...v0.8.24) (2020-03-18)
 
 
