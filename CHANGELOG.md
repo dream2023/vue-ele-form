@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.26](https://github.com/dream2023/vue-ele-form/compare/v0.8.25...v0.8.26) (2020-07-16)
+
+
+### Features
+
+* 新增time-picker组件 ([d359a2f](https://github.com/dream2023/vue-ele-form/commit/d359a2ff4bd8b512a837a5a8fc56ef8372037162))
+
 ### [0.8.25](https://github.com/dream2023/vue-ele-form/compare/v0.8.24...v0.8.25) (2020-05-08)
 
 
