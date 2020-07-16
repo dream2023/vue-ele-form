@@ -47,7 +47,7 @@
     "commitizen": "^4.0.3",
     "core-js": "^2.6.5",
     "cz-conventional-changelog": "^3.1.0",
-    "element-ui": "^2.13.0",
+    "element-ui": "^2.13.2",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.2.3",
     "github-release-notes": "^0.17.1",
@@ -56,7 +56,6 @@
     "lint-staged": "^8.1.5",
     "standard-version": "^7.0.0",
     "vue": "^2.6.11",
-    "vue-run-sfc": "^1.1.7",
     "vue-template-compiler": "^2.6.11"
   },
   "config": {
