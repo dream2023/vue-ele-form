@@ -9,6 +9,7 @@
           :rules="computedRules"
           @submit.native.prevent="handleSubmitForm"
           ref="form"
+          :validate-on-rule-change="false"
           :disabled="disabled"
           v-bind="formAttrs"
         >
@@ -433,8 +434,8 @@ export default {
               )
             }
             // 关联属性
-            desc[field]._optionLinkageFields = castArray(
-              desc[field].optionLinkageFields
+            desc[field]._optionsLinkageFields = castArray(
+              desc[field].optionsLinkageFields
             )
 
             // layout值, 内部属性不显示
@@ -595,6 +596,17 @@ export default {
         }
       })
     },
+    isReloadOptions(field) {
+      // 第一次进入 _options 为 false
+      const formItem = this.formDesc[field]
+      if (!formItem._options) return true
+      // 如果关联字段不存在，则直接返回 false
+      if (!formItem._optionsLinkageFields.length) return false
+      // 判断关联字段的值有无更新
+      return formItem._optionsLinkageFields.some(
+        field => this.formData[field] !== this.oldFormData[field]
+      )
+    },
     // 将四种类型: 字符串数组, 对象数组, Promise对象和函数统一为 对象数组
     changeOptions(options, prop, field) {
       if (options) {
@@ -602,25 +614,24 @@ export default {
           // 当options为数组时: 直接获取
           this.setOptions(options, prop, field)
         } else if (options instanceof Function) {
-          // 当options为函数: 执行函数并递归
-          this.changeOptions(options(this.formData), prop, field)
-        } else if (options instanceof Promise) {
           // 当options为Promise时: 等待Promise结束, 并获取值
-          const canRefetch = () => {
-            // 第一次进入 _options 为 false
-            const formItem = this.formDesc[field]
-            if (!formItem._options) return true
-            // 如果关联字段不存在，则直接返回 false
-            if (!formItem._optionLinkageFields.length) return false
-            // 判断关联字段的值有无更新
-            return formItem._optionLinkageFields.some(
-              field => this.formData[field] !== this.oldFormData[field]
-            )
-          }
-          if (!canRefetch()) {
+          if (
+            (this.formDesc[field]._optionsIsPromise &&
+              !this.isReloadOptions(field)) ||
+            this.isLoadingOptions
+          ) {
             return
           }
+          const res = options(this.formData)
+          if (res instanceof Promise) {
+            this.isLoadingOptions = true
+            this.formDesc[field]._optionsIsPromise = true
+          }
+          // 当options为函数: 执行函数并递归
+          this.changeOptions(res, prop, field)
+        } else if (options instanceof Promise) {
           options.then(options => {
+            this.isLoadingOptions = false
             this.changeOptions(options, prop, field)
           })
         } else if (typeof options === 'string' && this.optionsFn) {
