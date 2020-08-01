@@ -1,17 +1,24 @@
 <template>
-  <el-card header="ele-form演示" style="max-width:1200px;margin: 50px auto;">
-    <ele-form
-      v-model="formData"
-      :form-desc="formDesc"
-      :request-fn="handleSubmit"
-      :rules="rules"
-      @request-success="handleSuccess"
-    ></ele-form>
-  </el-card>
+  <div>
+    <app-header />
+    <el-card header="ele-form演示" style="max-width:1200px;margin: 100px auto;">
+      <ele-form
+        v-model="formData"
+        :form-desc="formDesc"
+        :request-fn="handleSubmit"
+        :rules="rules"
+        @request-success="handleSuccess"
+      ></ele-form>
+    </el-card>
+  </div>
 </template>
 
 <script>
+import AppHeader from './AppHeader'
 export default {
+  components: {
+    AppHeader
+  },
   data() {
     return {
       // 表单数据
