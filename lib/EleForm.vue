@@ -69,7 +69,7 @@
                           :options="formItem._options"
                           :ref="field"
                           :field="field"
-                          @input="handleChange(field, $event)"
+                          @input="setValue(field, $event)"
                           :value="formData[field]"
                         />
                       </slot>
@@ -446,10 +446,16 @@ export default {
     }
   },
   methods: {
+    getValue(field) {
+      return this.formData[field]
+    },
     handleChange(field, val) {
       this.oldFormData = cloneDeep(this.formData)
       this.$set(this.formData, field, val)
       this.$emit('input', this.formData)
+    },
+    setValue(field, val) {
+      this.handleChange(field, val)
       this.checkLinkage()
     },
     // 获取col的属性(是否为inline模式)
@@ -472,7 +478,7 @@ export default {
           const formData = this.formData
           Object.keys(formDesc).forEach(field => {
             const formItem = formDesc[field]
-            // 设置 type
+            // 0.设置 type
             let type = formItem.type
             if (typeof formItem.type === 'function') {
               type = this.getComponentName(formItem.type(formData))
@@ -482,14 +488,15 @@ export default {
                 // 保存现在的数据作为老数据
                 this.formDesc[field]['_oldValue']['type-' + formItem._type] =
                   formData[field]
+
                 // 类型改变, 则删除原数据
-                this.formData[field] = newVal
+                this.handleChange(field, newVal)
               }
             } else {
               type = this.getComponentName(formItem.type)
             }
 
-            // 4.默认值
+            // 1.默认值
             let defaultValue =
               typeof formItem.default === 'function'
                 ? formItem.default(formData)
@@ -504,17 +511,18 @@ export default {
               if (formItem.displayFormatter) {
                 defaultValue = formItem.displayFormatter(defaultValue, formData)
               }
-              this.formData[field] = defaultValue
+
+              this.handleChange(field, defaultValue)
             }
 
-            // 1.触发 v-if 显示 / 隐藏
+            // 2.触发 v-if 显示 / 隐藏
             let vif = true
             if (typeof formItem.vif === 'function') {
               vif = Boolean(formItem.vif(formData))
 
               if (!vif) {
                 // 如果隐藏, 则删除值
-                this.formData[field] = defaultValue || null
+                this.handleChange(field, defaultValue || null)
               }
             } else if (typeof formItem.vif === 'boolean') {
               vif = formItem.vif
@@ -651,7 +659,7 @@ export default {
 
       // 新 options 和老 options 不同时，触发值的改变
       if (newOptionsValues !== oldOptionsValues) {
-        this.handleChange(field, null)
+        this.setValue(field, null)
       }
     },
     // 验证表单
@@ -730,14 +738,15 @@ export default {
         })
       }
     },
-
+    // 验证表单
+    async validate() {
+      await this.validateForm()
+      await this.validateComponent()
+    },
     // 提交表单
     async handleSubmitForm() {
       try {
-        // 验证表单
-        await this.validateForm()
-        await this.validateComponent()
-
+        await this.validate()
         // 为了不影响原值, 这里进行 clone
         let data = cloneDeep(this.formData)
         // valueFormatter的处理

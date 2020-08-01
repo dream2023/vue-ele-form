@@ -23,7 +23,7 @@
         <div
           :key="index"
           class="ele-form-section-content"
-          v-for="(section, index) of computedSections"
+          v-for="(section, index) of sections"
         >
           <slot
             :icon="section.icon"
@@ -137,16 +137,6 @@ export default {
     }
   },
   computed: {
-    computedSections() {
-      if (this.getDeepFormDesc) {
-        return this.sections.map(item => {
-          item.formDesc = this.getDeepFormDesc(item.formDesc)
-          return item
-        })
-      } else {
-        return []
-      }
-    },
     formDesc() {
       return this.sections.reduce(
         (acc, cur) => Object.assign(acc, cur.formDesc),
@@ -166,7 +156,9 @@ export default {
       }
     },
     setValue(field, $event) {
-      this.$refs['ele-form'].setValue(field, $event)
+      if (this.$refs['ele-form']) {
+        this.$refs['ele-form'].setValue(field, $event)
+      }
     },
     getBtns(btns) {
       return btns.map(item => {
