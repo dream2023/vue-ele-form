@@ -69,7 +69,8 @@
                           :options="formItem._options"
                           :ref="field"
                           :field="field"
-                          v-model="formData[field]"
+                          @input="handleChange(field, $event)"
+                          :value="formData[field]"
                         />
                       </slot>
                       <div
@@ -235,6 +236,7 @@ export default {
   },
   data() {
     return {
+      oldFormData: {},
       // 是否正在请求中
       innerIsLoading: false,
       // 内部请求出错
@@ -412,6 +414,10 @@ export default {
                 '<code>$1</code>'
               )
             }
+            // 关联属性
+            desc[field]._optionLinkageFields = castArray(
+              desc[field].optionLinkageFields
+            )
 
             // layout值, 内部属性不显示
             desc[field]._colAttrs = this.getColAttrs(desc[field].layout)
@@ -421,9 +427,6 @@ export default {
             if (!desc[field]._oldValue) {
               desc[field]._oldValue = {}
             }
-
-            // 隐藏属性
-            this.hidenPrivateProperty(desc[field])
 
             // 设置 options
             this.changeOptions(desc[field].options, desc[field].prop, field)
@@ -440,33 +443,14 @@ export default {
       if (obj) {
         this.processError(obj)
       }
-    },
-    formData: {
-      handler(formData) {
-        if (formData) {
-          // 联动属性检测
-          this.checkLinkage()
-        }
-      },
-      deep: true
     }
   },
   methods: {
-    hidenPrivateProperty(obj) {
-      Object.keys(obj).forEach(key => {
-        if (key.startsWith('_')) {
-          Object.defineProperty(obj, key, this.defineLinkageProperty(obj[key]))
-        }
-      })
-    },
-    // 定义联动属性的descriptor
-    defineLinkageProperty(value) {
-      return {
-        enumerable: false,
-        writable: true,
-        configurable: true,
-        value: value
-      }
+    handleChange(field, val) {
+      this.oldFormData = cloneDeep(this.formData)
+      this.$set(this.formData, field, val)
+      this.$emit('input', this.formData)
+      this.checkLinkage()
     },
     // 获取col的属性(是否为inline模式)
     getColAttrs(layout) {
@@ -513,15 +497,12 @@ export default {
             // 默认值不为空  & (值为空 || 老值和当前值)
             if (
               !isEmpty(defaultValue) &&
-              (isEmpty(this.formData[field]) ||
-                formItem._defaultValue === this.formData[field])
+              (isEmpty(formData[field]) ||
+                formItem._defaultValue === formData[field])
             ) {
               // 判断是否有格式化函数
               if (formItem.displayFormatter) {
-                defaultValue = formItem.displayFormatter(
-                  defaultValue,
-                  this.formData
-                )
+                defaultValue = formItem.displayFormatter(defaultValue, formData)
               }
               this.formData[field] = defaultValue
             }
@@ -549,16 +530,13 @@ export default {
 
             let attrs =
               typeof formItem.attrs === 'function'
-                ? formItem.attrs(this.formData)
+                ? formItem.attrs(formData)
                 : formItem.attrs
 
-            formItem._type = type
-            formItem._vif = vif
-            formItem._disabled = disabled
-            formItem._attrs = attrs
-
-            // 隐藏属性
-            this.hidenPrivateProperty(formItem)
+            this.$set(formItem, '_type', type)
+            this.$set(formItem, '_vif', vif)
+            this.$set(formItem, '_disabled', disabled)
+            this.$set(formItem, '_attrs', attrs)
 
             // 4.重新获取 options
             if (formItem._vif && typeof formItem.options === 'function') {
@@ -608,50 +586,73 @@ export default {
       })
     },
     // 将四种类型: 字符串数组, 对象数组, Promise对象和函数统一为 对象数组
-    changeOptions(options, prop, field, resetValue = false) {
+    changeOptions(options, prop, field) {
       if (options) {
         if (options instanceof Array) {
           // 当options为数组时: 直接获取
-          this.setOptions(options, prop, field, resetValue)
+          this.setOptions(options, prop, field)
         } else if (options instanceof Function) {
           // 当options为函数: 执行函数并递归
-          this.changeOptions(options(this.formData), prop, field, resetValue)
+          this.changeOptions(options(this.formData), prop, field)
         } else if (options instanceof Promise) {
           // 当options为Promise时: 等待Promise结束, 并获取值
+          const canRefetch = () => {
+            // 第一次进入 _options 为 false
+            const formItem = this.formDesc[field]
+            if (!formItem._options) return true
+            // 如果关联字段不存在，则直接返回 false
+            if (!formItem._optionLinkageFields.length) return false
+            // 判断关联字段的值有无更新
+            return formItem._optionLinkageFields.some(
+              field => this.formData[field] !== this.oldFormData[field]
+            )
+          }
+          if (!canRefetch()) {
+            return
+          }
           options.then(options => {
-            this.changeOptions(options, prop, field, resetValue)
+            this.changeOptions(options, prop, field)
           })
         } else if (typeof options === 'string' && this.optionsFn) {
           // options为url地址
-          this.changeOptions(this.optionsFn(options), prop, field, resetValue)
+          this.changeOptions(this.optionsFn(options), prop, field)
         } else {
-          // 其他报错
-          throw new TypeError(
-            'options的类型不正确, options及options请求结果类型可为: 字符串数组, 对象数组, 函数和Promise或者URL地址, 当前值为: ' +
-              options +
-              ', 不属于以上四种类型'
-          )
+          if (typeof options === 'string') {
+            throw new TypeError(
+              `options值为: ${options}, 为字符串, 但是未配置options-fn参数, 具体请参考: https://www.yuque.com/chaojie-vjiel/vbwzgu/rgenav#ZVYtf`
+            )
+          } else {
+            // 其他报错
+            throw new TypeError(
+              'options的类型不正确, options及options请求结果类型可为: 字符串数组, 对象数组, 函数和Promise或者URL地址, 当前值为: ' +
+                options +
+                ', 不属于以上四种类型, 具体请参考: https://www.yuque.com/chaojie-vjiel/vbwzgu/rgenav'
+            )
+          }
         }
       } else {
         if (this.formDesc[field]._options) {
           // 如果new options为null / undefined, 且 old Options 存在, 则设置
-          this.setOptions([], prop, field, resetValue)
+          this.setOptions([], prop, field)
         }
       }
     },
     // 设置options
-    setOptions(options, prop, field, resetValue) {
+    setOptions(options, prop, field) {
       // 将options每一项转为对象
       let newOptions = this.getObjArrOptions(options)
+      const oldOptionsValues = (this.formDesc[field]._options || [])
+        .map(item => item.value)
+        .join(',')
       // 改变prop为规定的prop
       newOptions = this.changeProp(newOptions, prop)
+      const newOptionsValues = newOptions.map(item => item.value).join(',')
+      this.$set(this.formDesc[field], '_options', newOptions)
 
-      // const oldOptions = this.formDesc[field]._options
-      Object.assign(this.formDesc[field], {
-        _options: newOptions
-      })
-
-      // 是否需要重置值
+      // 新 options 和老 options 不同时，触发值的改变
+      if (newOptionsValues !== oldOptionsValues) {
+        this.handleChange(field, null)
+      }
     },
     // 验证表单
     validateForm() {
