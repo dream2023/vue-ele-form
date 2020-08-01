@@ -407,6 +407,24 @@ export default {
               desc[field].mock = true
             }
 
+            let defaultValue =
+              typeof desc[field].default === 'function'
+                ? desc[field].default(this.formData)
+                : desc[field].default
+            // 默认值不为空  & (值为空 || 老值和当前值)
+            if (!isEmpty(defaultValue) && isEmpty(this.formData[field])) {
+              // 判断是否有格式化函数
+              if (desc[field].displayFormatter) {
+                defaultValue = desc[field].displayFormatter(
+                  defaultValue,
+                  this.formData
+                )
+              }
+
+              this.handleChange(field, defaultValue)
+            }
+            this.$set(desc[field], '_defaultValue', defaultValue)
+
             // 转换 tip, 内部属性不显示
             if (desc[field].tip) {
               desc[field]._tip = String(desc[field].tip).replace(
@@ -428,13 +446,16 @@ export default {
               desc[field]._oldValue = {}
             }
 
-            // 设置 options
+            // // 设置 options
             this.changeOptions(desc[field].options, desc[field].prop, field)
           })
 
           // 检查联动
           this.checkLinkage()
         }
+        this.$nextTick(() => {
+          this.$refs.form.clearValidate()
+        })
       },
       immediate: true
     },
@@ -478,7 +499,7 @@ export default {
           const formData = this.formData
           Object.keys(formDesc).forEach(field => {
             const formItem = formDesc[field]
-            // 0.设置 type
+            // 1.设置 type
             let type = formItem.type
             if (typeof formItem.type === 'function') {
               type = this.getComponentName(formItem.type(formData))
@@ -496,25 +517,6 @@ export default {
               type = this.getComponentName(formItem.type)
             }
 
-            // 1.默认值
-            let defaultValue =
-              typeof formItem.default === 'function'
-                ? formItem.default(formData)
-                : formItem.default
-            // 默认值不为空  & (值为空 || 老值和当前值)
-            if (
-              !isEmpty(defaultValue) &&
-              (isEmpty(formData[field]) ||
-                formItem._defaultValue === formData[field])
-            ) {
-              // 判断是否有格式化函数
-              if (formItem.displayFormatter) {
-                defaultValue = formItem.displayFormatter(defaultValue, formData)
-              }
-
-              this.handleChange(field, defaultValue)
-            }
-
             // 2.触发 v-if 显示 / 隐藏
             let vif = true
             if (typeof formItem.vif === 'function') {
@@ -522,7 +524,7 @@ export default {
 
               if (!vif) {
                 // 如果隐藏, 则删除值
-                this.handleChange(field, defaultValue || null)
+                this.handleChange(field, formItem._defaultValue)
               }
             } else if (typeof formItem.vif === 'boolean') {
               vif = formItem.vif
@@ -658,7 +660,7 @@ export default {
       this.$set(this.formDesc[field], '_options', newOptions)
 
       // 新 options 和老 options 不同时，触发值的改变
-      if (newOptionsValues !== oldOptionsValues) {
+      if (oldOptionsValues && newOptionsValues !== oldOptionsValues) {
         this.setValue(field, null)
       }
     },
