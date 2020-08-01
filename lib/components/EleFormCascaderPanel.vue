@@ -26,13 +26,13 @@ import mock from '../tools/mock'
 export default {
   name: 'EleFormCascaderPanel',
   mixins: [formMixin],
-  data () {
+  data() {
     return {
       mockRule: 'custom'
     }
   },
   computed: {
-    defaultAttrs () {
+    defaultAttrs() {
       return {
         placeholder: this.t('ele-form.select') + this.desc.label,
         props: {
@@ -44,12 +44,12 @@ export default {
     }
   },
   methods: {
-    getCustomMockData () {
+    getCustomMockData() {
       const Mock = mock()
       if (Mock) {
-        const optionsTo2D = function (tree, key, stack = [], pathList = []) {
+        const optionsTo2D = function(tree, key, stack = [], pathList = []) {
           if (!tree) return
-          for (let data of tree) {
+          for (const data of tree) {
             stack.push(data[key])
             if (data.children && data.children.length) {
               optionsTo2D(data.children, key, stack, pathList)
