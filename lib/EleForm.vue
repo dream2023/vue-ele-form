@@ -369,8 +369,8 @@ export default {
     computedRules() {
       return this.formDescKeys.reduce((rules, field) => {
         // 合并 (全局 和 局部) 的rules
-        let formRules = castArray(this.rules[field])
-        let formItemRules = castArray(this.formDesc[field].rules)
+        const formRules = castArray(this.rules[field])
+        const formItemRules = castArray(this.formDesc[field].rules)
         rules[field] = [...formRules, ...formItemRules]
 
         // 如果采用required, 则判断已有的规则有无, 如果没有, 则添加
@@ -484,9 +484,9 @@ export default {
               type = this.getComponentName(formItem.type(formData))
               if (formItem._type && formItem._type !== type) {
                 // 获取此类型的以前值
-                const newVal = formItem['_oldValue']['type-' + type] || null
+                const newVal = formItem._oldValue['type-' + type] || null
                 // 保存现在的数据作为老数据
-                this.formDesc[field]['_oldValue']['type-' + formItem._type] =
+                this.formDesc[field]._oldValue['type-' + formItem._type] =
                   formData[field]
 
                 // 类型改变, 则删除原数据
@@ -536,7 +536,7 @@ export default {
               disabled = formItem.disabled
             }
 
-            let attrs =
+            const attrs =
               typeof formItem.attrs === 'function'
                 ? formItem.attrs(formData)
                 : formItem.attrs
@@ -667,7 +667,7 @@ export default {
       return new Promise((resolve, reject) => {
         if (this.computedRules) {
           // 当传递了验证规则
-          this.$refs['form'].validate((valid, invalidFields) => {
+          this.$refs.form.validate((valid, invalidFields) => {
             if (valid) {
               // 验证通过
               resolve()
@@ -748,7 +748,7 @@ export default {
       try {
         await this.validate()
         // 为了不影响原值, 这里进行 clone
-        let data = cloneDeep(this.formData)
+        const data = cloneDeep(this.formData)
         // valueFormatter的处理
         for (const field in data) {
           const formItem = this.formDesc[field]
