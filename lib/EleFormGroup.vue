@@ -105,7 +105,7 @@ export default {
   },
   methods: {
     getValue(val, index) {
-      if (this.$refs['ele-form']) {
+      if (this.$refs['ele-form'] && this.$refs['ele-form'][0]) {
         return this.$refs['ele-form'][0].getValue(val)
       }
     },
