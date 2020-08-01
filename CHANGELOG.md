@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.27](https://github.com/dream2023/vue-ele-form/compare/v0.8.26...v0.8.27) (2020-08-01)
+
+
+### Bug Fixes
+
+* 删除深度formDesc ([e715047](https://github.com/dream2023/vue-ele-form/commit/e715047737ab2ebbd7058dbc82d4f3ecf2f59d57))
+* 删除深度formDesc ([2e82384](https://github.com/dream2023/vue-ele-form/commit/2e823847fec7660db9fac677f5b72b4c5effbcdc))
+* 修复 options BUG ([fe2ca30](https://github.com/dream2023/vue-ele-form/commit/fe2ca30033c991ba62aa4921a18dd37261eb60bf))
+* 修复扩展组件相关BUG ([ae5e035](https://github.com/dream2023/vue-ele-form/commit/ae5e03556b88ebe987fb4dea1465350068fa28f3))
+* 修复options相关BUG ([91ee013](https://github.com/dream2023/vue-ele-form/commit/91ee0136ad410e594cf3657929c4a949a14c2caa))
+* 修改默认值BUG ([40fa19e](https://github.com/dream2023/vue-ele-form/commit/40fa19ec860f4796490a40e775ac141936591b06))
+
 ### [0.8.26](https://github.com/dream2023/vue-ele-form/compare/v0.8.25...v0.8.26) (2020-07-16)
 
 
