@@ -48,5 +48,10 @@
   // 格式化
   "[javascript]": {
     "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "workbench.colorCustomizations": {
+    "activityBar.background": "#5E0137",
+    "titleBar.activeBackground": "#84024D",
+    "titleBar.activeForeground": "#FFFBFD"
   }
 }
