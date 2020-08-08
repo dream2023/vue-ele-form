@@ -233,7 +233,12 @@ export default {
       default: false
     },
     // options 的请求方法
-    optionsFn: Function
+    optionsFn: Function,
+    // 是否显示错误后的 notify
+    isShowErrorNotify: {
+      type: Boolean,
+      default: true
+    }
   },
   data() {
     return {
@@ -710,6 +715,7 @@ export default {
 
     // 处理错误
     processError(errObj) {
+      if (!this.isShowErrorNotify) return
       try {
         const messageArr = Object.keys(errObj).reduce((acc, key) => {
           const formItem = this.formDesc[key]
@@ -743,11 +749,7 @@ export default {
         })
         this.$notify.error({
           title: t('ele-form.formError'),
-          message: h(
-            'div',
-            { style: { minWidth: '300px', marginTop: '12px' } },
-            messageArr
-          )
+          message: h('div', { style: { marginTop: '12px' } }, messageArr)
         })
       }
     },
