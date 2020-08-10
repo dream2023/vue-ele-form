@@ -25,6 +25,7 @@
       :visible="visible"
       v-bind="$attrs"
       v-on="$listeners"
+      :order="order"
     >
       <!-- 默认插槽 -->
       <template v-slot:default>
@@ -126,6 +127,12 @@ export default {
     formDesc: {
       type: Object,
       required: true
+    },
+    // 表单项顺序数组
+    // 数组项为formDesc中的key
+    order: {
+      type: Array,
+      default: () => []
     }
     // ... 其它属性同 vue-ele-form 组件
   },
