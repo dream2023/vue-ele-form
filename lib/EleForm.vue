@@ -279,7 +279,7 @@ export default {
             'native-type': 'submit'
           },
           text: this.computedSubmitBtnText,
-          click() {}
+          click() { }
         })
       }
 
@@ -623,13 +623,13 @@ export default {
           if (
             (this.formDesc[field]._optionsIsPromise &&
               !this.isReloadOptions(field)) ||
-            this.isLoadingOptions
+            this.formDesc[field]._isLoadingOptions
           ) {
             return
           }
           const res = options(this.formData)
           if (res instanceof Promise) {
-            this.isLoadingOptions = true
+            this.formDesc[field]._isLoadingOptions = true
             this.formDesc[field]._optionsIsPromise = true
           }
           // 当options为函数: 执行函数并递归
@@ -651,8 +651,8 @@ export default {
             // 其他报错
             throw new TypeError(
               'options的类型不正确, options及options请求结果类型可为: 字符串数组, 对象数组, 函数和Promise或者URL地址, 当前值为: ' +
-                options +
-                ', 不属于以上四种类型, 具体请参考: https://www.yuque.com/chaojie-vjiel/vbwzgu/rgenav'
+              options +
+              ', 不属于以上四种类型, 具体请参考: https://www.yuque.com/chaojie-vjiel/vbwzgu/rgenav'
             )
           }
         }
@@ -737,7 +737,7 @@ export default {
         }, [])
         this.showError(messageArr)
         // eslint-disable-next-line
-      } catch {}
+      } catch { }
     },
 
     // 显示错误
@@ -791,7 +791,7 @@ export default {
                   this.innerFormError = msg
                 }
                 // eslint-disable-next-line
-              } catch {}
+              } catch { }
             } else if (error instanceof Object) {
               // 返回的是对象类型, 则直接设置
               this.innerFormError = error
