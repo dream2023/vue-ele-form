@@ -8,6 +8,7 @@
         :request-fn="handleSubmit"
         :rules="rules"
         @request-success="handleSuccess"
+        :order="order"
       ></ele-form>
     </el-card>
   </div>
@@ -23,6 +24,14 @@ export default {
     return {
       // 表单数据
       formData: {},
+      // 根据formDesc key定义表单项排序，支持部分和全部排序。
+      order: [
+        'title',
+        'content',
+        'type',
+        'category',
+        'label'
+      ],
       formDesc: {
         title: {
           type: 'input',
