@@ -18,12 +18,12 @@
           <el-row :gutter="20">
             <slot
               :formData="formData"
-              :formDesc="formDesc"
+              :formDesc="orderedFormDesc"
               :formErrorObj="formErrorObj"
               :props="$props"
               name="form-content"
             >
-              <template v-for="(formItem, field) of formDesc">
+              <template v-for="(formItem, field) of orderedFormDesc">
                 <slot
                   :name="field + '-wrapper'"
                   :data="formData[field]"
@@ -113,7 +113,6 @@ import { throttle } from 'throttle-debounce'
 import localeMixin from 'element-ui/src/mixins/locale'
 import { t } from './locale'
 import { loadMockJs } from './tools/mock'
-// import { equal } from './tools/set'
 const isNumber = require('is-number')
 const cloneDeep = require('lodash.clonedeep')
 
@@ -234,6 +233,12 @@ export default {
     },
     // options 的请求方法
     optionsFn: Function,
+    // 表单项顺序数组
+    // 数组项为formDesc中的key
+    order: {
+      type: Array,
+      default: () => []
+    },
     // 是否显示错误后的 notify
     isShowErrorNotify: {
       type: Boolean,
@@ -395,6 +400,30 @@ export default {
     // formDesc的key
     formDescKeys() {
       return Object.keys(this.formDesc)
+    },
+    // 通过order数组排序后的formDesc
+    orderedFormDesc() {
+      if (this.order && this.order.length > 0) {
+        const orderedFormDesc = {}
+        // 根据order遍历，先添加到orderedFormDesc的key在之后遍历的时候，会先遍历，从而实现排序的目的。
+        this.order.forEach(field => {
+          if (this.formDesc[field]) {
+            orderedFormDesc[field] = this.formDesc[field]
+          } else {
+            throw new Error('order中定义的key在formDesc中不存在')
+          }
+        })
+        // 如果key不在order数组的时候，按照原序添加到orderedFormDesc
+        Object.keys(this.formDesc).forEach(field => {
+          // 当key不在order数组的时候
+          if (!orderedFormDesc[field]) {
+            orderedFormDesc[field] = this.formDesc[field]
+          }
+        })
+        return orderedFormDesc
+      } else {
+        return this.formDesc
+      }
     }
   },
   watch: {
@@ -623,13 +652,13 @@ export default {
           if (
             (this.formDesc[field]._optionsIsPromise &&
               !this.isReloadOptions(field)) ||
-            this.formDesc[field]._isLoadingOptions
+            this.isLoadingOptions
           ) {
             return
           }
           const res = options(this.formData)
           if (res instanceof Promise) {
-            this.formDesc[field]._isLoadingOptions = true
+            this.isLoadingOptions = true
             this.formDesc[field]._optionsIsPromise = true
           }
           // 当options为函数: 执行函数并递归
