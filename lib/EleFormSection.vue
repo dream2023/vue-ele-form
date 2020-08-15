@@ -81,6 +81,7 @@
                           :is="formDesc[field]._type"
                           :options="formDesc[field]._options"
                           :ref="field"
+                          :formData="formData"
                           :readonly="props.readonly"
                           :field="field"
                           :value="getValue(field)"

@@ -34,6 +34,7 @@
                 :is="desc._type"
                 :options="desc._options"
                 :ref="field"
+                :formData="formData"
                 :readonly="props.readonly"
                 :field="field"
                 :value="getValue(field)"

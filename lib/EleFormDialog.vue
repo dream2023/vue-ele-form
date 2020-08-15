@@ -51,6 +51,7 @@
             :disabled="formItem._disabled"
             :desc="formItem"
             :is="formItem._type"
+            :formData="formData"
             :options="formItem._options"
             :ref="field"
             :readonly="props.readonly"

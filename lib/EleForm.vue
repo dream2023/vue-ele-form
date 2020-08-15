@@ -70,6 +70,7 @@
                           :options="formItem._options"
                           :ref="field"
                           :field="field"
+                          :formData="formData"
                           @input="setValue(field, $event)"
                           :value="formData[field]"
                         />
