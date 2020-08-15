@@ -60,7 +60,13 @@
                   >
                     <el-form-item
                       :error="formErrorObj ? formErrorObj[field] : null"
-                      :label="props.isShowLabel ? formDesc[field].label : null"
+                      :label-width="formDesc[field].labelWidth || null"
+                      :label="
+                        props.isShowLabel &&
+                        formDesc[field].isShowLabel !== false
+                          ? formDesc[field].label
+                          : null
+                      "
                       :prop="field"
                     >
                       <!-- 具名 作用域插槽(用于用户自定义显示) -->
