@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.30](https://github.com/dream2023/vue-ele-form/compare/v0.8.29...v0.8.30) (2020-08-15)
+
+
+### Features
+
+* 将 formData 传递到子组件上 ([3cc3d8e](https://github.com/dream2023/vue-ele-form/commit/3cc3d8e4ba19a899da44f21b509b96ebd95153dc))
+* 新增order属性用来设置表单项的排序 ([9a54a97](https://github.com/dream2023/vue-ele-form/commit/9a54a97a85ae15dd3172ac17392231c9d82f3881))
+
+
+### Bug Fixes
+
+* **#71:** 修复 section 下 isShowLabel 不起作用 ([31bad2f](https://github.com/dream2023/vue-ele-form/commit/31bad2f67bd69b19c4da7a172b541eef55f4361c)), closes [#71](https://github.com/dream2023/vue-ele-form/issues/71)
+
 ### [0.8.29](https://github.com/dream2023/vue-ele-form/compare/v0.8.28...v0.8.29) (2020-08-13)
 
 
