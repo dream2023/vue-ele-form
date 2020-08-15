@@ -4,6 +4,10 @@
 [![npm](https://img.shields.io/npm/v/vue-ele-form.svg)](https://www.npmjs.com/package/vue-ele-form)
 [![download](https://img.shields.io/npm/dt/vue-ele-form)](https://npmcharts.com/compare/vue-ele-form?minimal=true)
 
+## 交流群
+
+![交流群](https://i.loli.net/2020/02/07/MmY1u7f4wR3igcB.jpg)
+
 ## 说明
 
 vue-ele-form 是基于 [element-ui form](https://element.eleme.cn/#/zh-CN/component/form) 的二次封装, 主要特点:
@@ -39,12 +43,10 @@ vue-ele-form 是基于 [element-ui form](https://element.eleme.cn/#/zh-CN/compon
 
 项目地址: [https://github.com/dream2023/vue-ele-form-generator](https://github.com/dream2023/vue-ele-form-generator)
 
-可视化工具 vscode 插件:[https://github.com/dream2023/fgen-for-vscode](https://github.com/dream2023/fgen-for-vscode)
-
 ## 安装
 
 ```bash
-npm install vue-ele-form --save
+npm install vue-ele-form --save # yarn add vue-ele-form
 ```
 
 ## 使用
@@ -59,7 +61,7 @@ Vue.use(EleForm)
 
 | Project                                                                                          | Status                                                                                                                         | Description                                 |
 | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------- |
-| [vue-ele-form](https://github.com/dream2023/vue-ele-form)                                        | [![npm](https://img.shields.io/npm/v/vue-ele-form)](https://github.com/dream2023/vue-ele-form)                                 | 基于 ElementUI 的数据驱动表单             |
+| [vue-ele-form](https://github.com/dream2023/vue-ele-form)                                        | [![npm](https://img.shields.io/npm/v/vue-ele-form)](https://github.com/dream2023/vue-ele-form)                                 | 基于 ElementUI 的数据驱动表单               |
 | [vue-ele-form-generator](https://github.com/dream2023/vue-ele-form-generator)                    | [![npm](https://img.shields.io/npm/v/vue-ele-form-generator)](https://github.com/dream2023/vue-ele-form-generator)             | 专为 vue-ele-form 开发的可视化表单设计工具  |
 | [fgen-cli](https://github.com/dream2023/fgen-cli)                                                | [![npm](https://img.shields.io/npm/v/fgen-cli)](https://github.com/dream2023/fgen-cli)                                         | 本地启动 vue-ele-form-generator 的 cli 工具 |
 | [fgen-for-vscode](https://marketplace.visualstudio.com/items?itemName=dream2023.fgen-for-vscode) | ![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/dream2023.fgen-for-vscode)             | vue-ele-form-generator 的 vscode 扩展       |
@@ -111,18 +113,6 @@ Vue.use(EleForm)
 <!--platinum end-->
 
 > 如果您觉得对您有所帮助, 可以请作者喝一杯咖啡, 让开源走的更远, 点击进入[码云赞赏](https://gitee.com/dream2023/vue-ele-form-generator)一下, 并加入下面交流群, 将链接发送给我
-
-## 交流群
-
-![交流群](https://i.loli.net/2020/02/07/MmY1u7f4wR3igcB.jpg)
-
-## [开发规划](https://github.com/dream2023/vue-ele-form/projects/1)
-
-- 更多的扩展组件
-- 重写文档
-- 增加视频源码讲解
-- 增加单元测试 和 E2E 测试
-- 增加 iview 和 ant-design for vue 支持
 
 ## 贡献指北
 
