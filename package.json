@@ -1,7 +1,7 @@
 {
   "name": "vue-ele-form",
   "description": "基于 element-ui 的数据驱动表单组件",
-  "version": "0.8.30",
+  "version": "0.8.31",
   "license": "MIT",
   "private": false,
   "scripts": {
@@ -12,7 +12,7 @@
     "build": "npm run lint && npm run build:entry & npm run build:lib && npm run build:docs",
     "lint": "vue-cli-service --mode production lint lib/*",
     "release": "standard-version",
-    "pub": "npm run build:lib && npm run release &&  npm publish --registry https://registry.npmjs.org && git push --follow-tags origin master && gren release --override"
+    "pub": "npm run build:lib && npm run release &&  npm publish --registry https://registry.npmjs.org && git push --follow-tags origin master && git push  --follow-tags gitee master"
   },
   "repository": {
     "type": "git",

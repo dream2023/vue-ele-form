@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.31](https://github.com/dream2023/vue-ele-form/compare/v0.8.30...v0.8.31) (2020-08-17)
+
+
+### Bug Fixes
+
+* **#62:** 修复remote-method 搜索问题 ([0aa9cd4](https://github.com/dream2023/vue-ele-form/commit/0aa9cd4b2cc2bbf0ccac125d418e41088d2ad04d)), closes [#62](https://github.com/dream2023/vue-ele-form/issues/62)
+* **#76:** 多个异步options仅请求一个 ([90540a5](https://github.com/dream2023/vue-ele-form/commit/90540a503f7daa6d21893b258e4c23c6fc152135)), closes [#76](https://github.com/dream2023/vue-ele-form/issues/76)
+
 ### [0.8.30](https://github.com/dream2023/vue-ele-form/compare/v0.8.29...v0.8.30) (2020-08-15)
 
 
