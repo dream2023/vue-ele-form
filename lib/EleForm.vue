@@ -125,6 +125,11 @@ export default {
     prop: 'formData',
     event: 'input'
   },
+  provide() {
+    return {
+      EleForm: this
+    }
+  },
   props: {
     // 表单描述
     formDesc: {
