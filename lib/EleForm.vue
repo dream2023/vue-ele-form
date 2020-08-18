@@ -448,23 +448,7 @@ export default {
               desc[field].mock = true
             }
 
-            let defaultValue =
-              typeof desc[field].default === 'function'
-                ? desc[field].default(this.formData)
-                : desc[field].default
-            // 默认值不为空  & (值为空 || 老值和当前值)
-            if (!isEmpty(defaultValue) && isEmpty(this.formData[field])) {
-              // 判断是否有格式化函数
-              if (desc[field].displayFormatter) {
-                defaultValue = desc[field].displayFormatter(
-                  defaultValue,
-                  this.formData
-                )
-              }
-
-              this.handleChange(field, defaultValue)
-            }
-            this.$set(desc[field], '_defaultValue', defaultValue)
+            this.setDefaultvalue(desc[field], field)
 
             // 转换 tip, 内部属性不显示
             if (desc[field].tip) {
@@ -553,6 +537,8 @@ export default {
 
                 // 类型改变, 则删除原数据
                 this.handleChange(field, newVal)
+
+                this.setDefaultvalue(this.formDesc[field], field)
               }
             } else {
               type = this.getComponentName(formItem.type)
@@ -564,7 +550,7 @@ export default {
               vif = Boolean(formItem.vif(formData))
 
               if (!vif) {
-                // 如果隐藏, 则删除值
+                // 如果隐藏, 则使用其默认值
                 this.handleChange(field, formItem._defaultValue)
               }
             } else if (typeof formItem.vif === 'boolean') {
@@ -597,6 +583,23 @@ export default {
         })
         this.checkLinkageFn()
       }
+    },
+    // 设置默认值
+    setDefaultvalue(formItem, field) {
+      let defaultValue =
+        typeof formItem.default === 'function'
+          ? formItem.default(this.formData)
+          : formItem.default
+      // 默认值不为空  & (值为空 || 老值和当前值)
+      if (!isEmpty(defaultValue) && isEmpty(this.formData[field])) {
+        // 判断是否有格式化函数
+        if (formItem.displayFormatter) {
+          defaultValue = formItem.displayFormatter(defaultValue, this.formData)
+        }
+
+        this.handleChange(field, defaultValue)
+      }
+      this.$set(formItem, '_defaultValue', defaultValue)
     },
     // 组件名称
     getComponentName(type) {
