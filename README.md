@@ -107,6 +107,12 @@ Vue.use(EleForm)
           <div>xzusoft</div>
         </a>
       </td>
+      <td align="center" valign="middle">
+        <a href="https://gitee.com/ahiris_seeenter" target="_blank">
+          <img width="200px" src="https://portrait.gitee.com/uploads/avatars/user/751/2253945_ahiris_seeenter_1597720904.png!avatar200">
+          <div>seeenter</div>
+        </a>
+      </td>
     </tr><tr></tr>
   </tbody>
 </table>
