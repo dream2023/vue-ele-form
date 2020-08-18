@@ -671,7 +671,7 @@ export default {
           this.changeOptions(res, prop, field)
         } else if (options instanceof Promise) {
           options.then(options => {
-            this.isLoadingOptions = false
+            this.formDesc[field]._isLoadingOptions = false
             this.changeOptions(options, prop, field)
           })
         } else if (typeof options === 'string' && this.optionsFn) {
