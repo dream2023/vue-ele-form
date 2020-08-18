@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.32](https://github.com/dream2023/vue-ele-form/compare/v0.8.31...v0.8.32) (2020-08-18)
+
+
+### Bug Fixes
+
+* **#76:** optionsLinkageFields 失效问题 ([93b10da](https://github.com/dream2023/vue-ele-form/commit/93b10da9ccf7b5cc2eb025f5135e6c3b42dabd24)), closes [#76](https://github.com/dream2023/vue-ele-form/issues/76)
+* **#79:** 修复动态default不起作用 ([dc1c876](https://github.com/dream2023/vue-ele-form/commit/dc1c876e46f3e41ecd8854b19cffaf9f8c285842)), closes [#79](https://github.com/dream2023/vue-ele-form/issues/79)
+
 ### [0.8.31](https://github.com/dream2023/vue-ele-form/compare/v0.8.30...v0.8.31) (2020-08-17)
 
 
