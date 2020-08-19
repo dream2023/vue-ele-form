@@ -113,6 +113,12 @@ Vue.use(EleForm)
           <div>seeenter</div>
         </a>
       </td>
+      <td align="center" valign="middle">
+        <a href="" target="_blank">
+          <img width="200px" src="https://s1.ax1x.com/2020/08/19/d1XV9x.jpg">
+          <div>高亢</div>
+        </a>
+      </td>
     </tr><tr></tr>
   </tbody>
 </table>
