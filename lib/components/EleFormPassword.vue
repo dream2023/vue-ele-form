@@ -8,14 +8,8 @@
     v-on="onEvents"
   >
     <!-- 组件内部插槽 -->
-    <template
-      v-for="(render, key) of desc.slots"
-      v-slot:[key]
-    >
-      <extend-slot
-        :key="key"
-        :render="render"
-      />
+    <template v-for="(render, key) of desc.slots" v-slot:[key]>
+      <extend-slot :key="key" :render="render" />
     </template>
   </el-input>
 </template>
@@ -26,20 +20,20 @@ import formMixin from '../mixins/formMixin'
 export default {
   name: 'EleFormPassword',
   mixins: [formMixin],
-  data () {
+  data() {
     return {
       mockRule: '@id',
       type: ['Number', 'String']
     }
   },
   computed: {
-    defaultAttrs () {
+    defaultAttrs() {
       return {
-        fetchSuggestions (s, cb) {
+        fetchSuggestions(s, cb) {
           const res = []
           cb(res)
         },
-        placeholder: this.t('ele-form.input') + this.desc.label
+        placeholder: this.t('ele-form.input') + this.desc._label
       }
     }
   }

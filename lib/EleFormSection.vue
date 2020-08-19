@@ -64,7 +64,7 @@
                       :label="
                         props.isShowLabel &&
                         formDesc[field].isShowLabel !== false
-                          ? formDesc[field].label
+                          ? formDesc[field]._label
                           : null
                       "
                       :prop="field"

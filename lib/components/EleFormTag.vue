@@ -37,7 +37,7 @@ export default {
   computed: {
     defaultAttrs() {
       return {
-        placeholder: this.t('ele-form.input') + this.desc.label
+        placeholder: this.t('ele-form.input') + this.desc._label
       }
     }
   },

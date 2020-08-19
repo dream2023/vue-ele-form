@@ -20,28 +20,27 @@
 </template>
 
 <script>
-
 import formMixin from '../mixins/formMixin'
 export default {
   name: 'EleFormAutocomplete',
   mixins: [formMixin],
-  data () {
+  data() {
     return {
       type: ['String'],
       mockRule: '@string'
     }
   },
   computed: {
-    defaultAttrs () {
+    defaultAttrs() {
       return {
-        fetchSuggestions (s, cb) {
+        fetchSuggestions(s, cb) {
           const res = []
           cb(res)
         },
-        placeholder: this.t('ele-form.input') + this.desc.label
+        placeholder: this.t('ele-form.input') + this.desc._label
       }
     },
-    slots () {
+    slots() {
       return this.desc && this.desc.slots ? this.desc.slots : {}
     }
   }

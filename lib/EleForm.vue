@@ -44,7 +44,7 @@
                       :error="formErrorObj ? formErrorObj[field] : null"
                       :label="
                         isShowLabel && formItem.isShowLabel !== false
-                          ? formItem.label
+                          ? formItem._label
                           : null
                       "
                       :label-width="formItem.labelWidth || null"
@@ -397,7 +397,7 @@ export default {
         ) {
           rules[field].push({
             required: true,
-            message: this.formDesc[field].label + t('ele-form.required')
+            message: this.formDesc[field]._label + t('ele-form.required')
           })
         }
         return rules
@@ -565,15 +565,23 @@ export default {
               disabled = formItem.disabled
             }
 
+            // 4.动态属性
             const attrs =
               typeof formItem.attrs === 'function'
                 ? formItem.attrs(formData)
                 : formItem.attrs
 
+            // 5.动态 label
+            const label =
+              typeof formItem.label === 'function'
+                ? formItem.label(formData)
+                : formItem.label
+
             this.$set(formItem, '_type', type)
             this.$set(formItem, '_vif', vif)
             this.$set(formItem, '_disabled', disabled)
             this.$set(formItem, '_attrs', attrs)
+            this.$set(formItem, '_label', label)
 
             // 4.重新获取 options
             if (formItem._vif && typeof formItem.options === 'function') {
@@ -758,7 +766,7 @@ export default {
         const messageArr = Object.keys(errObj).reduce((acc, key) => {
           const formItem = this.formDesc[key]
           const label =
-            formItem && formItem.label ? formItem.label + ': ' : key + ': '
+            formItem && formItem._label ? formItem._label + ': ' : key + ': '
           if (errObj[key] instanceof Array) {
             // errorObj: { name: [ { filed: 'name',  message: 'name is required' }] }
             // 内部校检结果返回的错误信息样式

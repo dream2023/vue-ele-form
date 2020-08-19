@@ -8,14 +8,8 @@
     v-on="onEvents"
   >
     <!-- 组件内部插槽 -->
-    <template
-      v-for="(render, key) of desc.slots"
-      v-slot:[key]
-    >
-      <extend-slot
-        :key="key"
-        :render="render"
-      />
+    <template v-for="(render, key) of desc.slots" v-slot:[key]>
+      <extend-slot :key="key" :render="render" />
     </template>
   </el-input>
 </template>
@@ -26,17 +20,17 @@ import formMixin from '../mixins/formMixin'
 export default {
   name: 'EleFormTextarea',
   mixins: [formMixin],
-  data () {
+  data() {
     return {
       mockRule: '@cparagraph',
       type: ['String', 'Number']
     }
   },
   computed: {
-    defaultAttrs () {
+    defaultAttrs() {
       return {
         autosize: { minRows: 6 },
-        placeholder: this.t('ele-form.input') + this.desc.label
+        placeholder: this.t('ele-form.input') + this.desc._label
       }
     }
   }

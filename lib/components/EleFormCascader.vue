@@ -34,7 +34,7 @@ export default {
   computed: {
     defaultAttrs() {
       return {
-        placeholder: this.t('ele-form.select') + this.desc.label,
+        placeholder: this.t('ele-form.select') + this.desc._label,
         props: {
           value: 'value',
           label: 'label',
