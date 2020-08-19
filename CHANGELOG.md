@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.33](https://github.com/dream2023/vue-ele-form/compare/v0.8.32...v0.8.33) (2020-08-19)
+
+
+### Features
+
+* label 支持动态 ([86751d9](https://github.com/dream2023/vue-ele-form/commit/86751d926980a6e08ae26854c512bb2ebd03c33d))
+
 ### [0.8.32](https://github.com/dream2023/vue-ele-form/compare/v0.8.31...v0.8.32) (2020-08-18)
 
 
