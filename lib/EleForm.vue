@@ -489,6 +489,9 @@ export default {
       if (obj) {
         this.processError(obj)
       }
+    },
+    formData() {
+      this.checkLinkage()
     }
   },
   methods: {
