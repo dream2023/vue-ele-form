@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.34](https://github.com/dream2023/vue-ele-form/compare/v0.8.33...v0.8.34) (2020-08-21)
+
+
+### Bug Fixes
+
+* **#81:** 当formData变化时触发联动 ([d3cb63d](https://github.com/dream2023/vue-ele-form/commit/d3cb63d0449cbc257cf9758de161e7d822097cc6)), closes [#81](https://github.com/dream2023/vue-ele-form/issues/81)
+
 ### [0.8.33](https://github.com/dream2023/vue-ele-form/compare/v0.8.32...v0.8.33) (2020-08-19)
 
 
