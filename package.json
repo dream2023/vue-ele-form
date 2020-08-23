@@ -54,7 +54,6 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.0",
     "eslint-plugin-vue": "^6.2.2",
-    "github-release-notes": "^0.17.3",
     "husky": "^3.1.0",
     "json-templater": "^1.2.0",
     "lint-staged": "^9.5.0",
