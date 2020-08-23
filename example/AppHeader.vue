@@ -8,24 +8,28 @@
           style="font-size: 20px"
           target="_blank"
           type="primary"
-        >VUE-ELE-FORM</el-link>
+          >VUE-ELE-FORM</el-link
+        >
       </div>
       <div>
         <el-link
-          href="https://github.com/dream2023/vue-ele-form-generator/"
+          href="https://github.com/dream2023/f-render/"
           target="_blank"
           type="primary"
-        >代码生成器</el-link>&nbsp;&nbsp;
+          >代码生成器</el-link
+        >&nbsp;&nbsp;
         <el-link
           href="https://github.com/dream2023/vue-ele-form"
           target="_blank"
           type="primary"
-        >GitHub</el-link>&nbsp;&nbsp;
+          >GitHub</el-link
+        >&nbsp;&nbsp;
         <el-link
           href="https://www.yuque.com/chaojie-vjiel/vbwzgu"
           target="_blank"
           type="primary"
-        >文档</el-link>
+          >文档</el-link
+        >
       </div>
     </div>
   </div>

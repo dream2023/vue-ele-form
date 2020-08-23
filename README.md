@@ -14,7 +14,7 @@ vue-ele-form 是基于 [element-ui form](https://element.eleme.cn/#/zh-CN/compon
 
 - 内置 20 多种[表单类型](https://www.yuque.com/chaojie-vjiel/vbwzgu/kz163g), 包括选`单选`、`多选`、`标签`、`级联选择器`等;
 - 拥有`上传图片增强`, `上传视频增强`, `上传文件增强`,`树形下拉选择框`, `富文本`，`表格编辑器`, `动态表单`, `markdown`, `地图`, `代码编辑器`, `json 编辑器`等丰富的[第三方扩展](https://www.yuque.com/chaojie-vjiel/vbwzgu/inlpxy)，满足你的更多需求;
-- 配备[可视化生成表单工具](https://github.com/dream2023/vue-ele-form-generator);
+- 配备[可视化生成表单工具](https://github.com/dream2023/f-render);
 - 内置[表单校检](https://www.yuque.com/chaojie-vjiel/vbwzgu/dyw8a7#GLim1);
 - [表单布局](https://www.yuque.com/chaojie-vjiel/vbwzgu/iw5dzf#uuQkg) 和 [响应式表单](https://www.yuque.com/chaojie-vjiel/vbwzgu/yadlgw);
 - [表单分组](https://www.yuque.com/chaojie-vjiel/vbwzgu/ue72yy);
@@ -39,9 +39,9 @@ vue-ele-form 是基于 [element-ui form](https://element.eleme.cn/#/zh-CN/compon
 
 ## 可视化生成表单
 
-[![可视化生成表单演示图](https://s1.ax1x.com/2020/03/17/8UJqhT.gif)](https://dream2023.gitee.io/vue-ele-form-generator/)
+[![f-render 演示图](https://s1.ax1x.com/2020/08/23/d0T976.gif)](https://dream2023.gitee.io/f-render/)
 
-项目地址: [https://github.com/dream2023/vue-ele-form-generator](https://github.com/dream2023/vue-ele-form-generator)
+项目地址: [https://github.com/dream2023/f-render](https://github.com/dream2023/f-render)
 
 ## 安装
 
@@ -59,24 +59,25 @@ Vue.use(EleForm)
 
 ## 生态
 
-| Project                                                                                          | Status                                                                                                                         | Description                                 |
-| ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------- |
-| [vue-ele-form](https://github.com/dream2023/vue-ele-form)                                        | [![npm](https://img.shields.io/npm/v/vue-ele-form)](https://github.com/dream2023/vue-ele-form)                                 | 基于 ElementUI 的数据驱动表单               |
-| [vue-ele-form-generator](https://github.com/dream2023/vue-ele-form-generator)                    | [![npm](https://img.shields.io/npm/v/vue-ele-form-generator)](https://github.com/dream2023/vue-ele-form-generator)             | 专为 vue-ele-form 开发的可视化表单设计工具  |
-| [fgen-cli](https://github.com/dream2023/fgen-cli)                                                | [![npm](https://img.shields.io/npm/v/fgen-cli)](https://github.com/dream2023/fgen-cli)                                         | 本地启动 vue-ele-form-generator 的 cli 工具 |
-| [fgen-for-vscode](https://marketplace.visualstudio.com/items?itemName=dream2023.fgen-for-vscode) | ![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/dream2023.fgen-for-vscode)             | vue-ele-form-generator 的 vscode 扩展       |
-| [vue-ele-form-json-editor](https://github.com/dream2023/vue-ele-form-json-editor)                | [![npm](https://img.shields.io/npm/v/vue-ele-form-json-editor)](https://github.com/dream2023/vue-ele-form-json-editor)         | JSON 编辑器(vue-ele-form 扩展)              |
-| [vue-ele-form-upload-file](https://github.com/dream2023/vue-ele-form-upload-file)                | [![npm](https://img.shields.io/npm/v/vue-ele-form-upload-file)](https://github.com/dream2023/vue-ele-form-upload-file)         | upload 文件上传组件(vue-ele-form 扩展)      |
-| [vue-ele-form-image-uploader](https://github.com/dream2023/vue-ele-form-image-uploader)          | [![npm](https://img.shields.io/npm/v/vue-ele-form-image-uploader)](https://github.com/dream2023/vue-ele-form-image-uploader)   | 上传图片增强组件(vue-ele-form 扩展)         |
-| [vue-ele-form-tree-select](https://github.com/dream2023/vue-ele-form-tree-select)                | [![npm](https://img.shields.io/npm/v/vue-ele-form-tree-select)](https://github.com/dream2023/vue-ele-form-tree-select)         | 树形选择框组件(vue-ele-form 扩展)           |
-| [vue-ele-form-table-editor](https://github.com/dream2023/vue-ele-form-table-editor)              | [![npm](https://img.shields.io/npm/v/vue-ele-form-table-editor)](https://github.com/dream2023/vue-ele-form-table-editor)       | 表格编辑器(vue-ele-form 扩展)               |
-| [vue-ele-form-dynamic](https://github.com/dream2023/vue-ele-form-dynamic)                        | [![npm](https://img.shields.io/npm/v/vue-ele-form-dynamic)](https://github.com/dream2023/vue-ele-form-dynamic)                 | 动态表单(vue-ele-form 扩展)                 |
-| [vue-ele-form-video-uploader](https://github.com/dream2023/vue-ele-form-video-uploader)          | [![npm](https://img.shields.io/npm/v/vue-ele-form-video-uploader)](https://github.com/dream2023/vue-ele-form-video-uploader)   | 上传视频增强组件(vue-ele-form 扩展)         |
-| [vue-ele-form-quill-editor](https://github.com/dream2023/vue-ele-form-quill-editor)              | [![npm](https://img.shields.io/npm/v/vue-ele-form-quill-editor)](https://github.com/dream2023/vue-ele-form-quill-editor)       | 富文本编辑器(vue-ele-form 扩展)             |
-| [vue-ele-form-markdown-editor](https://github.com/dream2023/vue-ele-form-markdown-editor)        | [![npm](https://img.shields.io/npm/v/vue-ele-form-markdown-editor)](https://github.com/dream2023/vue-ele-form-markdown-editor) | markdown 编辑器(vue-ele-form 扩展)          |
-| [vue-ele-form-bmap](https://github.com/dream2023/vue-ele-form-bmap)                              | [![npm](https://img.shields.io/npm/v/vue-ele-form-bmap)](https://github.com/dream2023/vue-ele-form-bmap)                       | 百度地图组件(vue-ele-form 扩展)             |
-| [vue-ele-form-codemirror](https://github.com/dream2023/vue-ele-form-codemirror)                  | [![npm](https://img.shields.io/npm/v/vue-ele-form-codemirror)](https://github.com/dream2023/vue-ele-form-codemirror)           | 代码编辑器(vue-ele-form-gallery 扩展)       |
-| [vue-ele-form-gallery](https://github.com/dream2023/vue-ele-form-gallery)                        | [![npm](https://img.shields.io/npm/v/vue-ele-form-gallery)](https://github.com/dream2023/vue-ele-form-gallery)                 | 图片/视频展示组件(vue-ele-form 扩展)        |
+## 生态
+
+| Project                                                                                   | Status                                                                                                                         | Description                                |
+| ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------ |
+| [vue-ele-form](https://github.com/dream2023/vue-ele-form)                                 | [![npm](https://img.shields.io/npm/v/vue-ele-form)](https://github.com/dream2023/vue-ele-form)                                 | 接基于 ElementUI 的数据驱动表单            |
+| [f-render](https://github.com/dream2023/f-render)                                         | [![npm](https://img.shields.io/npm/v/f-render)](https://github.com/dream2023/f-render)                                         | 专为 vue-ele-form 开发的可视化表单设计工具 |
+| [vue-ele-form-json-editor](https://github.com/dream2023/vue-ele-form-json-editor)         | [![npm](https://img.shields.io/npm/v/vue-ele-form-json-editor)](https://github.com/dream2023/vue-ele-form-json-editor)         | JSON 编辑器(vue-ele-form 扩展)             |
+| [vue-ele-form-upload-file](https://github.com/dream2023/vue-ele-form-upload-file)         | [![npm](https://img.shields.io/npm/v/vue-ele-form-upload-file)](https://github.com/dream2023/vue-ele-form-upload-file)         | upload 文件上传组件(vue-ele-form 扩展)     |
+| [vue-ele-form-image-uploader](https://github.com/dream2023/vue-ele-form-image-uploader)   | [![npm](https://img.shields.io/npm/v/vue-ele-form-image-uploader)](https://github.com/dream2023/vue-ele-form-image-uploader)   | 上传图片增强组件(vue-ele-form 扩展)        |
+| [vue-ele-form-tree-select](https://github.com/dream2023/vue-ele-form-tree-select)         | [![npm](https://img.shields.io/npm/v/vue-ele-form-tree-select)](https://github.com/dream2023/vue-ele-form-tree-select)         | 树形选择框组件(vue-ele-form 扩展)          |
+| [vue-ele-form-table-editor](https://github.com/dream2023/vue-ele-form-table-editor)       | [![npm](https://img.shields.io/npm/v/vue-ele-form-table-editor)](https://github.com/dream2023/vue-ele-form-table-editor)       | 表格编辑器(vue-ele-form 扩展)              |
+| [vue-ele-form-dynamic](https://github.com/dream2023/vue-ele-form-dynamic)                 | [![npm](https://img.shields.io/npm/v/vue-ele-form-dynamic)](https://github.com/dream2023/vue-ele-form-dynamic)                 | 动态表单(vue-ele-form 扩展)                |
+| [vue-ele-form-video-uploader](https://github.com/dream2023/vue-ele-form-video-uploader)   | [![npm](https://img.shields.io/npm/v/vue-ele-form-video-uploader)](https://github.com/dream2023/vue-ele-form-video-uploader)   | 上传视频增强组件(vue-ele-form 扩展)        |
+| [vue-ele-form-quill-editor](https://github.com/dream2023/vue-ele-form-quill-editor)       | [![npm](https://img.shields.io/npm/v/vue-ele-form-quill-editor)](https://github.com/dream2023/vue-ele-form-quill-editor)       | 富文本编辑器(vue-ele-form 扩展)            |
+| [vue-ele-form-markdown-editor](https://github.com/dream2023/vue-ele-form-markdown-editor) | [![npm](https://img.shields.io/npm/v/vue-ele-form-markdown-editor)](https://github.com/dream2023/vue-ele-form-markdown-editor) | markdown 编辑器(vue-ele-form 扩展)         |
+| [vue-ele-form-bmap](https://github.com/dream2023/vue-ele-form-bmap)                       | [![npm](https://img.shields.io/npm/v/vue-ele-form-bmap)](https://github.com/dream2023/vue-ele-form-bmap)                       | 百度地图组件(vue-ele-form 扩展)            |
+| [vue-ele-form-codemirror](https://github.com/dream2023/vue-ele-form-codemirror)           | [![npm](https://img.shields.io/npm/v/vue-ele-form-codemirror)](https://github.com/dream2023/vue-ele-form-codemirror)           | 代码编辑器(vue-ele-form-gallery 扩展)      |
+| [vue-ele-form-gallery](https://github.com/dream2023/vue-ele-form-gallery)                 | [![npm](https://img.shields.io/npm/v/vue-ele-form-gallery)](https://github.com/dream2023/vue-ele-form-gallery)                 | 图片/视频展示组件(vue-ele-form 扩展)       |
+| [vue-ele-form-data-editor](https://github.com/dream2023/vue-ele-form-data-editor)         | [![npm](https://img.shields.io/npm/v/vue-ele-form-data-editor)](https://github.com/dream2023/vue-ele-form-data-editor)         | 轻量级数据编辑器(vue-ele-form 扩展)        |
 
 <h2 align="center">特别感谢赞助者</h2>
 <!--platinum start-->
@@ -124,7 +125,7 @@ Vue.use(EleForm)
 </table>
 <!--platinum end-->
 
-> 如果您觉得对您有所帮助, 可以请作者喝一杯咖啡, 让开源走的更远, 点击进入[码云赞赏](https://gitee.com/dream2023/vue-ele-form-generator)一下, 并加入下面交流群, 将链接发送给我
+> 如果您觉得对您有所帮助, 可以请作者喝一杯咖啡, 让开源走的更远, 点击进入[码云赞赏](https://gitee.com/dream2023/f-render)一下, 并加入下面交流群, 将链接发送给我
 
 ## 贡献指北
 
