@@ -84,7 +84,7 @@
 </template>
 
 <script>
-const cloneDeep = require('lodash.clonedeep')
+const cloneDeep = require('clone')
 
 export default {
   inheritAttrs: false,

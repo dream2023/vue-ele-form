@@ -30,9 +30,9 @@
   ],
   "types": "./types/index.d.ts",
   "dependencies": {
+    "clone": "^2.1.2",
     "dayjs": "^1.8.31",
     "is-number": "^7.0.0",
-    "lodash.clonedeep": "^4.5.0",
     "throttle-debounce": "^2.2.1"
   },
   "devDependencies": {

@@ -115,7 +115,7 @@ import localeMixin from 'element-ui/src/mixins/locale'
 import { t } from './locale'
 import { loadMockJs } from './tools/mock'
 const isNumber = require('is-number')
-const cloneDeep = require('lodash.clonedeep')
+const cloneDeep = require('clone')
 
 export default {
   name: 'EleForm',
