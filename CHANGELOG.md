@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.36](https://github.com/dream2023/vue-ele-form/compare/v0.8.35...v0.8.36) (2020-08-27)
+
+
+### Features
+
+* 当为函数时将formDesc也做为参数 ([8abf278](https://github.com/dream2023/vue-ele-form/commit/8abf278e3c4a1856c1b99bdc9f8aca1a029dd76a))
+
 ### [0.8.35](https://github.com/dream2023/vue-ele-form/compare/v0.8.34...v0.8.35) (2020-08-25)
 
 
