@@ -517,6 +517,10 @@ export default {
         this.$refs[field][0].mockData()
       })
     },
+    // 当类型为函数时的请求
+    getFunctionAttr(fn, field) {
+      return fn(this.formData, this.formDesc[field], this.formDesc)
+    },
     // 检测联动
     checkLinkage() {
       if (this.checkVifFn) {
@@ -530,7 +534,9 @@ export default {
             // 1.设置 type
             let type = formItem.type
             if (typeof formItem.type === 'function') {
-              type = this.getComponentName(formItem.type(formData))
+              type = this.getComponentName(
+                this.getFunctionAttr(formItem.type, field)
+              )
               if (formItem._type && formItem._type !== type) {
                 // 获取此类型的以前值
                 const newVal = formItem._oldValue['type-' + type] || null
@@ -550,7 +556,7 @@ export default {
             // 2.触发 v-if 显示 / 隐藏
             let vif = true
             if (typeof formItem.vif === 'function') {
-              vif = Boolean(formItem.vif(formData))
+              vif = Boolean(this.getFunctionAttr(formItem.vif, field))
 
               if (!vif) {
                 // 如果隐藏, 则使用其默认值
@@ -563,7 +569,7 @@ export default {
             // 3.触发 disabled 禁用 / 启用
             let disabled = null
             if (typeof formItem.disabled === 'function') {
-              disabled = formItem.disabled(formData)
+              disabled = this.getFunctionAttr(formItem.disabled, field)
             } else if (typeof formItem.disabled === 'boolean') {
               disabled = formItem.disabled
             }
@@ -571,13 +577,13 @@ export default {
             // 4.动态属性
             const attrs =
               typeof formItem.attrs === 'function'
-                ? formItem.attrs(formData)
+                ? this.getFunctionAttr(formItem.attrs, field)
                 : formItem.attrs
 
             // 5.动态 label
             const label =
               typeof formItem.label === 'function'
-                ? formItem.label(formData)
+                ? this.getFunctionAttr(formItem.label, field)
                 : formItem.label
 
             this.$set(formItem, '_type', type)
@@ -676,7 +682,7 @@ export default {
           ) {
             return
           }
-          const res = options(this.formData)
+          const res = this.getFunctionAttr(options, field)
           if (res instanceof Promise) {
             this.formDesc[field]._isLoadingOptions = true
             this.formDesc[field]._optionsIsPromise = true
