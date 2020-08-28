@@ -468,7 +468,7 @@ export default {
             }
 
             // 设置 options
-            this.changeOptions(desc[field].options, desc[field].prop, field)
+            this.changeOptions(desc[field].options, field)
           })
 
           // 检查联动
@@ -600,7 +600,7 @@ export default {
 
             // 4.重新获取 options
             if (formItem._vif && typeof formItem.options === 'function') {
-              this.changeOptions(formItem.options, formItem._prop, field, true)
+              this.changeOptions(formItem.options, field)
             }
 
             this.hidePrivateAttr(formItem)
@@ -689,11 +689,11 @@ export default {
       )
     },
     // 将四种类型: 字符串数组, 对象数组, Promise对象和函数统一为 对象数组
-    changeOptions(options, prop, field) {
+    changeOptions(options, field) {
       if (options) {
         if (options instanceof Array) {
           // 当options为数组时: 直接获取
-          this.setOptions(options, prop, field)
+          this.setOptions(options, field)
         } else if (options instanceof Function) {
           // 当options为Promise时: 等待Promise结束, 并获取值
           if (
@@ -709,15 +709,15 @@ export default {
             this.formDesc[field]._optionsIsPromise = true
           }
           // 当options为函数: 执行函数并递归
-          this.changeOptions(res, prop, field)
+          this.changeOptions(res, field)
         } else if (options instanceof Promise) {
           options.then(options => {
             this.formDesc[field]._isLoadingOptions = false
-            this.changeOptions(options, prop, field)
+            this.changeOptions(options, field)
           })
         } else if (typeof options === 'string' && this.optionsFn) {
           // options为url地址
-          this.changeOptions(this.optionsFn(options), prop, field)
+          this.changeOptions(this.optionsFn(options), field)
         } else {
           if (typeof options === 'string') {
             throw new TypeError(
@@ -735,12 +735,13 @@ export default {
       } else {
         if (this.formDesc[field]._options) {
           // 如果new options为null / undefined, 且 old Options 存在, 则设置
-          this.setOptions([], prop, field)
+          this.setOptions([], field)
         }
       }
     },
     // 设置options
-    setOptions(options, prop, field) {
+    setOptions(options, field) {
+      const prop = this.formDesc[field]._prop
       // 将options每一项转为对象
       let newOptions = this.getObjArrOptions(options)
       const oldOptionsValues = (this.formDesc[field]._options || [])
@@ -752,7 +753,7 @@ export default {
       this.$set(this.formDesc[field], '_options', newOptions)
 
       // 新 options 和老 options 不同时，触发值的改变
-      if (oldOptionsValues && newOptionsValues !== oldOptionsValues) {
+      if (oldOptionsValues && (newOptionsValues !== oldOptionsValues)) {
         this.setValue(field, null)
       }
     },
