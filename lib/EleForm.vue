@@ -457,10 +457,6 @@ export default {
                 '<code>$1</code>'
               )
             }
-            // 关联属性
-            desc[field]._optionsLinkageFields = castArray(
-              desc[field].optionsLinkageFields
-            )
 
             // layout值, 内部属性不显示
             desc[field]._colAttrs = this.getColAttrs(desc[field].layout)
@@ -471,7 +467,7 @@ export default {
               desc[field]._oldValue = {}
             }
 
-            // // 设置 options
+            // 设置 options
             this.changeOptions(desc[field].options, desc[field].prop, field)
           })
 
@@ -520,6 +516,12 @@ export default {
     // 当类型为函数时的请求
     getFunctionAttr(fn, field) {
       return fn(this.formData, this.formDesc[field], this.formDesc)
+    },
+    // 获取动态属性
+    getDynamicAttr(attr, field) {
+      return typeof attr === 'function'
+        ? this.getFunctionAttr(attr, field)
+        : attr
     },
     // 检测联动
     checkLinkage() {
@@ -575,27 +577,33 @@ export default {
             }
 
             // 4.动态属性
-            const attrs =
-              typeof formItem.attrs === 'function'
-                ? this.getFunctionAttr(formItem.attrs, field)
-                : formItem.attrs
+            const attrs = this.getDynamicAttr(formItem.attrs, field)
 
             // 5.动态 label
-            const label =
-              typeof formItem.label === 'function'
-                ? this.getFunctionAttr(formItem.label, field)
-                : formItem.label
+            const label = this.getDynamicAttr(formItem.label, field)
+
+            // 6.动态 prop
+            const prop = this.getDynamicAttr(formItem.prop, field)
+
+            // 7.动态 optionsLinkageFields
+            const optionsLinkageFields = castArray(
+              this.getDynamicAttr(formItem.optionsLinkageFields, field)
+            )
 
             this.$set(formItem, '_type', type)
             this.$set(formItem, '_vif', vif)
             this.$set(formItem, '_disabled', disabled)
             this.$set(formItem, '_attrs', attrs)
             this.$set(formItem, '_label', label)
+            this.$set(formItem, '_prop', prop)
+            this.$set(formItem, '_optionsLinkageFields', optionsLinkageFields)
 
             // 4.重新获取 options
             if (formItem._vif && typeof formItem.options === 'function') {
-              this.changeOptions(formItem.options, formItem.prop, field, true)
+              this.changeOptions(formItem.options, formItem._prop, field, true)
             }
+
+            this.hidePrivateAttr(formItem)
           })
         })
         this.checkLinkageFn()
@@ -617,6 +625,19 @@ export default {
         this.handleChange(field, defaultValue)
       }
       this.$set(formItem, '_defaultValue', defaultValue)
+    },
+    // 隐藏私有属性
+    hidePrivateAttr(formItem) {
+      Object.keys(formItem).forEach(key => {
+        if (key.startsWith('_')) {
+          Object.defineProperty(formItem, key, {
+            enumerable: false,
+            configurable: true,
+            writable: true,
+            value: formItem[key]
+          })
+        }
+      })
     },
     // 组件名称
     getComponentName(type) {
