@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.37](https://github.com/dream2023/vue-ele-form/compare/v0.8.36...v0.8.37) (2020-08-28)
+
+
+### Features
+
+* 增加 prop和linkageOptions动态设置 ([a759916](https://github.com/dream2023/vue-ele-form/commit/a7599163165b0eb150575d3eb1cdd4986d8636d0))
+
 ### [0.8.36](https://github.com/dream2023/vue-ele-form/compare/v0.8.35...v0.8.36) (2020-08-27)
 
 
