@@ -5,6 +5,7 @@
     class="ele-form-full-line"
     v-bind="attrs"
     v-model="newValue"
+    :loading="loading"
     :remote-method="changeOptions"
     v-on="onEvents"
   >
@@ -39,6 +40,7 @@ export default {
   },
   data() {
     return {
+      loading: false,
       mockRule: 'radio',
       type: ['Boolean', 'Number', 'String', 'Array']
     }
@@ -56,8 +58,10 @@ export default {
   methods: {
     changeOptions(q) {
       if (this.remoteMethod) {
+        this.loading = true
         this.remoteMethod(q, options => {
-          this.EleForm.changeOptions(options, this.desc.prop, this.field)
+          this.loading = false
+          this.EleForm.changeOptions(options, this.field)
         })
       }
     }

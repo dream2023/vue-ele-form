@@ -42,6 +42,7 @@
     "@vue/cli-plugin-eslint": "~4.4.0",
     "@vue/cli-service": "~4.4.0",
     "@vue/eslint-config-standard": "^5.1.2",
+    "axios": "^0.20.0",
     "babel-eslint": "^10.1.0",
     "babel-plugin-component": "^1.1.1",
     "commitizen": "^4.1.2",

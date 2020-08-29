@@ -628,6 +628,7 @@ export default {
     },
     // 隐藏私有属性
     hidePrivateAttr(formItem) {
+      if (process.env.NODE_ENV !== 'production') return
       Object.keys(formItem).forEach(key => {
         if (key.startsWith('_')) {
           Object.defineProperty(formItem, key, {
@@ -753,9 +754,10 @@ export default {
       this.$set(this.formDesc[field], '_options', newOptions)
 
       // 新 options 和老 options 不同时，触发值的改变
-      if (oldOptionsValues && (newOptionsValues !== oldOptionsValues)) {
+      if (oldOptionsValues && newOptionsValues !== oldOptionsValues) {
         this.setValue(field, null)
       }
+      this.hidePrivateAttr(this.formDesc[field])
     },
     // 验证表单
     validateForm() {
