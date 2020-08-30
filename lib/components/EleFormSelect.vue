@@ -9,7 +9,7 @@
     :remote-method="changeOptions"
     v-on="onEvents"
   >
-    <template v-for="(render, key) of desc.slots" v-slot:[key]>
+    <template v-for="(render, key) of slots" v-slot:[key]>
       <extend-slot
         :data="{
           options: desc.options

@@ -9,7 +9,7 @@
     v-on="onEvents"
   >
     <!-- 非作用域插槽 -->
-    <template v-for="(render, key) of desc.slots" v-slot:[key]>
+    <template v-for="(render, key) of slots" v-slot:[key]>
       <extend-slot :key="key" :render="render" />
     </template>
   </el-date-picker>

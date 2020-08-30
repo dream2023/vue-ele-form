@@ -6,7 +6,7 @@
     v-model="newValue"
     v-on="onEvents"
   >
-    <template v-for="(render, key) of desc.slots" v-slot:[key]>
+    <template v-for="(render, key) of slots" v-slot:[key]>
       <extend-slot :key="key" :render="render" />
     </template>
   </el-input>

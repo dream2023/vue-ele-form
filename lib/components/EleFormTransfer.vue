@@ -13,7 +13,7 @@
       <extend-slot :data="data" :render="scopedSlots.default" />
     </template>
     <!-- 非作用域插槽 -->
-    <template v-for="(render, key) of desc.slots" v-slot:[key]>
+    <template v-for="(render, key) of slots" v-slot:[key]>
       <extend-slot :key="key" :render="render" />
     </template>
   </el-transfer>
@@ -30,12 +30,12 @@ export default {
   props: {
     value: {
       type: Array,
-      default () {
+      default() {
         return []
       }
     }
   },
-  data () {
+  data() {
     return {
       type: 'Array',
       mockRule: 'custom',
@@ -43,13 +43,13 @@ export default {
     }
   },
   methods: {
-    customInit (val) {
+    customInit(val) {
       if (isUnDef(val)) {
         val = []
       }
       return val
     },
-    getCustomMockData () {
+    getCustomMockData() {
       const Mock = mock()
       if (Mock) {
         const props = Object.assign({}, { key: 'key' }, this.attrs.props)
