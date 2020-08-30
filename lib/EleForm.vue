@@ -467,15 +467,19 @@ export default {
               desc[field]._oldValue = {}
             }
 
-            // 设置 options
-            this.changeOptions(desc[field].options, field)
+            this.setVif(desc[field], field)
+
+            if (desc[field]._vif) {
+              // 设置 options
+              this.changeOptions(desc[field].options, field)
+            }
           })
 
           // 检查联动
           this.checkLinkage()
         }
         this.$nextTick(() => {
-          this.$refs.form.clearValidate()
+          this.$refs.form && this.$refs.form.clearValidate()
         })
       },
       immediate: true
@@ -556,17 +560,7 @@ export default {
             }
 
             // 2.触发 v-if 显示 / 隐藏
-            let vif = true
-            if (typeof formItem.vif === 'function') {
-              vif = Boolean(this.getFunctionAttr(formItem.vif, field))
-
-              if (!vif) {
-                // 如果隐藏, 则使用其默认值
-                this.handleChange(field, formItem._defaultValue)
-              }
-            } else if (typeof formItem.vif === 'boolean') {
-              vif = formItem.vif
-            }
+            this.setVif(formItem, field)
 
             // 3.触发 disabled 禁用 / 启用
             let disabled = null
@@ -591,7 +585,6 @@ export default {
             )
 
             this.$set(formItem, '_type', type)
-            this.$set(formItem, '_vif', vif)
             this.$set(formItem, '_disabled', disabled)
             this.$set(formItem, '_attrs', attrs)
             this.$set(formItem, '_label', label)
@@ -599,7 +592,7 @@ export default {
             this.$set(formItem, '_optionsLinkageFields', optionsLinkageFields)
 
             // 4.重新获取 options
-            if (formItem._vif && typeof formItem.options === 'function') {
+            if (formItem._vif) {
               this.changeOptions(formItem.options, field)
             }
 
@@ -608,6 +601,20 @@ export default {
         })
         this.checkLinkageFn()
       }
+    },
+    setVif(formItem, field) {
+      let vif = true
+      if (typeof formItem.vif === 'function') {
+        vif = Boolean(this.getFunctionAttr(formItem.vif, field))
+
+        if (!vif) {
+          // 如果隐藏, 则使用其默认值
+          this.handleChange(field, formItem._defaultValue)
+        }
+      } else if (typeof formItem.vif === 'boolean') {
+        vif = formItem.vif
+      }
+      this.$set(formItem, '_vif', vif)
     },
     // 设置默认值
     setDefaultvalue(formItem, field) {
