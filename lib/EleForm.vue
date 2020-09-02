@@ -593,7 +593,7 @@ export default {
 
             // 4.重新获取 options
             if (formItem._vif) {
-              this.changeOptions(formItem.options, field)
+              this.changeOptions(formItem.options || formItem._options, field)
             }
 
             this.hidePrivateAttr(formItem)
@@ -749,10 +749,11 @@ export default {
     },
     // 设置options
     setOptions(options, field) {
-      const prop = this.formDesc[field]._prop
+      const formItem = this.formDesc[field]
+      const prop = formItem._prop
       // 将options每一项转为对象
       let newOptions = this.getObjArrOptions(options)
-      const oldOptionsValues = (this.formDesc[field]._options || [])
+      const oldOptionsValues = (formItem._options || [])
         .map(item => item.value)
         .join(',')
       // 改变prop为规定的prop
@@ -761,8 +762,10 @@ export default {
       this.$set(this.formDesc[field], '_options', newOptions)
 
       // 新 options 和老 options 不同时，触发值的改变
-      if (oldOptionsValues && newOptionsValues !== oldOptionsValues) {
-        this.setValue(field, null)
+      if (formItem.isRestValByOptions !== false) {
+        if (oldOptionsValues && newOptionsValues !== oldOptionsValues) {
+          this.setValue(field, null)
+        }
       }
       this.hidePrivateAttr(this.formDesc[field])
     },
