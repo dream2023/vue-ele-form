@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.42](https://github.com/dream2023/vue-ele-form/compare/v0.8.41...v0.8.42) (2020-09-02)
+
+
+### Bug Fixes
+
+* **#83:** 修复 remoteMethod 问题 ([693af0a](https://github.com/dream2023/vue-ele-form/commit/693af0a175a37f2ddb160cba53f2d551883a728d)), closes [#83](https://github.com/dream2023/vue-ele-form/issues/83)
+
 ### [0.8.41](https://github.com/dream2023/vue-ele-form/compare/v0.8.40...v0.8.41) (2020-08-30)
 
 
