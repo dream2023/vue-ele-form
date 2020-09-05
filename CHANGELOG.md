@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.43](https://github.com/dream2023/vue-ele-form/compare/v0.8.42...v0.8.43) (2020-09-05)
+
 ### [0.8.42](https://github.com/dream2023/vue-ele-form/compare/v0.8.41...v0.8.42) (2020-09-02)
 
 
