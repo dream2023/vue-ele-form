@@ -61,7 +61,8 @@ export default {
         this.loading = true
         this.remoteMethod(q, options => {
           this.loading = false
-          this.EleForm.formDesc[this.field].isRestValByOptions = false
+          this.EleForm.formDescData[this.field].options = options
+          this.EleForm.formDescData[this.field].isRestValByOptions = false
           this.EleForm.changeOptions(options, this.field)
         })
       }

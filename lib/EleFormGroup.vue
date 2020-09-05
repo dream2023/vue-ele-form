@@ -89,9 +89,6 @@ export default {
     // 修改form属性
     computedGroups() {
       return this.groups.map(item => {
-        if (this.getDeepFormDesc) {
-          item.form.formDesc = this.getDeepFormDesc(item.form.formDesc)
-        }
         item.form = Object.assign({}, this.$attrs, item.form)
         item.on = Object.assign({}, this.$listeners, item.on)
         return item
@@ -124,9 +121,6 @@ export default {
     }
   },
   mounted() {
-    this.$nextTick(() => {
-      this.getDeepFormDesc = this.$refs['ele-form'].getDeepFormDesc
-    })
     // 获取默认激活的分组
     if (isDef(this.activeGroupId)) {
       this.currentGroupId = this.activeGroupId

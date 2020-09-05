@@ -253,6 +253,7 @@ export default {
   },
   data() {
     return {
+      formDescData: {},
       oldFormData: {},
       // 是否正在请求中
       innerIsLoading: false,
@@ -262,7 +263,9 @@ export default {
   },
   computed: {
     isMock() {
-      return this.mock || Object.values(this.formDesc).some(item => item.mock)
+      return (
+        this.mock || Object.values(this.formDescData).some(item => item.mock)
+      )
     },
     // 按钮
     btns() {
@@ -387,17 +390,17 @@ export default {
       return this.formDescKeys.reduce((rules, field) => {
         // 合并 (全局 和 局部) 的rules
         const formRules = castArray(this.rules[field])
-        const formItemRules = castArray(this.formDesc[field].rules)
+        const formItemRules = castArray(this.formDescData[field].rules)
         rules[field] = [...formRules, ...formItemRules]
 
         // 如果采用required, 则判断已有的规则有无, 如果没有, 则添加
         if (
-          this.formDesc[field].required &&
+          this.formDescData[field].required &&
           !rules[field].some(rule => rule.required)
         ) {
           rules[field].push({
             required: true,
-            message: this.formDesc[field]._label + t('ele-form.required')
+            message: this.formDescData[field]._label + t('ele-form.required')
           })
         }
         return rules
@@ -405,7 +408,7 @@ export default {
     },
     // formDesc的key
     formDescKeys() {
-      return Object.keys(this.formDesc)
+      return Object.keys(this.formDescData)
     },
     // 通过order数组排序后的formDesc
     orderedFormDesc() {
@@ -413,22 +416,22 @@ export default {
         const orderedFormDesc = {}
         // 根据order遍历，先添加到orderedFormDesc的key在之后遍历的时候，会先遍历，从而实现排序的目的。
         this.order.forEach(field => {
-          if (this.formDesc[field]) {
-            orderedFormDesc[field] = this.formDesc[field]
+          if (this.formDescData[field]) {
+            orderedFormDesc[field] = this.formDescData[field]
           } else {
             throw new Error('order中定义的key在formDesc中不存在')
           }
         })
         // 如果key不在order数组的时候，按照原序添加到orderedFormDesc
-        Object.keys(this.formDesc).forEach(field => {
+        Object.keys(this.formDescData).forEach(field => {
           // 当key不在order数组的时候
           if (!orderedFormDesc[field]) {
-            orderedFormDesc[field] = this.formDesc[field]
+            orderedFormDesc[field] = this.formDescData[field]
           }
         })
         return orderedFormDesc
       } else {
-        return this.formDesc
+        return this.formDescData
       }
     }
   },
@@ -438,16 +441,35 @@ export default {
         this.$refs.form.clearValidate()
       }
     },
-    // 处理options参数
+    // 同步数据
     formDesc: {
+      handler(formDesc) {
+        const oldFormDescData = {}
+        // 去除被删除字段
+        Object.keys(this.formDescData)
+          .filter(key => formDesc[key])
+          .forEach(key => {
+            oldFormDescData[key] = this.formDescData[key]
+          })
+        this.formDescData = Object.assign(
+          {},
+          oldFormDescData,
+          cloneDeep(formDesc)
+        )
+      },
+      immediate: true,
+      deep: true
+    },
+    formDescData: {
       handler(desc) {
         if (desc) {
           Object.keys(desc).forEach(field => {
-            // 当全局设置mock为true时, 所有子项都标记为true
+            // 当全局设置 mock 为 true 时, 所有子项都标记为 true
             if (this.mock && isUnDef(desc[field].mock)) {
               desc[field].mock = true
             }
 
+            // 设置默认值
             this.setDefaultvalue(desc[field], field)
 
             // 转换 tip, 内部属性不显示
@@ -519,7 +541,7 @@ export default {
     },
     // 当类型为函数时的请求
     getFunctionAttr(fn, field) {
-      return fn(this.formData, this.formDesc[field], this.formDesc)
+      return fn(this.formData, this.formDescData[field], this.formDescData)
     },
     // 获取动态属性
     getDynamicAttr(attr, field) {
@@ -533,10 +555,10 @@ export default {
         this.checkLinkageFn()
       } else {
         this.checkLinkageFn = throttle(300, () => {
-          const formDesc = this.formDesc
+          const formDescData = this.formDescData
           const formData = this.formData
-          Object.keys(formDesc).forEach(field => {
-            const formItem = formDesc[field]
+          Object.keys(formDescData).forEach(field => {
+            const formItem = formDescData[field]
             // 1.设置 type
             let type = formItem.type
             if (typeof formItem.type === 'function') {
@@ -547,13 +569,13 @@ export default {
                 // 获取此类型的以前值
                 const newVal = formItem._oldValue['type-' + type] || null
                 // 保存现在的数据作为老数据
-                this.formDesc[field]._oldValue['type-' + formItem._type] =
+                this.formDescData[field]._oldValue['type-' + formItem._type] =
                   formData[field]
 
                 // 类型改变, 则删除原数据
                 this.handleChange(field, newVal)
 
-                this.setDefaultvalue(this.formDesc[field], field)
+                this.setDefaultvalue(this.formDescData[field], field)
               }
             } else {
               type = this.getComponentName(formItem.type)
@@ -595,8 +617,6 @@ export default {
             if (formItem._vif) {
               this.changeOptions(formItem.options || formItem._options, field)
             }
-
-            this.hidePrivateAttr(formItem)
           })
         })
         this.checkLinkageFn()
@@ -632,20 +652,6 @@ export default {
         this.handleChange(field, defaultValue)
       }
       this.$set(formItem, '_defaultValue', defaultValue)
-    },
-    // 隐藏私有属性
-    hidePrivateAttr(formItem) {
-      if (process.env.NODE_ENV !== 'production') return
-      Object.keys(formItem).forEach(key => {
-        if (key.startsWith('_')) {
-          Object.defineProperty(formItem, key, {
-            enumerable: false,
-            configurable: true,
-            writable: true,
-            value: formItem[key]
-          })
-        }
-      })
     },
     // 组件名称
     getComponentName(type) {
@@ -687,7 +693,7 @@ export default {
     },
     isReloadOptions(field) {
       // 第一次进入 _options 为 false
-      const formItem = this.formDesc[field]
+      const formItem = this.formDescData[field]
       if (!formItem._options) return true
       // 如果关联字段不存在，则直接返回 false
       if (!formItem._optionsLinkageFields.length) return false
@@ -705,22 +711,22 @@ export default {
         } else if (options instanceof Function) {
           // 当options为Promise时: 等待Promise结束, 并获取值
           if (
-            (this.formDesc[field]._optionsIsPromise &&
+            (this.formDescData[field]._optionsIsPromise &&
               !this.isReloadOptions(field)) ||
-            this.formDesc[field]._isLoadingOptions
+            this.formDescData[field]._isLoadingOptions
           ) {
             return
           }
           const res = this.getFunctionAttr(options, field)
           if (res instanceof Promise) {
-            this.formDesc[field]._isLoadingOptions = true
-            this.formDesc[field]._optionsIsPromise = true
+            this.formDescData[field]._isLoadingOptions = true
+            this.formDescData[field]._optionsIsPromise = true
           }
           // 当options为函数: 执行函数并递归
           this.changeOptions(res, field)
         } else if (options instanceof Promise) {
           options.then(options => {
-            this.formDesc[field]._isLoadingOptions = false
+            this.formDescData[field]._isLoadingOptions = false
             this.changeOptions(options, field)
           })
         } else if (typeof options === 'string' && this.optionsFn) {
@@ -741,7 +747,7 @@ export default {
           }
         }
       } else {
-        if (this.formDesc[field]._options) {
+        if (this.formDescData[field]._options) {
           // 如果new options为null / undefined, 且 old Options 存在, 则设置
           this.setOptions([], field)
         }
@@ -749,7 +755,7 @@ export default {
     },
     // 设置options
     setOptions(options, field) {
-      const formItem = this.formDesc[field]
+      const formItem = this.formDescData[field]
       const prop = formItem._prop
       // 将options每一项转为对象
       let newOptions = this.getObjArrOptions(options)
@@ -759,7 +765,7 @@ export default {
       // 改变prop为规定的prop
       newOptions = this.changeProp(newOptions, prop)
       const newOptionsValues = newOptions.map(item => item.value).join(',')
-      this.$set(this.formDesc[field], '_options', newOptions)
+      this.$set(this.formDescData[field], '_options', newOptions)
 
       // 新 options 和老 options 不同时，触发值的改变
       if (formItem.isRestValByOptions !== false) {
@@ -767,7 +773,6 @@ export default {
           this.setValue(field, null)
         }
       }
-      this.hidePrivateAttr(this.formDesc[field])
     },
     // 验证表单
     validateForm() {
@@ -807,7 +812,7 @@ export default {
       if (!this.isShowErrorNotify) return
       try {
         const messageArr = Object.keys(errObj).reduce((acc, key) => {
-          const formItem = this.formDesc[key]
+          const formItem = this.formDescData[key]
           const label =
             formItem && formItem._label ? formItem._label + ': ' : key + ': '
           if (errObj[key] instanceof Array) {
@@ -855,7 +860,7 @@ export default {
         const data = cloneDeep(this.formData)
         // valueFormatter的处理
         for (const field in data) {
-          const formItem = this.formDesc[field]
+          const formItem = this.formDescData[field]
           if (formItem && formItem.valueFormatter) {
             data[field] = formItem.valueFormatter(data[field], data)
           }
