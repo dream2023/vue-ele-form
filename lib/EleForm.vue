@@ -444,18 +444,7 @@ export default {
     // 同步数据
     formDesc: {
       handler(formDesc) {
-        const oldFormDescData = {}
-        // 去除被删除字段
-        Object.keys(this.formDescData)
-          .filter(key => formDesc[key])
-          .forEach(key => {
-            oldFormDescData[key] = this.formDescData[key]
-          })
-        this.formDescData = Object.assign(
-          {},
-          oldFormDescData,
-          cloneDeep(formDesc)
-        )
+        this.formDescData = cloneDeep(formDesc)
       },
       immediate: true,
       deep: true
