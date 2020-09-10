@@ -39,6 +39,7 @@
                     :key="field"
                     v-bind="formItem._colAttrs"
                     v-if="formItem._vif"
+                    :class="{ 'ele-form-col--break': formItem.break }"
                   >
                     <el-form-item
                       :error="formErrorObj ? formErrorObj[field] : null"
@@ -944,7 +945,9 @@ export default {
 .ele-form--inline .ele-form-btns {
   width: auto;
 }
-
+.ele-form-col--break {
+  clear: both;
+}
 .ele-form-tip {
   color: #909399;
   line-height: 1.5em;
