@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.44](https://github.com/dream2023/vue-ele-form/compare/v0.8.43...v0.8.44) (2020-09-10)
+
+
+### Features
+
+* 增加强制折行属性 break ([fb4f1a9](https://github.com/dream2023/vue-ele-form/commit/fb4f1a958d9643d224c2ac9e8996a5d20e04e025))
+
 ### [0.8.43](https://github.com/dream2023/vue-ele-form/compare/v0.8.42...v0.8.43) (2020-09-05)
 
 ### [0.8.42](https://github.com/dream2023/vue-ele-form/compare/v0.8.41...v0.8.42) (2020-09-02)
