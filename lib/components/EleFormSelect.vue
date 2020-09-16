@@ -67,6 +67,11 @@ export default {
         })
       }
     }
+  },
+  mounted() {
+    if (this.remoteMethod) {
+      this.changeOptions()
+    }
   }
 }
 </script>
