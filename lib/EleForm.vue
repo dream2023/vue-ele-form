@@ -112,7 +112,7 @@
 import responsiveMixin from './mixins/responsiveMixin'
 import { isUnDef, is, castArray, isEmpty } from './tools/utils'
 import { throttle } from 'throttle-debounce'
-import localeMixin from 'element-ui/src/mixins/locale'
+import localeMixin from './mixins/locale'
 import { t } from './locale'
 import { loadMockJs } from './tools/mock'
 const isNumber = require('is-number')
