@@ -877,6 +877,7 @@ export default {
               this.$emit('request-success', response)
             })
           } catch (error) {
+            console.error(error)
             // 处理异常情况
             if (error instanceof Error) {
               // 返回的是Error类型, 则进行解析

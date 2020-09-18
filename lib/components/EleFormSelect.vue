@@ -69,8 +69,8 @@ export default {
     }
   },
   mounted() {
-    if (this.remoteMethod) {
-      this.changeOptions()
+    if (this.remoteMethod && this.newValue) {
+      this.changeOptions(this.newValue)
     }
   }
 }
