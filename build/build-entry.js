@@ -4,7 +4,7 @@ const path = require('path')
 const endOfLine = require('os').EOL
 
 // 获取组件
-function getComponents (path) {
+function getComponents(path) {
   let components = fs.readdirSync(path)
   components = components.map(componentName =>
     componentName.slice(0, componentName.lastIndexOf('.vue'))
@@ -14,7 +14,7 @@ function getComponents (path) {
 }
 
 // 获取组件引入模板
-function getComponentsTemplate (ComponentNames) {
+function getComponentsTemplate(ComponentNames) {
   // 模板
   const IMPORT_TEMPLATE = "import {{name}} from './components/{{name}}'"
   // 替换
@@ -22,7 +22,7 @@ function getComponentsTemplate (ComponentNames) {
 }
 
 // 获取安装列表
-function getInstallTemplate (ComponentNames) {
+function getInstallTemplate(ComponentNames) {
   const INSTALL_COMPONENT_TEMPLATE = '  {{name}}'
   return ComponentNames.map(name =>
     render(INSTALL_COMPONENT_TEMPLATE, { name: name })
@@ -30,7 +30,7 @@ function getInstallTemplate (ComponentNames) {
 }
 
 // 获取内置组件类型
-function getBuiltInName (name) {
+function getBuiltInName(name) {
   name = name
     .replace('EleForm', '')
     .replace(/[A-Z\u00C0-\u00D6\u00D8-\u00DE]/g, '-$&')
@@ -39,7 +39,7 @@ function getBuiltInName (name) {
   return name
 }
 
-function getBuiltInNameTemplate (ComponentNames) {
+function getBuiltInNameTemplate(ComponentNames) {
   const names = ComponentNames.map(getBuiltInName)
   const TEMPLATE = "  '{{name}}'"
   return names.map(name => render(TEMPLATE, { name: name }))
@@ -66,6 +66,7 @@ import formMixin from './mixins/formMixin'
 import uploadMixin from './mixins/uploadMixin'
 import EleFormGroup from './EleFormGroup'
 import EleFormDialog from './EleFormDialog'
+import EleFormDrawer from './EleFormDrawer'
 import EleFormSection from './EleFormSection'
 {{include}}
 
@@ -73,6 +74,7 @@ const components = [
   EleForm,
   EleFormGroup,
   EleFormDialog,
+  EleFormDrawer,
   EleFormSection,
 {{install}}
 ]
