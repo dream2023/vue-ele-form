@@ -963,7 +963,7 @@ export default {
 }
 
 .ele-form-full-line.el-date-editor.el-input,
-.el-date-editor.el-input__inner,
+.ele-form-full-line.el-date-editor .el-input__inner,
 .ele-form-full-line.el-date-editor--daterange.el-input__inner,
 .ele-form-full-line.el-date-editor--datetimerange.el-input__inner,
 .ele-form-full-line.el-date-editor--timerange.el-input__inner,
