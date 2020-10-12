@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.48](https://github.com/dream2023/vue-ele-form/compare/v0.8.47...v0.8.48) (2020-10-12)
+
+
+### Features
+
+* 增加 drawer 组件 ([960b3b8](https://github.com/dream2023/vue-ele-form/commit/960b3b873a1a5057b9d84ec5bed1d598f80cf99c))
+
+
+### Bug Fixes
+
+* **#88:** 解决样式污染 ([0d4fea7](https://github.com/dream2023/vue-ele-form/commit/0d4fea7601d6a36af2202256336057a5bfc06747)), closes [#88](https://github.com/dream2023/vue-ele-form/issues/88)
+
 ### [0.8.47](https://github.com/dream2023/vue-ele-form/compare/v0.8.46...v0.8.47) (2020-09-18)
 
 
