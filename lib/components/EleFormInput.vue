@@ -4,7 +4,8 @@
     :style="desc.style"
     v-bind="attrs"
     v-model="newValue"
-    v-on="onEvents"
+    v-on="desc.on"
+    @input="handleChange"
   >
     <template v-for="(render, key) of slots" v-slot:[key]>
       <extend-slot :key="key" :render="render" />
@@ -29,6 +30,14 @@ export default {
       return {
         placeholder: this.t('ele-form.input') + this.desc._label
       }
+    }
+  },
+  methods: {
+    handleChange(val) {
+      if (this.attrs.type === 'number') {
+        val = Number(val)
+      }
+      this.$emit('input', val)
     }
   }
 }

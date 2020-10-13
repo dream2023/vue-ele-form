@@ -21,7 +21,6 @@
       @input="$emit('input', $event)"
       :isShowBackBtn="isShowBackBtn"
       :isShowCancelBtn="isShowCancelBtn"
-      @update:visible="$emit('update:visible', $event)"
       ref="ele-form"
       :visible="visible"
       v-bind="$attrs"
