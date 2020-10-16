@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.50](https://github.com/dream2023/vue-ele-form/compare/v0.8.49...v0.8.50) (2020-10-16)
+
+
+### Bug Fixes
+
+* switch 不应该强制转为 boolean 值 ([bbe8d5b](https://github.com/dream2023/vue-ele-form/commit/bbe8d5b1818c8dadf218cf5e993455360b3f86c6))
+
 ### [0.8.49](https://github.com/dream2023/vue-ele-form/compare/v0.8.48...v0.8.49) (2020-10-13)
 
 
