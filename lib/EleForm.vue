@@ -692,13 +692,20 @@ export default {
         }
       })
     },
-    isReloadOptions(field) {
-      // 第一次进入 _options 为 false
+    shouldRequest(field) {
       const formItem = this.formDescData[field]
+      // 如果 _options 不存在，则代表第一次进入，需要请求
       if (!formItem._options) return true
       // 如果关联字段不存在，则直接返回 false
-      if (!formItem._optionsLinkageFields.length) return false
-      // 判断关联字段的值有无更新
+      if (!formItem._optionsLinkageFields.length) {
+        console.error(
+          '[vue-ele-form]: options 如果是异步请求，则需要设置 optionsLinkageFields，',
+          formItem.options,
+          ' 未设置'
+        )
+        return false
+      }
+      // 判断关联字段的值有无更新，有不同的，则更新
       return formItem._optionsLinkageFields.some(
         field => this.formData[field] !== this.oldFormData[field]
       )
@@ -711,17 +718,12 @@ export default {
           this.setOptions(options, field)
         } else if (options instanceof Function) {
           // 当options为Promise时: 等待Promise结束, 并获取值
-          if (
-            (this.formDescData[field]._optionsIsPromise &&
-              !this.isReloadOptions(field)) ||
-            this.formDescData[field]._isLoadingOptions
-          ) {
-            return
-          }
+          if (this.formDescData[field]._isLoadingOptions) return
+          if (!this.shouldRequest(field)) return
+
           const res = this.getFunctionAttr(options, field)
           if (res instanceof Promise) {
             this.formDescData[field]._isLoadingOptions = true
-            this.formDescData[field]._optionsIsPromise = true
           }
           // 当options为函数: 执行函数并递归
           this.changeOptions(res, field)
@@ -731,6 +733,10 @@ export default {
             this.changeOptions(options, field)
           })
         } else if (typeof options === 'string' && this.optionsFn) {
+          if (this.formDescData[field]._isLoadingOptions) return
+          if (!this.shouldRequest(field)) return
+
+          this.formDescData[field]._isLoadingOptions = true
           // options为url地址
           this.changeOptions(this.optionsFn(options), field)
         } else {
