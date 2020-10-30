@@ -86,6 +86,7 @@
                 </slot>
               </template>
             </slot>
+            <slot name="form-footer" />
             <!-- 操作按钮区 -->
             <el-col class="ele-form-btns" v-if="btns.length">
               <el-form-item :label-width="inline ? '10px' : null">
@@ -698,11 +699,6 @@ export default {
       if (!formItem._options) return true
       // 如果关联字段不存在，则直接返回 false
       if (!formItem._optionsLinkageFields.length) {
-        console.error(
-          '[vue-ele-form]: options 如果是异步请求，则需要设置 optionsLinkageFields，',
-          formItem.options,
-          ' 未设置'
-        )
         return false
       }
       // 判断关联字段的值有无更新，有不同的，则更新

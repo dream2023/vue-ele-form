@@ -7,6 +7,7 @@
         :form-desc="formDesc"
         :request-fn="handleSubmit"
         :rules="rules"
+        :options-fn="$axios.get"
         @request-success="handleSuccess"
       ></ele-form>
     </el-card>
