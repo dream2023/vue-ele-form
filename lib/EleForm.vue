@@ -251,7 +251,13 @@ export default {
     isShowErrorNotify: {
       type: Boolean,
       default: true
-    }
+    },
+    // 一些钩子
+    beforeValidate: Function,
+    beforeRequest: Function,
+    requestSuccess: Function,
+    requestError: Function,
+    requestEnd: Function
   },
   data() {
     return {
@@ -858,14 +864,30 @@ export default {
     // 提交表单
     async handleSubmitForm() {
       try {
+        // 自定义处理
+        this.$emit('before-validate', this.formData)
+        if (this.beforeValidate) {
+          const isPass = await this.beforeValidate(this.formData)
+          if (isPass === false) return
+        }
+
         await this.validate()
         // 为了不影响原值, 这里进行 clone
-        const data = cloneDeep(this.formData)
+        let data = cloneDeep(this.formData)
         // valueFormatter的处理
         for (const field in data) {
           const formItem = this.formDescData[field]
           if (formItem && formItem.valueFormatter) {
             data[field] = formItem.valueFormatter(data[field], data)
+          }
+        }
+
+        this.$emit('before-request', data)
+        if (this.beforeRequest) {
+          const beforeRequestData = this.beforeRequest(data)
+          if (beforeRequestData === false) return
+          if (typeof beforeRequestData === 'object') {
+            data = beforeRequestData
           }
         }
 
@@ -877,8 +899,15 @@ export default {
             const response = await this.requestFn(data)
             this.$nextTick(() => {
               this.$emit('request-success', response)
+              if (this.requestSuccess) {
+                this.requestSuccess(response)
+              }
             })
           } catch (error) {
+            if (this.requestError) {
+              this.requestError(error)
+            }
+
             console.error(error)
             // 处理异常情况
             if (error instanceof Error) {
@@ -897,6 +926,9 @@ export default {
             this.$emit('request-error')
           } finally {
             this.innerIsLoading = false
+            if (this.requestEnd) {
+              this.requestEnd()
+            }
             this.$emit('request-end')
           }
         } else {
