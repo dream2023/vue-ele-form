@@ -251,7 +251,8 @@ export default {
     isShowErrorNotify: {
       type: Boolean,
       default: true
-    }
+    },
+    beforeSubmit: Function
   },
   data() {
     return {
@@ -260,7 +261,8 @@ export default {
       // 是否正在请求中
       innerIsLoading: false,
       // 内部请求出错
-      innerFormError: {}
+      innerFormError: {},
+      beforeSubmitLoading: false
     }
   },
   computed: {
@@ -291,7 +293,7 @@ export default {
           attrs: {
             type: 'primary',
             size: formBtnSize,
-            loading: this.isLoading || this.innerIsLoading,
+            loading: this.isLoading || this.innerIsLoading || this.beforeSubmitLoading,
             'native-type': 'submit'
           },
           text: this.computedSubmitBtnText,
@@ -810,6 +812,19 @@ export default {
       return Promise.all(validators.map(fn => fn()))
     },
 
+    beforeCommit() {
+      this.beforeSubmitLoading = true
+      return new Promise((resolve, reject) => {
+        if (this.beforeSubmit) {
+          this.beforeSubmit(resolve, reject)
+        } else {
+          resolve()
+        }
+      }).finally(() => {
+        this.beforeSubmitLoading = false
+      })
+    },
+
     // 处理错误
     processError(errObj) {
       if (!this.isShowErrorNotify) return
@@ -859,6 +874,7 @@ export default {
     async handleSubmitForm() {
       try {
         await this.validate()
+        await this.beforeCommit()
         // 为了不影响原值, 这里进行 clone
         const data = cloneDeep(this.formData)
         // valueFormatter的处理

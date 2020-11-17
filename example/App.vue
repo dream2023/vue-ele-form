@@ -9,6 +9,7 @@
         :rules="rules"
         :options-fn="$axios.get"
         @request-success="handleSuccess"
+        :beforeSubmit="beforeSubmit"
       ></ele-form>
     </el-card>
   </div>
@@ -87,6 +88,12 @@ export default {
     },
     handleSuccess() {
       this.$message.success('创建成功')
+    },
+    beforeSubmit(resolve, reject) {
+      console.log('beforeSubmit do something')
+      setTimeout(() => {
+        resolve()
+      }, 2000)
     }
   }
 }
