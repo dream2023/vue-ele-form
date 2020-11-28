@@ -111,13 +111,12 @@
 
 <script>
 import responsiveMixin from './mixins/responsiveMixin'
-import { isUnDef, is, castArray, isEmpty } from './tools/utils'
+import { isUnDef, is, castArray, isEmpty, isNumber } from './tools/utils'
 import { throttle } from 'throttle-debounce'
 import localeMixin from './mixins/locale'
 import { t } from './locale'
 import { loadMockJs } from './tools/mock'
-const isNumber = require('is-number')
-const cloneDeep = require('clone')
+import cloneDeep from 'lodash.clonedeep'
 
 export default {
   name: 'EleForm',
