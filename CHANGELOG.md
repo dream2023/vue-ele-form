@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.54](https://github.com/dream2023/vue-ele-form/compare/v0.8.52...v0.8.54) (2020-12-21)
+
+
+### Features
+
+* 增加钩子函数 ([cbb4926](https://github.com/dream2023/vue-ele-form/commit/cbb4926b13854cc890e6f1a3cd3025497894d9bc))
+
+
+### Bug Fixes
+
+* select 扩展组件 BUG ([8d52150](https://github.com/dream2023/vue-ele-form/commit/8d521504a54e3422b528c7a972c26bef40001f98))
+
 ### [0.8.53](https://github.com/dream2023/vue-ele-form/compare/v0.8.52...v0.8.53) (2020-11-17)
 
 
