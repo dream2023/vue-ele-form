@@ -57,6 +57,7 @@
                     :key="field"
                     v-bind="formDesc[field]._colAttrs"
                     v-if="formDesc[field]._vif"
+                    :class="{ 'ele-form-col--break': formDesc[field].break }"
                   >
                     <el-form-item
                       :error="formErrorObj ? formErrorObj[field] : null"
