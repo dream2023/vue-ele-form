@@ -4,10 +4,6 @@
 [![npm](https://img.shields.io/npm/v/vue-ele-form.svg)](https://www.npmjs.com/package/vue-ele-form)
 [![download](https://img.shields.io/npm/dt/vue-ele-form)](https://npmcharts.com/compare/vue-ele-form?minimal=true)
 
-## 交流群
-
-![交流群](https://i.loli.net/2020/02/07/MmY1u7f4wR3igcB.jpg)
-
 ## 说明
 
 vue-ele-form 是基于 [element-ui form](https://element.eleme.cn/#/zh-CN/component/form) 的二次封装, 主要特点:
