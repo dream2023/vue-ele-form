@@ -6,7 +6,7 @@
     v-bind="attrs"
     v-model="newValue"
     :loading="loading"
-    :remote-method="changeOptions"
+    :remote-method="remoteMethod?changeOptions:null"
     v-on="onEvents"
   >
     <template v-for="(render, key) of slots" v-slot:[key]>
