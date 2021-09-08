@@ -4,6 +4,11 @@
 [![npm](https://img.shields.io/npm/v/vue-ele-form.svg)](https://www.npmjs.com/package/vue-ele-form)
 [![download](https://img.shields.io/npm/dt/vue-ele-form)](https://npmcharts.com/compare/vue-ele-form?minimal=true)
 
+## 维护说明
+
+项目由于架构方面的问题，**本人不再维护**，也不推荐大家使用，但是如果你已经在用了，并且发现了问题，可以通过 PR 方式提交改善，我也会帮忙发布 npm 版本。
+
+
 ## 说明
 
 vue-ele-form 是基于 [element-ui form](https://element.eleme.cn/#/zh-CN/component/form) 的二次封装, 主要特点:
