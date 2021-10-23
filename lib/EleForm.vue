@@ -567,6 +567,10 @@ export default {
           const formData = this.formData
           Object.keys(formDescData).forEach(field => {
             const formItem = formDescData[field]
+            // 针对联动与远程搜索下拉无法关联改动
+            if (!formItem.isRestValByOptions) {
+              formItem.isRestValByOptions = true
+            }
             // 1.设置 type
             let type = formItem.type
             if (typeof formItem.type === 'function') {
